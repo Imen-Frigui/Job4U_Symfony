@@ -9,12 +9,28 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<table border='1'>
+<thead>
+<th>Date </th>
+<th> Simple user</th> 
+<th>Email </th>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/Pidev/src/Controller/PostulationController.php'|file_link(0) }}">src/Controller/PostulationController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/Pidev/templates/postulation/index.html.twig'|file_link(0) }}">templates/postulation/index.html.twig</a></code></li>
-    </ul>
+</thead>
+<tbody>
+    {%for pos in p  %}
+<tr>
+<td >{{pos.date}}</td>
+<td >{{pos.simpleUser}}</td>
+<td >{{pos.email}}</td>
+<td>
+<a href= "{{path('postulation_update' ,{'idPos':pos.idPos})}}">Update </a>
+</td>
+<td>
+<a href= "{{path('remove_pos' ,{'idPos':pos.idPos})}}">Remove </a>
+</td>
+</tr>
+{%endfor%}
+</tbody>
+</table>
 </div>
 {% endblock %}
