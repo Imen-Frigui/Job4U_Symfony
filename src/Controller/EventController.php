@@ -46,6 +46,7 @@ class EventController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
     #[Route('/event/list', name: 'event_list')]
     public function list(EventRepository $eventRepository): Response
     {
@@ -55,9 +56,15 @@ class EventController extends AbstractController
             'events' => $events,
         ]);
     }
+
     #[Route('/event/delete/{id}', name: 'event_delete')]
     public function delete(Event $event): Response
-    {           
+    {       
+        // Check if the logged-in user is the creator of the event
+        if ($event->getCreator() !== 1) {
+            $this->addFlash('error', 'You are not authorized to edit this event.');
+            return $this->redirectToRoute('app_event');
+        }      
         $em = $this->getDoctrine()->getManager();
         if ($event->getCreator()->getId() === 1) {
             $em->remove($event);
@@ -68,9 +75,15 @@ class EventController extends AbstractController
         }
         return $this->redirectToRoute('app_event');
     }
+
     #[Route('/event/edit/{id}', name: 'event_edit')]
     public function edit(Request $request, Event $event): Response
     {
+    // Check if the logged-in user is the creator of the event
+    if ($event->getCreator() !== 1) {
+        $this->addFlash('error', 'You are not authorized to edit this event.');
+        return $this->redirectToRoute('app_event');
+    }
     $id = $request->get('id');           
     $entityManager = $this->getDoctrine()->getManager();
     $event = $entityManager->getRepository(Event::class)->find($id);
