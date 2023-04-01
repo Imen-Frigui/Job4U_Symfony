@@ -20,6 +20,13 @@ class PostulationController extends AbstractController
            'p'=>$pos,
         ]);
     }
+    #[Route('/admin', name: 'display_admin')]
+    public function indexAdmin(): Response
+    {  
+        return $this->render('Admin/index.html.twig'
+
+        );
+    }
     
     #[Route('/addPos', name: 'postulation_add')]
     public function addPos(Request $request): Response{
