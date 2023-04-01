@@ -1,0 +1,42 @@
+{% if app.session.getFlashBag().has('success') %}
+	<div class="alert alert-success alert-dismissible fade show" role="alert">
+		{{ app.session.getFlashBag().get('success')[0] }}
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+{% endif %}
+{% block body %}
+	<!-- Table with stripped rows -->
+	<table border="2">
+		<thead>
+			<tr>
+				<th>titre</th>
+				<th>creator</th>
+				<th>descritption</th>
+				<th>date</th>
+				<th>location</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for e in events %}
+				<tr>
+					<td>{{ e.title }}</td>
+					<td>{{ e.getCreator().getNom() }}</td>
+					<td>{{ e.description }}</td>
+					<td>{{ e.date|date('m/d/Y')}}</td>
+					<td>{{ e.location }}</td>
+					<td>
+						{% if e.getCreator().getId() == 1 %}
+							<td>
+								<a class="btn btn-success" href="{{ path('event_edit', {'id': e.id}) }}">Edit</a>
+							</td>
+							<td>
+								<a class="btn btn-success" href="{{ path('event_delete',{'id':e.id}) }}">Delete</a>
+							</td>
+						{% endif %}
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<!-- End small tables -->
+{% endblock %}
