@@ -1,0 +1,45 @@
+{% extends 'templateFront.html.twig' %}
+
+{% block title %}New Reclamation{% endblock %}
+
+{% block body %}
+<div class="container">
+<div class="d-flex flex-column justify-content-center">
+ <div class="row">
+
+            <h1>Liste des Reclamation</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Message</th>
+                <th>Type</th>
+                <th>Statut</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reclamation in reclamations %}
+            <tr>
+                <td>{{ reclamation.message }}</td>
+                <td>{{ reclamation.type }}</td>
+                <td>{{ reclamation.statut }}</td>
+                <td>
+                    <a href="{{ path('app_reclamation_show', {'idReclamation': reclamation.idReclamation}) }}"><button class="btn btn-secondary">show</button></a>
+                    <a href="{{ path('app_reclamation_edit', {'idReclamation': reclamation.idReclamation}) }}"><button class="btn btn-warning">edit</button></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+
+        </div>
+  </div>
+    </div>
+{% endblock %}

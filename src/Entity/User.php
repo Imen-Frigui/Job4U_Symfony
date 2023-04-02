@@ -1,55 +1,77 @@
 <?php
+
 namespace App\Entity;
+use Symfony\Component\Validator\Constraints as Assert;
 
-use App\Entity\Event;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\UserRepository;
 
-#[ORM\Entity(repositoryClass: UserRepository::class)]
+/**
+ * User
+ *
+ * @ORM\Table(name="user")
+ * @ORM\Entity
+ */
 class User
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: "IDENTITY")]
-    #[ORM\Column(type: "integer")]
-    private int $id;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="Id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
 
-    #[ORM\Column(type: "string", length: 255)]
-    private string $nom;
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="Nom", type="string", length=50, nullable=true, options={"default"="NULL"})
+     */
+    private $nom = 'NULL';
 
-    #[ORM\Column(type: "string", length: 255)]
-    private string $prenom;
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="Prenom", type="string", length=50, nullable=true, options={"default"="NULL"})
+     */
+    private $prenom = 'NULL';
 
-    #[ORM\Column(type: "string", length: 180, unique: true)]
-    private string $email;
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="Mail", type="string", length=255, nullable=true, options={"default"="NULL"})
+     */
+    private $mail = 'NULL';
 
-    #[ORM\Column(type: "string")]
-    private string $role;
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="Password", type="string", length=255, nullable=true, options={"default"="NULL"})
+     */
+    private $password = 'NULL';
 
-    #[ORM\Column(type: "string")]
-    private string $password;
-
-    #[ORM\OneToMany(mappedBy: 'creator_id', targetEntity: Event::class)]
-    private Collection $events;
-
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Participant::class)]
-    private Collection $participants;
-
-    public function __construct()
-    {
-        $this->events = new ArrayCollection();
-        $this->participants = new ArrayCollection();
-    }
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="Role", type="string", length=50, nullable=true, options={"default"="NULL"})
+     */
+    private $role = 'NULL';
 
     public function getId(): ?int
     {
         return $this->id;
     }
-    
+
     public function getNom(): ?string
     {
         return $this->nom;
+    }
+
+    public function setNom(?string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
     }
 
     public function getPrenom(): ?string
@@ -57,31 +79,21 @@ class User
         return $this->prenom;
     }
 
-
-    public function getEmail(): ?string
+    public function setPrenom(?string $prenom): self
     {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
+        $this->prenom = $prenom;
 
         return $this;
     }
 
-    public function getRole(): ?string
+    public function getMail(): ?string
     {
-        return $this->role;
+        return $this->mail;
     }
-    public function setId(int $id): self
+
+    public function setMail(?string $mail): self
     {
-        $this->id = $id;
-        return $this;    
-    }
-    public function setRole(string $role): self
-    {
-        $this->role = $role;
+        $this->mail = $mail;
 
         return $this;
     }
@@ -91,91 +103,24 @@ class User
         return $this->password;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword(?string $password): self
     {
         $this->password = $password;
 
         return $this;
     }
 
-    public function getUsername(): ?string
+    public function getRole(): ?string
     {
-        return $this->email;
+        return $this->role;
     }
 
-    public function setNom(string $nom): self
+    public function setRole(?string $role): self
     {
-        $this->nom = $nom;
+        $this->role = $role;
 
         return $this;
     }
 
-    public function setPrenom(string $prenom): self
-    {
-        $this->prenom = $prenom;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Event>
-     */
-    public function getEvents(): Collection
-    {
-        return $this->events;
-    }
-
-    public function addEvent(Event $event): self
-    {
-        if (!$this->events->contains($event)) {
-            $this->events->add($event);
-            $event->setCreator($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEvent(Event $event): self
-    {
-        if ($this->events->removeElement($event)) {
-            // set the owning side to null (unless already changed)
-            if ($event->getCreator() === $this) {
-                $event->setCreator(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Participant>
-     */
-    public function getParticipants(): Collection
-    {
-        return $this->participants;
-    }
-
-    public function addParticipant(Participant $participant): self
-    {
-        if (!$this->participants->contains($participant)) {
-            $this->participants->add($participant);
-            $participant->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeParticipant(Participant $participant): self
-    {
-        if ($this->participants->removeElement($participant)) {
-            // set the owning side to null (unless already changed)
-            if ($participant->getUser() === $this) {
-                $participant->setUser(null);
-            }
-        }
-
-        return $this;
-    }
 
 }
-?>
