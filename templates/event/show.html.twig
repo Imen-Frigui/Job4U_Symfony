@@ -1,0 +1,36 @@
+{% block title %}
+	{{ event.title }}
+{% endblock %}
+
+{% block body %}
+	<h1>{{ event.title }}</h1>
+	<p>{{ event.description }}</p>
+	<p>Date:
+		{{ event.date|date('m/d/Y') }}</p>
+	<p>Location:
+		{{ event.location }}</p>
+
+	{% if event.getCreator() %}
+		<p>Creator:
+			{{ event.getCreator().getNom() }}{{" "}}
+			{{ event.getCreator().getPrenom() }}</p>
+	{% endif %}
+
+	{% if event.getCreator().getId()==1 %}
+		<a class="btn btn-primary" href="{{ path('event_edit', {'id': event.id}) }}">Edit</a>
+		<a class="btn btn-danger" href="{{ path('event_delete', {'id': event.id}) }}" onclick="return confirm('Are you sure you want to delete this event?')">Delete</a>
+	{% endif %}
+	<a href="{{ path('participant_add', {'eventId': event.id}) }}">Participate</a>
+	<h2>Participants</h2>
+	{% if event.participants|length > 0 %}
+		<ul>
+			{% for participant in event.participants %}
+				<li>{{ event.getCreator().getNom() }}{{" "}}
+					{{ event.getCreator().getPrenom() }}</li>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<p>No participants yet.</p>
+	{% endif %}
+	<a class="btn btn-primary" href="{{ path('app_event') }}">Back to events</a>
+{% endblock %}

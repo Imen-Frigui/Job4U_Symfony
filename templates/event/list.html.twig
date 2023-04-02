@@ -25,6 +25,7 @@
 					<td>{{ e.date|date('m/d/Y')}}</td>
 					<td>{{ e.location }}</td>
 					<td>
+						<a class="btn btn-primary" href="{{ path('event_show', {'id': e.id}) }}">Show</a>
 						{% if e.getCreator().getId() == 1 %}
 							<td>
 								<a class="btn btn-success" href="{{ path('event_edit', {'id': e.id}) }}">Edit</a>

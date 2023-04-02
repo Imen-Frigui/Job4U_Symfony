@@ -1,0 +1,27 @@
+{% block body %}
+	<h1>My Events</h1>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Title</th>
+				<th>Description</th>
+				<th>Date</th>
+				<th>Location</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for event in events %}
+				<tr>
+					<td>{{ event.title }}</td>
+					<td>{{ event.description }}</td>
+					<td>{{ event.date|date('d-m-Y H:i:s') }}</td>
+					<td>{{ event.location }}</td>
+					<td>
+						<a href="{{ path('event_show', {'id': event.id}) }}" class="btn btn-primary">Show</a>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

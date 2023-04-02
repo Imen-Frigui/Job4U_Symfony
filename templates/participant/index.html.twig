@@ -1,0 +1,30 @@
+{% block body %}
+	<h1>Participants</h1>
+
+	{% if participants|length > 0 %}
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Email</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for participant in participants %}
+					<tr>
+						<td>{{ event.getCreator().getNom() }}</td>
+						<td>{{ event.getCreator().getPrenom() }}</td>
+						<td>
+							<a href="{{ path('participant_delete', {'id': participant.id}) }}" class="btn btn-danger">Delete</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<p>No participants found.</p>
+	{% endif %}
+
+	<a href="{{ path('participant_add') }}" class="btn btn-success">Add Participant</a>
+{% endblock %}
