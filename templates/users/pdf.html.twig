@@ -1,0 +1,29 @@
+{% include 'temp1.html.twig' %}
+
+{% block header %}
+{% endblock %}
+{% block body %}
+<table>
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">name</th>
+            <th scope="col">email</th>
+
+        </tr>
+        </thead>
+   <tbody>
+        {% for i in user %}
+
+            <tr>
+                <td>{{ i.id  }}</td>
+                <td>{{ i.name  }}</td>
+                <td>{{ i.email  }}</td>
+
+
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+

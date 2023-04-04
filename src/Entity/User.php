@@ -1,62 +1,63 @@
 <?php
+
 namespace App\Entity;
 
-use App\Entity\Event;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: "IDENTITY")]
-    #[ORM\Column(type: "integer")]
-    private int $id;
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    #[ORM\Column(type: "string", length: 255)]
-    private string $nom;
-
-    #[ORM\Column(type: "string", length: 255)]
-    private string $prenom;
-
-    #[ORM\Column(type: "string", length: 180, unique: true)]
+    #[ORM\Column(length: 180,type:"string", unique: true)]
     private string $email;
 
-    #[ORM\Column(type: "string")]
-    private string $role;
+    #[ORM\Column]
+    private array $roles = [];
 
-    #[ORM\Column(type: "string")]
-    private string $password;
 
-    #[ORM\OneToMany(mappedBy: 'creator_id', targetEntity: Event::class)]
-    private Collection $events;
+      
+    #[ORM\Column(length: 180,type:"string")]
+    private $name;
+    /**
+     * @var string The hashed password
+     */
+    #[ORM\Column]
+    private ?string $password = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Participant::class)]
-    private Collection $participants;
 
-    public function __construct()
+     
+    #[ORM\Column(length: 180,type:"string")]
+    private $reset_token="";
+
+
+    #[ORM\Column(length: 180,type:"string")]
+    private $image="";
+
+    
+    public function getImage(): ?string
     {
-        $this->events = new ArrayCollection();
-        $this->participants = new ArrayCollection();
+        return $this->image;
     }
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
-    
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
-
-    public function getPrenom(): ?string
-    {
-        return $this->prenom;
-    }
-
 
     public function getEmail(): ?string
     {
@@ -70,25 +71,49 @@ class User
         return $this;
     }
 
-    public function getRole(): ?string
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
     {
-        return $this->role;
+        return (string) $this->email;
     }
-    public function setId(int $id): self
+
+    /**
+     * @deprecated since Symfony 5.3, use getUserIdentifier instead
+     */
+    public function getUsername(): string
     {
-        $this->id = $id;
-        return $this;    
+        return (string) $this->email;
     }
-    public function setRole(string $role): self
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
     {
-        $this->role = $role;
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
 
         return $this;
     }
 
-    public function getPassword(): ?string
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): string
     {
-        return $this->password;
+        return (string) $this->password;
     }
 
     public function setPassword(string $password): self
@@ -98,84 +123,59 @@ class User
         return $this;
     }
 
-    public function getUsername(): ?string
+    /**
+     * Returning a salt is only needed, if you are not using a modern
+     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
+     *
+     * @see UserInterface
+     */
+    public function getSalt(): ?string
     {
-        return $this->email;
-    }
-
-    public function setNom(string $nom): self
-    {
-        $this->nom = $nom;
-
-        return $this;
-    }
-
-    public function setPrenom(string $prenom): self
-    {
-        $this->prenom = $prenom;
-
-        return $this;
+        return null;
     }
 
     /**
-     * @return Collection<int, Event>
+     * @see UserInterface
      */
-    public function getEvents(): Collection
+    public function eraseCredentials()
     {
-        return $this->events;
-    }
-
-    public function addEvent(Event $event): self
-    {
-        if (!$this->events->contains($event)) {
-            $this->events->add($event);
-            $event->setCreator($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEvent(Event $event): self
-    {
-        if ($this->events->removeElement($event)) {
-            // set the owning side to null (unless already changed)
-            if ($event->getCreator() === $this) {
-                $event->setCreator(null);
-            }
-        }
-
-        return $this;
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
     /**
-     * @return Collection<int, Participant>
+     * Get the value of name
+     */ 
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set the value of name
+     *
+     * @return  self
+     */ 
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+     /**
+     * @return mixed
      */
-    public function getParticipants(): Collection
+    public function getResetToken()
     {
-        return $this->participants;
+        return $this->reset_token;
     }
 
-    public function addParticipant(Participant $participant): self
+    /**
+     * @param mixed $reset_token
+     */
+    public function setResetToken($reset_token): void
     {
-        if (!$this->participants->contains($participant)) {
-            $this->participants->add($participant);
-            $participant->setUser($this);
-        }
-
-        return $this;
+        $this->reset_token = $reset_token;
     }
-
-    public function removeParticipant(Participant $participant): self
-    {
-        if ($this->participants->removeElement($participant)) {
-            // set the owning side to null (unless already changed)
-            if ($participant->getUser() === $this) {
-                $participant->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
 }
-?>
