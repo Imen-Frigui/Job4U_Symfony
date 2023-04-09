@@ -1,11 +1,63 @@
-{% block content %}
-	<h1>Edit Event</h1>
+{% extends 'base1.html.twig' %}
 
-	{{ form_start(form) }}
-	{{ form_row(form.title) }}
-	{{ form_row(form.description) }}
-	{{ form_row(form.date) }}
-	{{ form_row(form.location) }}
-	<button type="submit" class="btn btn-primary">Update Event</button>
-	{{ form_end(form) }}
+{% block body %}
+	<div style="display: flex;align-items: center;justify-content: center;margin-top: 10px; padding: 5px;">
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">Change current Event</h5>
+
+				<!-- General Form Elements -->
+				{{ form_start(form) }}
+				<div class="row mb-3">
+					<label for="inputText" style="width: 80%;" class="col-sm-2 col-form-label">Title</label>
+					<div class="col-sm-10">
+						{{ form_widget(form.title,{'attr':{'class':'form-control'}}) }}
+					</div>
+				</div>
+
+				<div class="row mb-3">
+					<label for="inputDate" style="width: 80%;" class="col-sm-2 col-form-label">Date and Time</label>
+					<div class="col-sm-10">
+						{{ form_widget(form.date,{'attr':{'class':'form-control'}}) }}
+					</div>
+				</div>
+
+				<div class="row mb-3">
+					<label for="inputPassword" style="width: 80%;" class="col-sm-2 col-form-label">Description</label>
+					<div class="col-sm-10">
+						{{form_widget(form.description,{'attr':{'class':'form-control'}}) }}
+					</div>
+				</div>
+				<div class="row mb-3">
+					<label for="inputText" style="width: 80%;" class="col-sm-2 col-form-label">Location</label>
+					<div class="col-sm-10">
+						{{ form_widget(form.location,{'attr':{'class':'form-control'}}) }}
+					</div>
+				</div>
+
+				<div class="row mb-3">
+					<label style="width: 80%;" class="col-sm-2 col-form-label">Select</label>
+					<div class="col-sm-10">
+						<select class="form-select" aria-label="Default select example">
+							<option selected="">Location</option>
+							<option value="1">Tunis</option>
+							<option value="2">BenArous</option>
+							<option value="3">Three</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="row mb-3">
+					<div class="col-sm-10">
+						<button type="submit" class="btn btn-primary">Modify Event</button>
+					</div>
+				</div>
+
+				{{ form_end(form) }}
+				<!-- End General Form Elements -->
+
+			</div>
+		</div>
+
+	</div>
 {% endblock %}
