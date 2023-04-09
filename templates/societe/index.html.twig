@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SocieteController!{% endblock %}
+{% block title %}Hello PostulationController!{% endblock %}
 
 {% block body %}
 <style>
@@ -9,12 +9,33 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<table border='1'>
+<thead>
+<th>adresse </th>
+<th> email</th> 
+<th>tel </th>
+<th>domaine </th>
+<th>sosImage </th>
+</thead>
+</thead>
+<tbody>
+    {%for sos in s %}
+<tr>
+<td >{{sos.adresse}}</td>
+<td >{{sos.email}}</td>
+<td >{{sos.tel}}</td>
+<td >{{sos.domaine}}</td>
+<td >{{sos.sosImage}}</td>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/Pidev/src/Controller/SocieteController.php'|file_link(0) }}">src/Controller/SocieteController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/Pidev/templates/societe/index.html.twig'|file_link(0) }}">templates/societe/index.html.twig</a></code></li>
-    </ul>
+<td>
+<a href= "{{path('societe_update' ,{'id':sos.id})}}">Update </a>
+</td>
+<td>
+<a href= "{{path('remove_sos' ,{'id':sos.id})}}">Remove </a>
+</td>
+</tr>
+{%endfor%}
+</tbody>
+</table>
 </div>
 {% endblock %}

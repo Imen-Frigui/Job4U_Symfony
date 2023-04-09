@@ -14,14 +14,19 @@ class Postulation
     private ?int $idPos=null;
  
     #[ORM\Column(length:255)]
+    #[Assert\Length(min : 5, minMessage :' Entrer un date valid')]
     private ?string $date=null;
 
 
+
     #[ORM\Column(length:255)]
+    #[Assert\NotBlank(message:"Simple User is required")]
     private ?string $simpleUser=null;
 
    
     #[ORM\Column(length:50)]
+    #[Assert\NotBlank(message:"Email is required")]
+    #[Assert\Email(message:"The email '{{ value }}' is not a valid email ")]
     private ?string $email=null;
 
     public function getIdPos(): ?int
