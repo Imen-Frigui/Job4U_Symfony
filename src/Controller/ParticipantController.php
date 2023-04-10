@@ -114,22 +114,38 @@ public function MyParticipations(): Response
         'participations' => $participations,
     ]);
 }
-#[Route('/ban/participant/{id}', name: 'ban_participant')]
-public function banParticipant(int $id, ParticipantRepository $participantRepository): Response
-{
-    $participant = $participantRepository->find($id);
+#[Route('/ban/participant/{participantId}', name: 'ban_participant')]
+    public function banParticipant(int $participantId, ParticipantRepository $participantRepository): Response
+    {
+        $participant = $participantRepository->find($participantId);
 
-    if (!$participant) {
-        throw $this->createNotFoundException('Participant not found.');
+        if (!$participant) {
+            throw $this->createNotFoundException('Participant not found.');
+        }
+
+        $participant->setStatus(Participant::STATUS_BANNED);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->flush();
+
+        return $this->redirectToRoute('event_participants', ['id' => $participant->getEvent()->getId()]);
     }
-
-    $participant->setStatus(Participant::STATUS_BANNED);
-
-    $entityManager = $this->getDoctrine()->getManager();
-    $entityManager->flush();
-
-    return $this->redirectToRoute('participants_list', ['eventId' => $participant->getEvent()->getId()]);
-}
-
+    #[Route('/accept/participant/{participantId}', name: 'accept_participant')]
+    public function acceptParticipant(int $participantId, ParticipantRepository $participantRepository): Response
+    {
+        $participant = $participantRepository->find($participantId);
+    
+        if (!$participant) {
+            throw $this->createNotFoundException('Participant not found.');
+        }
+    
+        $participant->setStatus(Participant::STATUS_ACCEPTED);
+    
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->flush();
+    
+        return $this->redirectToRoute('event_participants', ['id' => $participant->getEvent()->getId()]);
+    }
+    
 
 }

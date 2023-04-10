@@ -24,6 +24,9 @@
 										<th scope="col" data-sortable="" style="width: 12.30311%;">
 											<a href="#" class="dataTable-sorter">Last Name</a>
 										</th>
+										<th scope="col" data-sortable="" style="width: 12.30311%;">
+											<a href="#" class="dataTable-sorter">Status</a>
+										</th>
 										<th scope="col" data-sortable="" style="width: 30.2828%;">
 											<a href="#" class="dataTable-sorter">Action</a>
 										</th>
@@ -37,11 +40,26 @@
 											<th scope="row">{{i}}</th>
 											<td>{{ participant.getUser().getNom()}}</td>
 											<td>{{ participant.getUser().getPrenom()}}</td>
+											<td>{{ participant.status}}</td>
 											<td>
-												<a href="{{ path('participant_delete', {'participantId': participant.id, 'eventId':event.id }) }}">
-													<button type="button" class="btn btn-danger">Ban Particper</button>
-												</a>
+												{% if participant.status == 'pending' %}
+													<a href="{{ path('ban_participant', {'participantId': participant.id, 'eventId': event.id }) }}">
+														<button type="button" class="btn btn-danger">Ban Participant</button>
+													</a>
+													<a href="{{ path('accept_participant', {'participantId': participant.id, 'eventId': event.id }) }}">
+														<button type="button" class="btn btn-success">Accept Participant</button>
+													</a>
+												{% elseif participant.status == 'banned' %}
+													<a href="{{ path('accept_participant', {'participantId': participant.id, 'eventId': event.id }) }}">
+														<button type="button" class="btn btn-success">Accept Participant</button>
+													</a>
+												{% elseif participant.status == 'accepted' %}
+													<a href="{{ path('ban_participant', {'participantId': participant.id, 'eventId': event.id }) }}">
+														<button type="button" class="btn btn-danger">Ban Participant</button>
+													</a>
+												{% endif %}
 											</td>
+
 										</tr>
 									{% endfor %}
 								</tbody>
