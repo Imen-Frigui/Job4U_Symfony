@@ -6,6 +6,7 @@ use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
@@ -17,15 +18,25 @@ class Event
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Title field is empty")]
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Description field is empty")]
+    #[Assert\Length(
+        min: 7,
+        max: 100,
+        minMessage: "Description must be at least {{ min }} characters long",
+        maxMessage: "Description cannot be longer than {{ max }} characters",
+    )]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotBlank(message: "Date of the event not assigned")]
     private ?\DateTimeInterface $date = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Location field is empty")]
     private ?string $location = null;
 
     #[ORM\ManyToOne(inversedBy: 'events')]
@@ -134,5 +145,4 @@ class Event
 
         return $this;
     }
-
 }
