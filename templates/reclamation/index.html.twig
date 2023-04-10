@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Reclamation index{% endblock %}
+{% block title %}Liste des Reclamation{% endblock %}
 
 {% block body %}
-    <h1>Reclamation index</h1>
+    <h1>Liste des Reclamations </h1>
 
     <table class="table">
         <thead>
@@ -23,17 +23,21 @@
                 <td>{{ reclamation.type }}</td>
                 <td>{{ reclamation.statut }}</td>
                 <td>
-                    <a href="{{ path('app_reclamation_show', {'idReclamation': reclamation.idReclamation}) }}"><button class="btn btn-secondary">show</button></a>
-                    <a href="{{ path('app_reclamation_edit', {'idReclamation': reclamation.idReclamation}) }}"><button class="btn btn-warning">edit</button></a>
+                <div class="container">
+                    <a href="{{ path('app_reclamation_show', {'idReclamation': reclamation.idReclamation}) }}"><button class="btn btn-secondary">Details</button></a>
+                    <a href="{{ path('app_reclamation_edit', {'idReclamation': reclamation.idReclamation}) }}"><button class="btn btn-warning">Modifier</button></a>
+                
+                    {{ include('reclamation/_delete_form.html.twig') }}
+                    </div>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">pas de données</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_reclamation_new') }}"><button class="btn btn-primary">Create new</button></a>
+    <a href="{{ path('app_reclamation_new') }}"><button class="btn btn-primary">Créer</button></a>
 {% endblock %}

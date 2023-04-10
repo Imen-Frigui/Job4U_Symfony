@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Reponse index{% endblock %}
+{% block title %}Liste des Reponse{% endblock %}
 
 {% block body %}
-    <h1>Reponse index</h1>
+    <h1>Liste des Reponses</h1>
 
     <table class="table">
         <thead>
@@ -23,8 +23,8 @@
                 <td>{{ reponse.messageRep }}</td>
                 <td>{{ reponse.dateRep|date('d-m-Y')  }}</td>
                 <td>
-                    <a href="{{ path('app_reponse_show', {'idReponse': reponse.idReponse}) }}"><button class="btn btn-secondary">show</button></a>
-                    <a href="{{ path('app_reponse_edit', {'idReponse': reponse.idReponse}) }}"><button class="btn btn-warning">edit</button></a>
+                    <a href="{{ path('app_reponse_show', {'idReponse': reponse.idReponse}) }}"><button class="btn btn-secondary">Details</button></a>
+                    <a href="{{ path('app_reponse_edit', {'idReponse': reponse.idReponse}) }}"><button class="btn btn-warning">Modifier</button></a>
                 </td>
             </tr>
         {% else %}
@@ -35,5 +35,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_reponse_new') }}"><button class="btn btn-primary">Create new</button></a>
+    <a href="{{ path('app_reponse_new') }}"><button class="btn btn-primary">Créer</button></a>
 {% endblock %}

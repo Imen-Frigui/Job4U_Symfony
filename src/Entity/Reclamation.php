@@ -27,6 +27,22 @@ class Reclamation
      *
      * @ORM\Column(name="message", type="string", length=255, options={"default"="NULL"})
      * @Assert\NotBlank
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 50,
+     *      minMessage = "Votre message doit avoir au minimum 5 caractéres",
+     *      maxMessage = "Votre message doit avoir au maximum 50 caractéres"
+     * )
+     * @Assert\Regex(
+     *     pattern="/^[A-Z]/",
+     *     match=true,
+     *     message="Votre message doit commencer par une lettre majuscule"
+     * )
+     * @Assert\Regex(
+     *     pattern = "/[#?!@$%^&*-]+/i",
+     *     match=false,
+     *     message="Votre message ne doit pas contenir un caractére spéciale" 
+     * )
      */
     private $message = '';
 

@@ -31,8 +31,18 @@ class Reponse
      * @Assert\Length(
      *      min = 5,
      *      max = 50,
-     *      minMessage = "Your message must be at least {{ limit }} characters long",
-     *      maxMessage = "Your message cannot be longer than {{ limit }} characters"
+     *      minMessage = "Votre message doit avoir au minimum 5 caractéres",
+     *      maxMessage = "Votre message doit avoir au maximum 50 caractéres"
+     * )
+     * @Assert\Regex(
+     *     pattern="/^[A-Z]/",
+     *     match=true,
+     *     message="Votre message doit commencer par une lettre majuscule"
+     * )
+     * @Assert\Regex(
+     *     pattern = "/[#?!@$%^&*-]+/i",
+     *     match=false,
+     *     message="Votre message ne doit pas contenir un caractére spéciale" 
      * )
      */
     private $messageRep;
