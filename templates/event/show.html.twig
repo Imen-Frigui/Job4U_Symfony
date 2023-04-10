@@ -22,143 +22,6 @@
 				</div>
 			{% endfor %}
 			<div class="row">
-
-				<div class="col-lg-8 entries">
-
-					<article class="entry entry-single">
-
-						<div class="entry-img">
-							<img src="{{('asset1/img/blog/blog-1.jpg')}}" alt="" class="img-fluid">
-						</div>
-
-						<h2 class="entry-title">
-							<a href="{{ path('event_show', {'id': event.id}) }}">{{event.title}}</a>
-						</h2>
-
-						<div class="entry-meta">
-							<ul>
-								<li class="d-flex align-items-center">
-									<i class="bi bi-person"></i>
-									<a href="{{ path('event_show', {'id': event.id}) }}">{{event.getCreator().getNom()}}{{" "}}{{event.getCreator().getPrenom()}}</a>
-								</li>
-								<li class="d-flex align-items-center">
-									<i class="bi bi-clock"></i>
-									<a href="{{ path('event_show', {'id': event.id}) }}">
-										<time datetime="2020-01-01">{{ event.date|date('d-m-Y H:i:s') }}</time>
-									</a>
-								</li>
-								<li class="d-flex align-items-center">
-									<i class="bi bi-geo-alt"></i>
-									<a href="{{ path('event_show', {'id': event.id}) }}">{{ event.location }}</a>
-								</li>
-							</ul>
-						</div>
-
-						<div class="entry-content">
-							<p>
-								{{event.description}}
-							</p>
-							<p>
-								<img src="{{('asset1/img/blog/blog-inside-post.jpg')}}" class="img-fluid" alt="">
-							</p>
-						</div>
-
-						<div class="entry-footer">
-							<div class="float-right">
-								<a href="{{ path('participant_add', {'eventId': event.id}) }}">
-									<button type="submit" class="btn btn-primary" style="margin-left: 650px;">Participate</button>
-								</a>
-							</div>
-							<i class="bi bi-folder"></i>
-							<ul class="cats">
-								<li>
-									<a href="#">Category</a>
-								</li>
-							</ul>
-
-							<i class="bi bi-tags"></i>
-							<ul class="tags">
-								<li>
-									<a href="#">Creative</a>
-								</li>
-								<li>
-									<a href="#">Tips</a>
-								</li>
-								<li>
-									<a href="#">Marketing</a>
-								</li>
-							</ul>
-						</div>
-
-					</article>
-					<!-- End blog entry -->
-
-					<div class="blog-author d-flex align-items-center">
-						<img src="{{('asset1/img/blog/blog-author.jpg')}}" class="rounded-circle float-left" alt="">
-						<div>
-							<h4>{{event.getCreator().getNom()}}{{" "}}{{event.getCreator().getPrenom()}}</h4>
-							<div class="social-links">
-								<a href="https://twitters.com/#">
-									<i class="bi bi-twitter"></i>
-								</a>
-								<a href="https://facebook.com/#">
-									<i class="bi bi-facebook"></i>
-								</a>
-								<a href="https://instagram.com/#">
-									<i class="biu bi-instagram"></i>
-								</a>
-							</div>
-							<p>
-								Itaque quidem optio quia voluptatibus dolorem dolor. Modi eum sed possimus accusantium. Quas repellat voluptatem officia numquam sint aspernatur voluptas. Esse et accusantium ut unde voluptas.
-							</p>
-						</div>
-					</div>
-					<!-- End blog author bio -->
-					<div class="card">
-						<div class="card-body">
-							<h5 class="card-title">Table with stripped rows</h5>
-
-							<!-- Table with stripped rows -->
-							<table class="table table-striped">
-								<thead>
-									<tr>
-										<th scope="col">#</th>
-										<th scope="col">First Name</th>
-										<th scope="col">Last Name</th>
-									</tr>
-								</thead>
-								{% if event.participants|length > 0 %}
-									{% set i=1 %}
-									{% for participant in event.participants %}
-										<tbody>
-											{% set i=i+1 %}
-											<tr>
-												<th scope="row">{{i}}</th>
-												<td>{{participant.getUser().getNom()}}</td>
-												<td>{{participant.getUser().getPrenom()}}</td>
-											</tr>
-										</tbody>
-									{% endfor %}
-								{% else %}
-									<tbody>
-										<tr>
-											<th scope="row">{{1}}</th>
-											<td>No Participants Yet Be the First To Participate!</td>
-											<td></td>
-										</tr>
-									</tbody>
-								</table>
-
-							{% endif %}
-							<!-- End Table with stripped rows -->
-
-						</div>
-					</div>
-					<!-- End blog comments -->
-
-				</div>
-				<!-- End blog entries list -->
-
 				<div class="col-lg-4">
 
 					<div class="sidebar">
@@ -256,43 +119,149 @@
 				</div>
 				<!-- End blog sidebar -->
 
+				<div class="col-lg-8 entries">
+					<a class="btn btn-secondary" style=" margin-top: 10px;margin-bottom: 10px;" href="{{ path('app_event') }}">Back To Events</a>
+
+					<article class="entry entry-single">
+
+						<div class="entry-img">
+							<img src="{{('asset1/img/blog/blog-1.jpg')}}" alt="" class="img-fluid">
+						</div>
+
+						<h2 class="entry-title">
+							<a href="{{ path('event_show', {'id': event.id}) }}">{{event.title}}</a>
+						</h2>
+
+						<div class="entry-meta">
+							<ul>
+								<li class="d-flex align-items-center">
+									<i class="bi bi-person"></i>
+									<a href="{{ path('event_show', {'id': event.id}) }}">{{event.getCreator().getNom()}}{{" "}}{{event.getCreator().getPrenom()}}</a>
+								</li>
+								<li class="d-flex align-items-center">
+									<i class="bi bi-clock"></i>
+									<a href="{{ path('event_show', {'id': event.id}) }}">
+										<time datetime="2020-01-01">{{ event.date|date('d-m-Y H:i:s') }}</time>
+									</a>
+								</li>
+								<li class="d-flex align-items-center">
+									<i class="bi bi-geo-alt"></i>
+									<a href="{{ path('event_show', {'id': event.id}) }}">{{ event.location }}</a>
+								</li>
+							</ul>
+						</div>
+
+						<div class="entry-content">
+							<p>
+								{{event.description}}
+							</p>
+							<p>
+								<img src="{{('asset1/img/blog/blog-inside-post.jpg')}}" class="img-fluid" alt="">
+							</p>
+						</div>
+
+						<div class="entry-footer">
+							<div class="float-right">
+								<a href="{{ path('participant_add', {'eventId': event.id}) }}">
+									<button type="submit" class="btn btn-primary" style="margin-left: 650px;">Participate</button>
+								</a>
+							</div>
+							<i class="bi bi-folder"></i>
+							<ul class="cats">
+								<li>
+									<a href="#">Category</a>
+								</li>
+							</ul>
+
+							<i class="bi bi-tags"></i>
+							<ul class="tags">
+								<li>
+									<a href="#">Creative</a>
+								</li>
+								<li>
+									<a href="#">Tips</a>
+								</li>
+								<li>
+									<a href="#">Marketing</a>
+								</li>
+							</ul>
+						</div>
+
+					</article>
+					<!-- End blog entry -->
+
+					<div class="blog-author d-flex align-items-center">
+						<img src="{{('asset1/img/blog/blog-author.jpg')}}" class="rounded-circle float-left" alt="">
+						<div>
+							<h4>{{event.getCreator().getNom()}}{{" "}}{{event.getCreator().getPrenom()}}</h4>
+							<div class="social-links">
+								<a href="https://twitters.com/#">
+									<i class="bi bi-twitter"></i>
+								</a>
+								<a href="https://facebook.com/#">
+									<i class="bi bi-facebook"></i>
+								</a>
+								<a href="https://instagram.com/#">
+									<i class="biu bi-instagram"></i>
+								</a>
+							</div>
+							<p>
+								Itaque quidem optio quia voluptatibus dolorem dolor. Modi eum sed possimus accusantium. Quas repellat voluptatem officia numquam sint aspernatur voluptas. Esse et accusantium ut unde voluptas.
+							</p>
+						</div>
+					</div>
+					<!-- End blog author bio -->
+
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">Table with stripped rows</h5>
+							<!-- Table with stripped rows -->
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">First Name</th>
+										<th scope="col">Last Name</th>
+									</tr>
+								</thead>
+								{% if event.participants|length > 0 %}
+									{% set i=1 %}
+									{% for participant in event.participants %}
+										<tbody>
+											{% set i=i+1 %}
+											<tr>
+												<th scope="row">{{i}}</th>
+												<td>{{participant.getUser().getNom()}}</td>
+												<td>{{participant.getUser().getPrenom()}}</td>
+											</tr>
+										</tbody>
+									{% endfor %}
+								{% else %}
+									<tbody>
+										<tr>
+											<th scope="row">{{1}}</th>
+											<td>No Participants Yet Be the First To Participate!</td>
+											<td></td>
+										</tr>
+									</tbody>
+								</table>
+
+							{% endif %}
+							<!-- End Table with stripped rows -->
+
+						</div>
+					</div>
+					<!-- End blog comments -->
+
+				</div>
+				<!-- End blog entries list -->
+
+
 			</div>
+
 
 		</div>
 	</section>
-	<h1>{{ event.title }}</h1>
-	<p>{{ event.description }}</p>
-	<p>Date:
-		{{ event.date|date('m/d/Y') }}</p>
-	<p>Location:
-		{{ event.location }}</p>
 
-	{% if event.getCreator() %}
-		<p>Creator:
-			{{ event.getCreator().getNom() }}{{" "}}
-			{{ event.getCreator().getPrenom() }}</p>
-	{% endif %}
-
-	{% if event.getCreator().getId()==1 %}
-		<a class="btn btn-primary" href="{{ path('event_edit', {'id': event.id}) }}">Edit</a>
-		<a class="btn btn-danger" href="{{ path('event_delete', {'id': event.id}) }}" onclick="return confirm('Are you sure you want to delete this event?')">Delete</a>
-	{% endif %}
-	<a href="{{ path('participant_add', {'eventId': event.id}) }}">Participate</a>
-	<h2>Participants</h2>
-	{% if event.participants|length > 0 %}
-		<ul>
-			{% for participant in event.participants %}
-				<li>{{ event.getCreator().getNom() }}{{" "}}
-					{{ event.getCreator().getPrenom() }}</li>
-			{% endfor %}
-		</ul>
-	{% else %}
-		<p>No participants yet.</p>
-	{% endif %}
-	<div class="alert alert-warning alert-dismissible fade show" role="alert">
-		<i class="bi bi-exclamation-triangle me-1"></i>
-		No Participants Yet Be the First To Participate!
-		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-	</div>
-	<a class="btn btn-primary" href="{{ path('app_event') }}">Back to events</a>
 {% endblock %}
+{% block footer %}{% endblock %}
