@@ -73,27 +73,28 @@ class ParticipantController extends AbstractController
         return $this->redirectToRoute('event_show', ['id' => $event->getId()]);
     }
 
-    #[Route('/my-events', name: 'my_events')]
-    public function myEvents(): Response
+    #[Route('/event/{eventId}/participant/withdraw', name: 'participant_withdraw')]
+    public function withdraw(Event $eventId): Response
     {
-        $participantId = 2;
+        $em = $this->getDoctrine()->getManager();
+    
+        $participant = $em->getRepository(Participant::class)->findOneBy(['user' => 2, 'event' => $eventId]);
 
-        $entityManager = $this->getDoctrine()->getManager();
-        
-        $events = $entityManager->createQueryBuilder()
-            ->select('e')
-            ->from('App\Entity\Event', 'e')
-            ->join('e.participants', 'p')
-            ->where('p.user = :participantId')
-            ->setParameter('participantId', $participantId)
-            ->getQuery()
-            ->getResult();
-        
-
-        return $this->render('participant/my_events.html.twig', [
-            'events' => $events,
-        ]);
+    
+        // Check if the current user is the participant of the event
+        if ($participant->getUser()->getId() !== 2) {
+            $this->addFlash('error', 'You are not authorized to withdraw from this event.');
+            return $this->redirectToRoute('my_participations');
+        }
+    
+        // Remove the participant from the database
+        $em->remove($participant);
+        $em->flush();
+    
+        // Redirect back to the event show page
+        return $this->redirectToRoute('my_participations');
     }
+    
     #[Route('/my-participations', name: 'my_participations')]
 public function MyParticipations(): Response
 {
@@ -108,7 +109,7 @@ public function MyParticipations(): Response
         ->getQuery()
         ->getResult();
 
-    return $this->render('my_participations.html.twig', [
+    return $this->render('participant/my_participations.html.twig', [
         'participations' => $participations,
     ]);
 }
