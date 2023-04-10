@@ -25,7 +25,7 @@
 									<li class="d-flex align-items-center">
 										<i class="bi bi-clock"></i>
 										<a href="{{ path('event_show', {'id': e.id}) }}">
-											<time datetime="2020-01-01">{{ e.date|date('F j, Y') }}</time>
+											<time datetime="2020-01-01">{{ e.date|date('d-m-Y H:i:s') }}</time>
 										</a>
 									</li>
 									<li class="d-flex align-items-center">

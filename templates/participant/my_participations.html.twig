@@ -35,50 +35,57 @@
 									</tr>
 								</thead>
 								<tbody>
-									{% set i=0 %}
-									{% for participation in participations %}
-										{% set i=i+1 %}
+									{% if participations is empty %}
 										<tr>
-											<th scope="row">{{i}}</th>
-											<td>{{ participation.event.title }}</td>
-											<td>{{ participation.event.getCreator().getNom()}}{{" "}}{{ participation.event.getCreator().getPrenom()}}</td>
-											<td>{{ participation.event.date|date('Y-m-d') }}</td>
-											<td>{{ participation.event.location }}</td>
-											<td>
-												<a href="{{ path('participant_withdraw', {'eventId': participation.event.id}) }}">
-													<button type="button" class="btn btn-danger">Withdraw Participation</button>
-												</a>
-												<a href="{{ path('event_show', {'id': participation.event.id}) }}">
-													<button type="button" class="btn btn-info">View Event</button>
-												</a>
-											</td>
-										</tr>
-									{% endfor %}
+											<th scope="row">{{1}}</th>
+											<td>No events Found !</td>
+											<td>{{" "}}</td>
+										{% else %}
+											{% set i=0 %}
+											{% for participation in participations %}
+												{% set i=i+1 %}
+												<tr>
+													<th scope="row">{{i}}</th>
+													<td>{{ participation.event.title }}</td>
+													<td>{{ participation.event.getCreator().getNom()}}{{" "}}{{ participation.event.getCreator().getPrenom()}}</td>
+													<td>{{ participation.event.date|date('d-m-Y H:i:s') }}</td>
+													<td>{{ participation.event.location }}</td>
+													<td>
+														<a href="{{ path('participant_withdraw', {'eventId': participation.event.id}) }}">
+															<button type="button" class="btn btn-danger">Withdraw Participation</button>
+														</a>
+														<a href="{{ path('event_show', {'id': participation.event.id}) }}">
+															<button type="button" class="btn btn-info">View Event</button>
+														</a>
+													</td>
+												</tr>
+											{% endfor %}
+										{% endif %}
+									</tbody>
 								</tbody>
-							</tbody>
-						</table>
+							</table>
+						</div>
+						<div class="dataTable-bottom">
+							<nav class="dataTable-pagination">
+								<ul class="dataTable-pagination-list"></ul>
+							</nav>
+						</div>
 					</div>
-					<div class="dataTable-bottom">
-						<nav class="dataTable-pagination">
-							<ul class="dataTable-pagination-list"></ul>
-						</nav>
-					</div>
+					<!-- End Table with stripped rows -->
+
 				</div>
-				<!-- End Table with stripped rows -->
-
 			</div>
+
 		</div>
-
 	</div>
-</div>
-<h1>My Participations</h1>
 
-{% if participations is empty %}
-	<p>No events found.</p>
-{% else %}
-	<ul>
-		{% for participation in participations %}
-			<li>{{ participation.event.title }}</li>
-		{% endfor %}
-	</ul>
-{% endif %}{% endblock %}
+	{% if participations is empty %}
+		<p>No events found.</p>
+	{% else %}
+		<ul>
+			{% for participation in participations %}
+				<li>{{ participation.event.title }}</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+{% endblock %}

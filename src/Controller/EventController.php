@@ -79,11 +79,6 @@ class EventController extends AbstractController
     #[Route('/event/edit/{id}', name: 'event_edit')]
     public function edit(Request $request, Event $event): Response
     {
-    // Check if the logged-in user is the creator of the event
-    if ($event->getCreator() !== 1) {
-        $this->addFlash('error', 'You are not authorized to edit this event.');
-        return $this->redirectToRoute('app_event');
-    }
     $id = $request->get('id');           
     $entityManager = $this->getDoctrine()->getManager();
     $event = $entityManager->getRepository(Event::class)->find($id);
@@ -96,7 +91,7 @@ class EventController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->flush();
 
-        return $this->redirectToRoute('app_event');
+        return $this->redirectToRoute('my_events');
     }
     return $this->render('event/edit.html.twig',['form'=>$form->createView()]);
 
@@ -110,5 +105,31 @@ public function show(Event $event): Response
         'event' => $event,
     ]);
 }
+
+    #[Route('/my-events', name: 'my_events')]
+    public function myEvents(): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+      //  $user = $em->getRepository(User::class)->find(1);
+        $events = $em->getRepository(Event::class)->findBy(['creator' => 1]);
+        return $this->render('event/my_events.html.twig', [
+            'events' => $events,
+        ]);
+    }
+
+    #[Route('/event/{id}/participants', name: 'event_participants')]
+public function participants(Event $event): Response
+{
+    // Get the list of participants for the event
+    $participants = $event->getParticipants();
+    
+    // Render the participants list view
+    return $this->render('event/participants.html.twig', [
+        'event' => $event,
+        'participants' => $participants,
+    ]);
+}
+
+
 
 }

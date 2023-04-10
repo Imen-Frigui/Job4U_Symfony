@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Event;
 use App\Entity\Participant;
 use App\Entity\User;
+use App\Repository\ParticipantRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -113,7 +114,22 @@ public function MyParticipations(): Response
         'participations' => $participations,
     ]);
 }
+#[Route('/ban/participant/{id}', name: 'ban_participant')]
+public function banParticipant(int $id, ParticipantRepository $participantRepository): Response
+{
+    $participant = $participantRepository->find($id);
 
+    if (!$participant) {
+        throw $this->createNotFoundException('Participant not found.');
+    }
+
+    $participant->setStatus(Participant::STATUS_BANNED);
+
+    $entityManager = $this->getDoctrine()->getManager();
+    $entityManager->flush();
+
+    return $this->redirectToRoute('participants_list', ['eventId' => $participant->getEvent()->getId()]);
+}
 
 
 }

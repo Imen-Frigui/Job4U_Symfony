@@ -44,7 +44,7 @@
 								<li class="d-flex align-items-center">
 									<i class="bi bi-clock"></i>
 									<a href="{{ path('event_show', {'id': event.id}) }}">
-										<time datetime="2020-01-01">{{ event.date|date('F j, Y') }}</time>
+										<time datetime="2020-01-01">{{ event.date|date('d-m-Y H:i:s') }}</time>
 									</a>
 								</li>
 								<li class="d-flex align-items-center">
@@ -139,12 +139,16 @@
 											</tr>
 										</tbody>
 									{% endfor %}
+								{% else %}
+									<tbody>
+										<tr>
+											<th scope="row">{{1}}</th>
+											<td>No Participants Yet Be the First To Participate!</td>
+											<td></td>
+										</tr>
+									</tbody>
 								</table>
-							{% else %}
-								<div class="alert alert-warning alert-dismissible fade show" role="alert">
-									<i class="bi bi-exclamation-triangle me-1"></i>
-									No Participants Yet Be the First To Participate!
-								</div>
+
 							{% endif %}
 							<!-- End Table with stripped rows -->
 
