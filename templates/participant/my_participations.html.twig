@@ -1,0 +1,13 @@
+{% block content %}
+	<h1>My Participations</h1>
+
+	{% if participations is empty %}
+		<p>No events found.</p>
+	{% else %}
+		<ul>
+			{% for participation in participations %}
+				<li>{{ participation.event.title }}</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+{% endblock %}

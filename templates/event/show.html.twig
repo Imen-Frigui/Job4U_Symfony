@@ -1,8 +1,261 @@
+{% extends 'base1.html.twig' %}
 {% block title %}
 	{{ event.title }}
 {% endblock %}
 
 {% block body %}
+	<section id="blog" class="blog">
+		<div class="container aos-init aos-animate" data-aos="fade-up">
+			{% for message in app.flashes('success') %}
+				<div class="alert alert-success alert-dismissible fade show" style="display: flex;align-items: center;justify-content: center;margin-top: 10px; padding: 5px;" role=" alert">
+					<i class="bi bi-check-circle me-1"></i>
+					{{ message }}
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+			{% endfor %}
+
+			{% for message in app.flashes('warning') %}
+				<div class="alert alert-warning alert-dismissible fade show" style="justify-content: center;margin-top: 10px;" role="alert">
+					<i class="bi bi-exclamation-triangle me-1"></i>
+					{{ message }}
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+			{% endfor %}
+			<div class="row">
+
+				<div class="col-lg-8 entries">
+
+					<article class="entry entry-single">
+
+						<div class="entry-img">
+							<img src="{{('asset1/img/blog/blog-1.jpg')}}" alt="" class="img-fluid">
+						</div>
+
+						<h2 class="entry-title">
+							<a href="{{ path('event_show', {'id': event.id}) }}">{{event.title}}</a>
+						</h2>
+
+						<div class="entry-meta">
+							<ul>
+								<li class="d-flex align-items-center">
+									<i class="bi bi-person"></i>
+									<a href="{{ path('event_show', {'id': event.id}) }}">{{event.getCreator().getNom()}}{{" "}}{{event.getCreator().getPrenom()}}</a>
+								</li>
+								<li class="d-flex align-items-center">
+									<i class="bi bi-clock"></i>
+									<a href="{{ path('event_show', {'id': event.id}) }}">
+										<time datetime="2020-01-01">{{ event.date|date('F j, Y') }}</time>
+									</a>
+								</li>
+								<li class="d-flex align-items-center">
+									<i class="bi bi-geo-alt"></i>
+									<a href="{{ path('event_show', {'id': event.id}) }}">{{ event.location }}</a>
+								</li>
+							</ul>
+						</div>
+
+						<div class="entry-content">
+							<p>
+								{{event.description}}
+							</p>
+							<p>
+								<img src="{{('asset1/img/blog/blog-inside-post.jpg')}}" class="img-fluid" alt="">
+							</p>
+						</div>
+
+						<div class="entry-footer">
+							<div class="float-right">
+								<a href="{{ path('participant_add', {'eventId': event.id}) }}">
+									<button type="submit" class="btn btn-primary" style="margin-left: 650px;">Participate</button>
+								</a>
+							</div>
+							<i class="bi bi-folder"></i>
+							<ul class="cats">
+								<li>
+									<a href="#">Category</a>
+								</li>
+							</ul>
+
+							<i class="bi bi-tags"></i>
+							<ul class="tags">
+								<li>
+									<a href="#">Creative</a>
+								</li>
+								<li>
+									<a href="#">Tips</a>
+								</li>
+								<li>
+									<a href="#">Marketing</a>
+								</li>
+							</ul>
+						</div>
+
+					</article>
+					<!-- End blog entry -->
+
+					<div class="blog-author d-flex align-items-center">
+						<img src="{{('asset1/img/blog/blog-author.jpg')}}" class="rounded-circle float-left" alt="">
+						<div>
+							<h4>{{event.getCreator().getNom()}}{{" "}}{{event.getCreator().getPrenom()}}</h4>
+							<div class="social-links">
+								<a href="https://twitters.com/#">
+									<i class="bi bi-twitter"></i>
+								</a>
+								<a href="https://facebook.com/#">
+									<i class="bi bi-facebook"></i>
+								</a>
+								<a href="https://instagram.com/#">
+									<i class="biu bi-instagram"></i>
+								</a>
+							</div>
+							<p>
+								Itaque quidem optio quia voluptatibus dolorem dolor. Modi eum sed possimus accusantium. Quas repellat voluptatem officia numquam sint aspernatur voluptas. Esse et accusantium ut unde voluptas.
+							</p>
+						</div>
+					</div>
+					<!-- End blog author bio -->
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">Table with stripped rows</h5>
+
+							<!-- Table with stripped rows -->
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">First Name</th>
+										<th scope="col">Last Name</th>
+									</tr>
+								</thead>
+								{% if event.participants|length > 0 %}
+									{% set i=1 %}
+									{% for participant in event.participants %}
+										<tbody>
+											{% set i=i+1 %}
+											<tr>
+												<th scope="row">{{i}}</th>
+												<td>{{participant.getUser().getNom()}}</td>
+												<td>{{participant.getUser().getPrenom()}}</td>
+											</tr>
+										</tbody>
+									{% endfor %}
+								</table>
+							{% else %}
+								<div class="alert alert-warning alert-dismissible fade show" role="alert">
+									<i class="bi bi-exclamation-triangle me-1"></i>
+									No Participants Yet Be the First To Participate!
+								</div>
+							{% endif %}
+							<!-- End Table with stripped rows -->
+
+						</div>
+					</div>
+					<!-- End blog comments -->
+
+				</div>
+				<!-- End blog entries list -->
+
+				<div class="col-lg-4">
+
+					<div class="sidebar">
+
+						<h3 class="sidebar-title">Search</h3>
+						<div class="sidebar-item search-form">
+							<form action="">
+								<input type="text">
+								<button type="submit">
+									<i class="bi bi-search"></i>
+								</button>
+							</form>
+						</div>
+						<!-- End sidebar search formn-->
+
+						<h3 class="sidebar-title">Categories</h3>
+						<div class="sidebar-item categories">
+							<ul>
+								<li><a href="#">General<span>(25)</span></a></li>
+								<li><a href="#">Lifestyle<span>(12)</span></a></li>
+								<li><a href="#">Travel<span>(5)</span></a></li>
+								<li><a href="#">Design<span>(22)</span></a></li>
+								<li><a href="#">Creative<span>(8)</span></a></li>
+								<li><a href="#">Educaion<span>(14)</span></a></li>
+							</ul>
+						</div>
+						<!-- End sidebar categories-->
+
+						<h3 class="sidebar-title">Recent Posts</h3>
+						<div class="sidebar-item recent-posts">
+							<div class="post-item clearfix">
+								<img src="assets/img/blog/blog-recent-1.jpg" alt="">
+								<h4>
+									<a href="blog-single.html">Nihil blanditiis at in nihil autem</a>
+								</h4>
+								<time datetime="2020-01-01">Jan 1, 2020</time>
+							</div>
+
+							<div class="post-item clearfix">
+								<img src="assets/img/blog/blog-recent-2.jpg" alt="">
+								<h4>
+									<a href="blog-single.html">Quidem autem et impedit</a>
+								</h4>
+								<time datetime="2020-01-01">Jan 1, 2020</time>
+							</div>
+
+							<div class="post-item clearfix">
+								<img src="assets/img/blog/blog-recent-3.jpg" alt="">
+								<h4>
+									<a href="blog-single.html">Id quia et et ut maxime similique occaecati ut</a>
+								</h4>
+								<time datetime="2020-01-01">Jan 1, 2020</time>
+							</div>
+
+							<div class="post-item clearfix">
+								<img src="assets/img/blog/blog-recent-4.jpg" alt="">
+								<h4>
+									<a href="blog-single.html">Laborum corporis quo dara net para</a>
+								</h4>
+								<time datetime="2020-01-01">Jan 1, 2020</time>
+							</div>
+
+							<div class="post-item clearfix">
+								<img src="assets/img/blog/blog-recent-5.jpg" alt="">
+								<h4>
+									<a href="blog-single.html">Et dolores corrupti quae illo quod dolor</a>
+								</h4>
+								<time datetime="2020-01-01">Jan 1, 2020</time>
+							</div>
+
+						</div>
+						<!-- End sidebar recent posts-->
+
+						<h3 class="sidebar-title">Tags</h3>
+						<div class="sidebar-item tags">
+							<ul>
+								<li><a href="#">App</a></li>
+								<li><a href="#">IT</a></li>
+								<li><a href="#">Business</a></li>
+								<li><a href="#">Mac</a></li>
+								<li><a href="#">Design</a></li>
+								<li><a href="#">Office</a></li>
+								<li><a href="#">Creative</a></li>
+								<li><a href="#">Studio</a></li>
+								<li><a href="#">Smart</a></li>
+								<li><a href="#">Tips</a></li>
+								<li><a href="#">Marketing</a></li>
+							</ul>
+						</div>
+						<!-- End sidebar tags-->
+
+					</div>
+					<!-- End sidebar -->
+
+				</div>
+				<!-- End blog sidebar -->
+
+			</div>
+
+		</div>
+	</section>
 	<h1>{{ event.title }}</h1>
 	<p>{{ event.description }}</p>
 	<p>Date:
@@ -32,5 +285,10 @@
 	{% else %}
 		<p>No participants yet.</p>
 	{% endif %}
+	<div class="alert alert-warning alert-dismissible fade show" role="alert">
+		<i class="bi bi-exclamation-triangle me-1"></i>
+		No Participants Yet Be the First To Participate!
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
 	<a class="btn btn-primary" href="{{ path('app_event') }}">Back to events</a>
 {% endblock %}

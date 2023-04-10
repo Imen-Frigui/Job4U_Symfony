@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class ParticipantController extends AbstractController
 {
@@ -26,20 +27,29 @@ class ParticipantController extends AbstractController
     public function Participate(Event $eventId): Response
     {
         $em = $this->getDoctrine()->getManager();
-
         // Get the event and user entities based on their IDs
         $event = $em->getRepository(Event::class)->find($eventId);
         $user = $em->getRepository(User::class)->find(2);
+           // Check if the user has already participated in the event
+        $participant = $em->getRepository(Participant::class)->findOneBy(['event' => $eventId, 'user' => 2]);
+        if ($participant) {
+            // User has already participated in the event, display error message
+            $message = 'You are already a participant in this event';
+            $this->addFlash('warning', $message);
+        } else { // User has not yet participated in the event, create a new participant entity and persist it to the database
 
-        // Create a new participant entity and set the event and user properties
-        $participant = new Participant();
-        $participant->setEvent($event);
-        $participant->setUser($user);
+            // Create a new participant entity and set the event and user properties
+            $participant = new Participant();
+            $participant->setEvent($event);
+            $participant->setUser($user);
 
-        // Persist the new participant to the database
-        $em->persist($participant);
-        $em->flush();
+            // Persist the new participant to the database
+            $em->persist($participant);
+            $em->flush();
 
+            $message = 'You have successfully joined the event';
+            $this->addFlash('success', $message);
+}
         // Redirect back to the event show page
         return $this->redirectToRoute('event_show', ['id' => $event->getId()]);
     }
@@ -84,6 +94,25 @@ class ParticipantController extends AbstractController
             'events' => $events,
         ]);
     }
+    #[Route('/my-participations', name: 'my_participations')]
+public function MyParticipations(): Response
+{
+    $em = $this->getDoctrine()->getManager();
+    $user = $em->getRepository(User::class)->find(2);
+
+    $participations = $em->getRepository(Participant::class)
+        ->createQueryBuilder('p')
+        ->leftJoin('p.event', 'e')
+        ->where('p.user = :user')
+        ->setParameter('user', $user)
+        ->getQuery()
+        ->getResult();
+
+    return $this->render('my_participations.html.twig', [
+        'participations' => $participations,
+    ]);
+}
+
 
 
 }

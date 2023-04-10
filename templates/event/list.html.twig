@@ -13,24 +13,24 @@
 							</div>
 
 							<h2 class="entry-title">
-								<a href="blog-single.html">{{ e.title }}</a>
+								<a href="{{ path('event_show', {'id': e.id}) }}">{{ e.title }}</a>
 							</h2>
 
 							<div class="entry-meta">
 								<ul>
 									<li class="d-flex align-items-center">
 										<i class="bi bi-person"></i>
-										<a href="blog-single.html">{{ e.getCreator().getNom() }}</a>
+										<a href="{{ path('event_show', {'id': e.id}) }}">{{ e.getCreator().getNom() }}</a>
 									</li>
 									<li class="d-flex align-items-center">
 										<i class="bi bi-clock"></i>
-										<a href="blog-single.html">
+										<a href="{{ path('event_show', {'id': e.id}) }}">
 											<time datetime="2020-01-01">{{ e.date|date('F j, Y') }}</time>
 										</a>
 									</li>
 									<li class="d-flex align-items-center">
 										<i class="bi bi-geo-alt"></i>
-										<a href="blog-single.html">{{ e.location }}</a>
+										<a href="{{ path('event_show', {'id': e.id}) }}">{{ e.location }}</a>
 									</li>
 								</ul>
 							</div>
@@ -40,7 +40,7 @@
 									{{ e.description }}
 								</p>
 								<div class="read-more">
-									<a href="blog-single.html" href="{{ path('event_show', {'id': e.id}) }}">Show</a>
+									<a href="{{ path('event_show', {'id': e.id}) }}">Show</a>
 								</div>
 								{% if e.getCreator().getId() == 2 %}
 									<td>
