@@ -72,5 +72,6 @@ class PostulationController extends AbstractController
      }
      return $this->render('postulation/updatePos.html.twig',['form'=>$form->createView()]);
 
-    }  
+    }
+ 
 }

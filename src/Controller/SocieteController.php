@@ -9,25 +9,30 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 class SocieteController extends AbstractController
 {
-    #[Route('/', name: 'display_sos')]
+    #[Route('/societe', name: 'display_sos')]
     public function index(): Response
     {  
-        $pos=$this->getDoctrine()->getManager()->getRepository(Societe::class)->findAll(); 
+        $sos=$this->getDoctrine()->getManager()->getRepository(Societe::class)->findAll(); 
         return $this->render('societe/index.html.twig', [
-           's'=>$sos,
+         's' => 'sos',
+         
         ]);
     }
+    
     #[Route('/admin', name: 'display_admin')]
     public function indexAdmin(): Response
     {  
         return $this->render('Admin/index.html.twig'
+         
+      );
 
-        );
+        
     }
     
     #[Route('/addSos', name: 'Societe_add')]
     public function addSos(Request $request): Response{
     $entityManager = $this->getDoctrine()->getManager();
+    $Societe= new societe(); 
     $Societe= new societe(); 
     
     $form=$this->createForm(sosType::class,$Societe);

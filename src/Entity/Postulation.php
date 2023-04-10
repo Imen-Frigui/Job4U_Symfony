@@ -14,7 +14,7 @@ class Postulation
     private ?int $idPos=null;
  
     #[ORM\Column(length:255)]
-    #[Assert\Length(min : 5, minMessage :' Entrer un date valid')]
+    #[Assert\NotBlank(message: "Date of the event not assigned")]
     private ?string $date=null;
 
 
