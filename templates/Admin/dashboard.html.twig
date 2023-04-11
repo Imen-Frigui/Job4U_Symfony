@@ -1,24 +1,50 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-	<div class="card info-card customers-card" style="margin-left: 450px;margin-right: 50px;margin-top: 100px;">
-		<div style="margin-left: 10px;margin-right: 50px;margin-top: 10px;" class="card-body">
-			<h5 class="card-title">Customers
-				<span>| This Year</span>
-			</h5>
 
-			<div class="d-flex align-items-center">
-				<div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-					<i class="bi bi-people"></i>
-				</div>
-				<div class="ps-3">
-					<h6>1244</h6>
-					<span class="text-danger small pt-1 fw-bold">12%</span>
-					<span class="text-muted small pt-2 ps-1">decrease</span>
 
+	<div style="align-items: center;justify-content: center;margin-top: 10px; margin-right: 500px;margin-left: 500px;">
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">Create New Event</h5>
+
+				<!-- General Form Elements -->
+				<div class="row mb-3">
+					<label for="inputText" style="width: 80%;" class="col-sm-2 col-form-label">Title</label>
+					<div class="col-sm-10"></div>
 				</div>
+
+				<div class="row mb-3">
+					<label for="inputDate" style="width: 80%;" class="col-sm-2 col-form-label">Date and Time</label>
+					<div class="input-group date"></div>
+				</div>
+
+
+				<div class="row mb-3">
+					<label for="inputPassword" style="width: 80%;" class="col-sm-2 col-form-label">Description</label>
+					<div class="col-sm-10"></div>
+				</div>
+
+				<div class="row mb-3">
+					<label for="inputText" style="width: 80%;" class="col-sm-2 col-form-label">Location</label>
+					<div class="col-sm-10"></div>
+				</div>
+
+				<div class="row mb-3">
+					<label style="width: 80%;" class="col-sm-2 col-form-label">Category</label>
+					<div class="col-sm-10"></div>
+				</div>
+
+
+				<div class="row mb-3">
+					<div class="col-sm-10">
+						<button type="submit" class="btn btn-primary">Create Event</button>
+					</div>
+				</div>
+
+				<!-- End General Form Elements -->
+
 			</div>
-
 		</div>
-	</div>
 
-</div>{% endblock %}
+	</div>
+{% endblock %}
