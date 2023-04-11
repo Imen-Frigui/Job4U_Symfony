@@ -3,36 +3,7 @@
 {% block title %}Hello {% endblock %}
 
 {% block body %}
-{#<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-<table border='1'>
-<thead>
-<th>Date </th>
-<th> Simple user</th> 
-<th>Email </th>
-
-</thead>
-<tbody>
-    {%for pos in p  %}
-<tr>
-<td >{{pos.date}}</td>
-<td >{{pos.simpleUser}}</td>
-<td >{{pos.email}}</td>
-<td>
-<a href= "{{path('postulation_update' ,{'idPos':pos.idPos})}}">Update </a>
-</td>
-<td>
-<a href= "{{path('remove_pos' ,{'idPos':pos.idPos})}}">Remove </a>
-</td>
-</tr>
-{%endfor%}
-</tbody>
-</table>
-</div>#}
 <div class="row" style="display: flex;align-items: center;justify-content: center;margin-top: 150px;">
 
     <div class="col-lg-6">

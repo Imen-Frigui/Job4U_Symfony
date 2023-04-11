@@ -29,6 +29,7 @@ class Societe
     #[ORM\Column(length:255)]
     private ?string $sosImage=null;
 
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +91,18 @@ class Societe
     public function setSosImage(string $sosImage): self
     {
         $this->sosImage = $sosImage;
+
+        return $this;
+    }
+
+    public function getPostulation(): ?Postulation
+    {
+        return $this->postulation;
+    }
+
+    public function setPostulation(?Postulation $postulation): self
+    {
+        $this->postulation = $postulation;
 
         return $this;
     }

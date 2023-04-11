@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PostulationController extends AbstractController
 {
     #[Route('/', name: 'display_pos')]
-    public function index(): Response
+    public function index(Request $request): Response
     {  
         $pos=$this->getDoctrine()->getManager()->getRepository(Postulation::class)->findAll(); 
         return $this->render('postulation/index.html.twig', [
@@ -39,9 +39,7 @@ class PostulationController extends AbstractController
         $em= $this->getDoctrine()->getManager();
         $em->persist($postulation);//add
         $em->flush();
-        $nextAction = $form->get('ajouter')->isClicked()
-        ? 'task_new'
-        : 'task_success';
+        
 
         return $this->redirectToRoute('display_pos');
      }

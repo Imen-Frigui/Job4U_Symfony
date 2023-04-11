@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+
 class SocieteController extends AbstractController
 {
     #[Route('/societe', name: 'display_sos')]
@@ -14,7 +15,7 @@ class SocieteController extends AbstractController
     {  
         $sos=$this->getDoctrine()->getManager()->getRepository(Societe::class)->findAll(); 
         return $this->render('societe/index.html.twig', [
-         's' => 'sos',
+         's' => $sos,
          
         ]);
     }
@@ -29,12 +30,10 @@ class SocieteController extends AbstractController
         
     }
     
-    #[Route('/addSos', name: 'Societe_add')]
+    #[Route('/societe/addSos', name: 'Societe_add')]
     public function addSos(Request $request): Response{
     $entityManager = $this->getDoctrine()->getManager();
     $Societe= new societe(); 
-    $Societe= new societe(); 
-    
     $form=$this->createForm(sosType::class,$Societe);
     $form->handleRequest($request);
      if ($form->isSubmitted()&& $form->isValid()){
@@ -48,7 +47,7 @@ class SocieteController extends AbstractController
      return $this->render('societe/createSos.html.twig',['form'=>$form->createView()]);
 
     }  
-    #[Route('/removesos/{id}', name: 'remove_sos')]
+    #[Route('/societe/removesos/{id}', name: 'remove_sos')]
     public function RemoveSos(Societe $societe): Response
     {  
        $em=$this->getDoctrine()->getManager();
@@ -56,7 +55,7 @@ class SocieteController extends AbstractController
        $em->flush();
        return $this->redirectToRoute('display_sos');
     }
-    #[Route('/updateSos/{id}', name: 'societe_update')]
+    #[Route('/societe/updateSos/{id}', name: 'societe_update')]
     public function UpdateSos(Request $request,$id): Response{
     
     $societe = $this->getDoctrine()->getManager()->getRepository(Societe::class)->find($id); 
