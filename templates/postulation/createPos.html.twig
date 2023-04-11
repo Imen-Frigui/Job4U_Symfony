@@ -10,14 +10,7 @@
 
                     <!-- General Form Elements -->
                     {{ form_start(form,{attr:{novalidate:'novalidate'}}) }}
-                        <label for="inputText" class="col-sm-4 col-form-label">date</label>
-                        <div class="col-sm-10">
-                            {{ form_widget(form.date,{'attr':{'class':'form-control'}}) }}
-							
-
-                        </div>
-                        {{ form_errors(form.date,{'attr':{'class':'text-danger'}}) }}
-
+                        
 
 
                     <label for="inputText" class="col-sm-4 col-form-label">Prenom</label>
@@ -34,6 +27,17 @@
 							
                         </div>
                         {{ form_errors(form.email,{'attr':{'class':'text-danger'}}) }}
+
+
+
+                    <label for="inputText" class="col-sm-4 col-form-label">date</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(form.date_pos,{'attr':{'class':'form-control'}}) }}
+                        
+
+                    </div>
+                    {{ form_errors(form.date_pos,{'attr':{'class':'text-danger'}}) }}
+
 
                 <button type="add" class="btn btn-primary">Add</button>
         

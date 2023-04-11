@@ -21,9 +21,10 @@ class PosType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('date',DateTimeType::class)
+            
             ->add('simpleUser')
             ->add('email')
+            ->add('date_pos',DateTimeType::class)
            // ->add('ajouter',SumbitType::class ,['label' => 'ajouter'],)
             ->getForm()
         ;

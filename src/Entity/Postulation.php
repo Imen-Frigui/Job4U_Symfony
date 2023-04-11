@@ -11,15 +11,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass:PostulationRepository::class)]
 
 class Postulation
-{  
+{ 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $idPos=null;
  
-    #[ORM\Column(length:255)]
-    
-    private ?\DateTimeInterface $date=null;
 
 
 
@@ -34,6 +31,9 @@ class Postulation
     private ?string $email=null;
 
 
+    
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $date_pos = null;
 
     
     public function __construct()
@@ -45,18 +45,13 @@ class Postulation
     {
         return $this->idPos;
     }
-
-    public function getDate(): ?\DateTimeInterface
+    public function setIdPos(): ?int
     {
-        return $this->date;
+        return $this->idPos;
     }
 
-    public function setDate(\DateTimeInterface $date): self
-    {
-        $this->date = $date;
 
-        return $this;
-    }
+  
 
     public function getSimpleUser(): ?string
     {
@@ -78,6 +73,17 @@ class Postulation
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+    public function getDatePos(): ?\DateTimeInterface
+    {
+        return $this->date_pos;
+    }
+
+    public function setDatePos(\DateTimeInterface $date_pos): self
+    {
+        $this->date_pos = $date_pos;
 
         return $this;
     }
@@ -112,17 +118,6 @@ class Postulation
         return $this;
     }
 
-    public function getDatePos(): ?\DateTimeInterface
-    {
-        return $this->datePos;
-    }
-
-    public function setDatePos(\DateTimeInterface $datePos): self
-    {
-        $this->datePos = $datePos;
-
-        return $this;
-    }
-
+   
 
 }
