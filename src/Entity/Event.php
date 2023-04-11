@@ -34,6 +34,7 @@ class Event
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\NotBlank(message: "Date of the event not assigned")]
+    #[Assert\GreaterThanOrEqual("today", message: "The date of the event cannot be in the past.")]
     private ?\DateTimeInterface $date = null;
 
     #[ORM\Column(length: 255)]
