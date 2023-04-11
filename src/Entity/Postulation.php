@@ -33,6 +33,7 @@ class Postulation
 
     
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotBlank(message: "Date of the event not assigned")]
     private ?\DateTimeInterface $date_pos = null;
 
     

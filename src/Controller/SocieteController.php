@@ -30,7 +30,7 @@ class SocieteController extends AbstractController
         
     }
     
-    #[Route('/societe/addSos', name: 'Societe_add')]
+    #[Route('/addSos', name: 'Societe_add')]
     public function addSos(Request $request): Response{
     $entityManager = $this->getDoctrine()->getManager();
     $Societe= new societe(); 

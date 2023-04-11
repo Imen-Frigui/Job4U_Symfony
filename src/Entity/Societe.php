@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\SocieteRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass:SocieteRepository::class)]
 
 class Societe
@@ -15,15 +16,26 @@ class Societe
     private ?int $id=null;
 
     #[ORM\Column(length:20)]
+    #[Assert\NotBlank(message:"Enter a valid adresse")]
     private ?string $adresse=null;
 
     #[ORM\Column(length:255)]
+    #[Assert\NotBlank(message:"Email is required")]
+    #[Assert\Email(message:"The email '{{ value }}' is not a valid email ")]
     private ?string $email=null;
 
     #[ORM\Column(length:255)]
+    #[Assert\Length(
+        min: 00000000,
+        max: 99999999,
+        minMessage: "tel must be at least {{ min }} characters long",
+        maxMessage: "tel cannot be longer than {{ max }} characters",
+    )]
+    #[Assert\NotBlank(message:'Enter a valid phone number between {{ min }} and {{ max }}')]
     private ?string $tel=null;
 
     #[ORM\Column(length:255)]
+    #[Assert\NotBlank(message:"Field of work is required")]
     private ?string $domaine=null;
 
     #[ORM\Column(length:255)]
