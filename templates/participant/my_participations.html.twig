@@ -14,20 +14,23 @@
 							<table class="table datatable dataTable-table">
 								<thead>
 									<tr>
-										<th scope="col" data-sortable="" style="width: 7.58187%;" class="asc">
+										<th scope="col" data-sortable="" style="width: 3%;" class="asc">
 											<a href="#" class="dataTable-sorter">#</a>
 										</th>
-										<th scope="col" data-sortable="" style="width: 15.0785%;">
+										<th scope="col" data-sortable="" style="width: 10.0785%;">
 											<a href="#" class="dataTable-sorter">Title</a>
 										</th>
-										<th scope="col" data-sortable="" style="width: 15.7199%;">
+										<th scope="col" data-sortable="" style="width: 10.7199%;">
 											<a href="#" class="dataTable-sorter">Event Host</a>
 										</th>
-										<th scope="col" data-sortable="" style="width: 12.30311%;">
+										<th scope="col" data-sortable="" style="width: 11.30311%;">
 											<a href="#" class="dataTable-sorter">Start Date</a>
 										</th>
-										<th scope="col" data-sortable="" style="width: 20.2828%;">
+										<th scope="col" data-sortable="" style="width: 7%;">
 											<a href="#" class="dataTable-sorter">Location</a>
+										</th>
+										<th scope="col" data-sortable="" style="width: 9.2828%;">
+											<a href="#" class="dataTable-sorter">Status</a>
 										</th>
 										<th scope="col" data-sortable="" style="width: 30.2828%;">
 											<a href="#" class="dataTable-sorter">Action</a>
@@ -50,6 +53,17 @@
 													<td>{{ participation.event.getCreator().getNom()}}{{" "}}{{ participation.event.getCreator().getPrenom()}}</td>
 													<td>{{ participation.event.date|date('d-m-Y H:i:s') }}</td>
 													<td>{{ participation.event.location }}</td>
+													<td>
+														{% if participation.status == 'pending' %}
+															<span class="badge bg-warning">{{ participation.status}}</span>
+														{% elseif participation.status == 'banned' %}
+															<span class="badge bg-danger">{{ participation.status}}</span>
+														{% elseif participation.status == 'accepted' %}
+															<span class="badge bg-success">{{ participation.status}}</span>
+
+														{% endif %}
+													</td>
+
 													<td>
 														<a href="{{ path('participant_withdraw', {'eventId': participation.event.id}) }}">
 															<button type="button" class="btn btn-danger">Withdraw Participation</button>
@@ -78,14 +92,4 @@
 
 		</div>
 	</div>
-
-	{% if participations is empty %}
-		<p>No events found.</p>
-	{% else %}
-		<ul>
-			{% for participation in participations %}
-				<li>{{ participation.event.title }}</li>
-			{% endfor %}
-		</ul>
-	{% endif %}
 {% endblock %}

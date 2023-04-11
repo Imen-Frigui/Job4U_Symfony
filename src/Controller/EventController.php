@@ -16,12 +16,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class EventController extends AbstractController
 {
     #[Route('/', name: 'app_event')]
-    public function index(EventRepository $eventRepository): Response
+    public function index(EventRepository $eventRepository, EventCategoryRepository $eventCategoryRepository): Response
     {
         $events = $eventRepository->findAll();
+        $eventCategories  = $eventCategoryRepository->findAll();
 
         return $this->render('event/list.html.twig', [
-            'events' => $events,
+            'events' => $events, 'eventCategories' => $eventCategories,
         ]);
     }
 
@@ -54,12 +55,13 @@ class EventController extends AbstractController
     }
 
     #[Route('/event/list', name: 'event_list')]
-    public function list(EventRepository $eventRepository): Response
+    public function list(EventRepository $eventRepository, EventCategoryRepository $eventCategoryRepository): Response
     {
         $events = $eventRepository->findAll();
+        $eventCategories  = $eventCategoryRepository->findAll();
 
         return $this->render('event/list.html.twig', [
-            'events' => $events,
+            'events' => $events, 'eventCategories' => $eventCategories,
         ]);
     }
 
@@ -103,10 +105,13 @@ class EventController extends AbstractController
     }
 
     #[Route('/event/show/{id}', name: 'event_show')]
-    public function show(Event $event, EventCategoryRepository $eventCategoryRepository): Response
+    public function show(Event $event, EventCategoryRepository $eventCategoryRepository, EventRepository $eventRepository): Response
     {
+        $events = $eventRepository->findAll();
+
         $eventCategories  = $eventCategoryRepository->findAll();
         return $this->render('event/show.html.twig', [
+            'events' => $events,
             'event' => $event,
             'eventCategories' => $eventCategories,
         ]);

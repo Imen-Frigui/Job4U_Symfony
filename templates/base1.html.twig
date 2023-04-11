@@ -47,11 +47,11 @@
 		href="{{ asset('asset1/css/style.css')}}" rel="stylesheet">
 
 	<!-- =======================================================
-																																	    * Template Name: FlexStart - v1.9.0
-																																	    * Template URL: https://bootstrapmade.com/flexstart-bootstrap-startup-template/
-																																	    * Author: BootstrapMade.com
-																																	    * License: https://bootstrapmade.com/license/
-																																	    ======================================================== -->
+																																										    * Template Name: FlexStart - v1.9.0
+																																										    * Template URL: https://bootstrapmade.com/flexstart-bootstrap-startup-template/
+																																										    * Author: BootstrapMade.com
+																																										    * License: https://bootstrapmade.com/license/
+																																										    ======================================================== -->
 	</head>
 
 	<body>
@@ -60,14 +60,18 @@
 		{% block header %}
 			<header id="header" class="header fixed-top">
 				<div class="container-fluid container-xl d-flex align-items-center justify-content-between">
-
 					<a href="{{ path('app_event')}}" class="logo d-flex align-items-center">
-						<img src="{{ asset('asset1/img/logo.png') }}" alt="">
-						<span>Job4U</span>
+						<img src="{{ asset('asset1/img/job_logo.png') }}" alt="">
+						<span></span>
 					</a>
 
 					<nav id="navbar" class="navbar">
+
+
 						<ul>
+							<li>
+								<a class="nav-link scrollto active" href="{{ path('app_event_category') }}">Dashboard</a>
+							</li>
 							<li>
 								<a class="nav-link scrollto active" href="{{ path('app_event')}}">Home</a>
 							</li>
@@ -104,8 +108,8 @@
 <div class="container">
 	<div class="row">
 		<div class="col-lg-6 d-flex flex-column justify-content-center">
-			<h1 data-aos="fade-up">We offer modern solutions for growing your business</h1>
-			<h2 data-aos="fade-up" data-aos-delay="400">We are team of talented designers making websites with Bootstrap</h2>
+			<h1 data-aos="fade-up">We offer modern solutions for finding jobs and opportunities</h1>
+			<h2 data-aos="fade-up" data-aos-delay="400">Find jobs experinces make your own network and learn in the process and more</h2>
 			<div data-aos="fade-up" data-aos-delay="600">
 				<div class="text-center text-lg-start">
 					<a href="#about" class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">
@@ -116,7 +120,7 @@
 			</div>
 		</div>
 		<div class="col-lg-6 hero-img" data-aos="zoom-out" data-aos-delay="200">
-			<img src="{{ asset('asset1/img/hero-img.png') }}" class="img-fluid" alt="">
+			<img src="{{ asset('asset1/img/job_logo.png') }}" class="img-fluid" alt="">
 		</div>
 	</div>
 </div></section><!-- End Hero -->{% endblock %}{% block body %}<main
@@ -1403,11 +1407,11 @@ id="main">
 	<div class="container">
 		<div class="row gy-4">
 			<div class="col-lg-5 col-md-12 footer-info">
-				<a href="index.html" class="logo d-flex align-items-center">
-					<img src="asset1/img/logo.png" alt="">
-					<span>FlexStart</span>
+				<a href="{{ path('app_event')}}" class="logo d-flex align-items-center">
+					<img src="{{('asset1/img/job_logo.png')}}" alt="">
+					<span>Job4U</span>
 				</a>
-				<p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies darta donna mare fermentum iaculis eu non diam phasellus.</p>
+				<p>This website is ment to help you find jobs or oppurtinuties and make new connection add to that learning , experementing .</p>
 				<div class="social-links mt-3">
 					<a href="#" class="twitter">
 						<i class="bi bi-twitter"></i>
@@ -1429,7 +1433,7 @@ id="main">
 				<ul>
 					<li>
 						<i class="bi bi-chevron-right"></i>
-						<a href="#">Home</a>
+						<a href="{{ path('app_event')}}">Home</a>
 					</li>
 					<li>
 						<i class="bi bi-chevron-right"></i>
