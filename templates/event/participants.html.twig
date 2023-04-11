@@ -15,19 +15,19 @@
 							<table class="table datatable dataTable-table">
 								<thead>
 									<tr>
-										<th scope="col" data-sortable="" style="width: 7.58187%;" class="asc">
+										<th scope="col" data-sortable="" style="width: 5%;" class="asc">
 											<a href="#" class="dataTable-sorter">#</a>
 										</th>
-										<th scope="col" data-sortable="" style="width: 15.7199%;">
+										<th scope="col" data-sortable="" style="width: 7.7199%;">
 											<a href="#" class="dataTable-sorter">First Name</a>
 										</th>
-										<th scope="col" data-sortable="" style="width: 12.30311%;">
+										<th scope="col" data-sortable="" style="width: 7.30311%;">
 											<a href="#" class="dataTable-sorter">Last Name</a>
 										</th>
 										<th scope="col" data-sortable="" style="width: 12.30311%;">
 											<a href="#" class="dataTable-sorter">Status</a>
 										</th>
-										<th scope="col" data-sortable="" style="width: 30.2828%;">
+										<th scope="col" data-sortable="" style="width: 20.2828%;">
 											<a href="#" class="dataTable-sorter">Action</a>
 										</th>
 									</tr>
@@ -40,7 +40,16 @@
 											<th scope="row">{{i}}</th>
 											<td>{{ participant.getUser().getNom()}}</td>
 											<td>{{ participant.getUser().getPrenom()}}</td>
-											<td>{{ participant.status}}</td>
+											<td>
+												{% if participant.status == 'pending' %}
+													<span class="badge bg-warning">{{ participant.status}}</span>
+												{% elseif participant.status == 'banned' %}
+													<span class="badge bg-danger">{{ participant.status}}</span>
+												{% elseif participant.status == 'accepted' %}
+													<span class="badge bg-success">{{ participant.status}}</span>
+
+												{% endif %}
+											</td>
 											<td>
 												{% if participant.status == 'pending' %}
 													<a href="{{ path('ban_participant', {'participantId': participant.id, 'eventId': event.id }) }}">
@@ -59,23 +68,17 @@
 													</a>
 												{% endif %}
 											</td>
-
 										</tr>
-									{% endfor %}
+									</tbody>
 								</tbody>
-							</tbody>
-						</table>
-					</div>
-					<div class="dataTable-bottom">
-						<nav class="dataTable-pagination">
-							<ul class="dataTable-pagination-list"></ul>
-						</nav>
-					</div>
-				</div>
-				<!-- End Table with stripped rows -->
-
-			</div>
-		</div>
-
-	</div>
-</div>{% endblock %}
+							</tr>
+						</tbody>
+					</tbody>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</tbody>
+</table></div><div class="dataTable-bottom">
+<nav class="dataTable-pagination">
+	<ul class="dataTable-pagination-list"></ul>
+</nav></div></div><!-- End Table with stripped rows --></div></div></div></div>{% endblock %}
