@@ -8,13 +8,20 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use Symfony\Component\Validator\ValidateValidator;
+use Symfony\Component\Validator\ValidateValidatoruse ;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+
+
+;
+
 class PosType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('date')
+            ->add('date',DateTimeType::class)
             ->add('simpleUser')
             ->add('email')
            // ->add('ajouter',SumbitType::class ,['label' => 'ajouter'],)

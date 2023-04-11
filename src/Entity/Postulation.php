@@ -4,20 +4,22 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PostulationRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass:PostulationRepository::class)]
 
 class Postulation
-{ 
+{  
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $idPos=null;
  
     #[ORM\Column(length:255)]
-    #[Assert\NotBlank(message: "Date of the event not assigned")]
-    private ?string $date=null;
+    
+    private ?\DateTimeInterface $date=null;
 
 
 
@@ -31,6 +33,8 @@ class Postulation
     #[Assert\Email(message:"The email '{{ value }}' is not a valid email ")]
     private ?string $email=null;
 
+
+
     
     public function __construct()
     {
@@ -42,12 +46,12 @@ class Postulation
         return $this->idPos;
     }
 
-    public function getDate(): ?string
+    public function getDate(): ?\DateTimeInterface
     {
         return $this->date;
     }
 
-    public function setDate(string $date): self
+    public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
 
@@ -104,6 +108,18 @@ class Postulation
                 $societe->setPostulation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDatePos(): ?\DateTimeInterface
+    {
+        return $this->datePos;
+    }
+
+    public function setDatePos(\DateTimeInterface $datePos): self
+    {
+        $this->datePos = $datePos;
 
         return $this;
     }
