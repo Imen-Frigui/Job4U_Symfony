@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	<div class="row" style="margin-left: 300px;margin-right: 50px;margin-top: 20px;">
+
+		<div class="col-lg-12">
+			<a class="btn btn-secondary" style=" margin-top: 100px;margin-bottom: 10px;" href="{{ path('app_event_category_add') }}">+ Add New Category</a>
+
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title text-dark">The Event Category List
+					</h5>
+					<!-- Table with stripped rows -->
+					<div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns" style="">
+						<div class="dataTable-top">
+							<div style="margin-left: 1150px;margin-top: 10px;margin-bottom: 10px;" class="dataTable-search"><input class="dataTable-input" placeholder="Search..." type="text"></div>
+						</div>
+						<div class="dataTable-container">
+							<table class="table datatable dataTable-table">
+								<thead>
+									<tr>
+										<th scope="col" data-sortable="" style="width: 7.58187%;" class="asc">
+											<a href="#" class="dataTable-sorter">#</a>
+										</th>
+										<th scope="col" data-sortable="" style="width: 10.7199%;">
+											<a href="#" class="dataTable-sorter">Name</a>
+										</th>
+										<th scope="col" data-sortable="" style="width: 30.30311%;">
+											<a href="#" class="dataTable-sorter">Description</a>
+										</th>
+										<th scope="col" data-sortable="" style="width: 30.2828%;">
+											<a href="#" class="dataTable-sorter">Action</a>
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% set i=0 %}
+									{% for eventCategory in eventCategories %}
+										{% set i=i+1 %}
+										<tr>
+											<th scope="row">{{i}}</th>
+											<td>{{ eventCategory.name }}</td>
+											<td>{{ eventCategory.description }}</td>
+											<td>
+												<a href="{{ path('edit_eventCategory', {'id': eventCategory.id}) }}">
+													<button type="button" class="btn btn-success">Edit EventCategory</button>
+												</a>
+												<a href="{{ path('delete_eventCategory', {'id': eventCategory.id }) }}">
+													<button type="button" class="btn btn-danger">Delete EventCategory</button>
+												</a>
+											</td>
+
+										</tr>
+									{% endfor %}
+								</tbody>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<!-- End Table with stripped rows -->
+
+			</div>
+		</div>
+
+	</div>
+</div>{% endblock %}

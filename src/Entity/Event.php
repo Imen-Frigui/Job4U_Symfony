@@ -6,6 +6,7 @@ use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
+use App\Entity\EventCategory;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -45,6 +46,10 @@ class Event
 
     #[ORM\OneToMany(mappedBy: 'event', targetEntity: Participant::class)]
     private Collection $participants;
+
+    #[ORM\ManyToOne(inversedBy: 'events')]
+    #[Assert\NotBlank(message: "The event category is not assigned")]
+    private ?EventCategory $eventCategory = null;
 
     public function __construct()
     {
@@ -142,6 +147,18 @@ class Event
                 $participant->setEvent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEventCategory(): ?EventCategory
+    {
+        return $this->eventCategory;
+    }
+
+    public function setEventCategory(?EventCategory $eventCategory): self
+    {
+        $this->eventCategory = $eventCategory;
 
         return $this;
     }

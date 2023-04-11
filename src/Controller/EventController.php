@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Event;
+use App\Entity\EventCategory;
 use App\Form\EventType;
 use App\Entity\User;
+use App\Repository\EventCategoryRepository;
 use App\Repository\EventRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +19,7 @@ class EventController extends AbstractController
     public function index(EventRepository $eventRepository): Response
     {
         $events = $eventRepository->findAll();
-    
+
         return $this->render('event/list.html.twig', [
             'events' => $events,
         ]);
@@ -35,10 +37,14 @@ class EventController extends AbstractController
         $event = new Event();
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
-        if ($form ->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
+
             $event->setCreator($creator);
+
             $em = $this->getDoctrine()->getManager();
-            $em->persist($event);//add
+            $category = $entityManager->getRepository(EventCategory::class)->find($form->get('eventCategory')->getData());
+            $event->setEventCategory($category);
+            $em->persist($event); //add
             $em->flush();
             return $this->redirectToRoute('event_list');
         }
@@ -51,7 +57,7 @@ class EventController extends AbstractController
     public function list(EventRepository $eventRepository): Response
     {
         $events = $eventRepository->findAll();
-    
+
         return $this->render('event/list.html.twig', [
             'events' => $events,
         ]);
@@ -59,12 +65,12 @@ class EventController extends AbstractController
 
     #[Route('/event/delete/{id}', name: 'event_delete')]
     public function delete(Event $event): Response
-    {       
+    {
         // Check if the logged-in user is the creator of the event
         if ($event->getCreator() !== 1) {
             $this->addFlash('error', 'You are not authorized to edit this event.');
             return $this->redirectToRoute('app_event');
-        }      
+        }
         $em = $this->getDoctrine()->getManager();
         if ($event->getCreator()->getId() === 1) {
             $em->remove($event);
@@ -79,38 +85,38 @@ class EventController extends AbstractController
     #[Route('/event/edit/{id}', name: 'event_edit')]
     public function edit(Request $request, Event $event): Response
     {
-    $id = $request->get('id');           
-    $entityManager = $this->getDoctrine()->getManager();
-    $event = $entityManager->getRepository(Event::class)->find($id);
-    
-    $form = $this->createForm(EventType::class,$event);
+        $id = $request->get('id');
+        $entityManager = $this->getDoctrine()->getManager();
+        $event = $entityManager->getRepository(Event::class)->find($id);
 
-    $form->handleRequest($request);
+        $form = $this->createForm(EventType::class, $event);
 
-    if($form->isSubmitted() && $form->isValid()) {
-        $em = $this->getDoctrine()->getManager();
-        $em->flush();
+        $form->handleRequest($request);
 
-        return $this->redirectToRoute('my_events');
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+            return $this->redirectToRoute('my_events');
+        }
+        return $this->render('event/edit.html.twig', ['form' => $form->createView()]);
     }
-    return $this->render('event/edit.html.twig',['form'=>$form->createView()]);
 
-}
-
-#[Route('/event/show/{id}', name: 'event_show')]
-
-public function show(Event $event): Response
-{
-    return $this->render('event/show.html.twig', [
-        'event' => $event,
-    ]);
-}
+    #[Route('/event/show/{id}', name: 'event_show')]
+    public function show(Event $event, EventCategoryRepository $eventCategoryRepository): Response
+    {
+        $eventCategories  = $eventCategoryRepository->findAll();
+        return $this->render('event/show.html.twig', [
+            'event' => $event,
+            'eventCategories' => $eventCategories,
+        ]);
+    }
 
     #[Route('/my-events', name: 'my_events')]
     public function myEvents(): Response
     {
         $em = $this->getDoctrine()->getManager();
-      //  $user = $em->getRepository(User::class)->find(1);
+        //  $user = $em->getRepository(User::class)->find(1);
         $events = $em->getRepository(Event::class)->findBy(['creator' => 1]);
         return $this->render('event/my_events.html.twig', [
             'events' => $events,
@@ -118,18 +124,39 @@ public function show(Event $event): Response
     }
 
     #[Route('/event/{id}/participants', name: 'event_participants')]
-public function participants(Event $event): Response
-{
-    // Get the list of participants for the event
-    $participants = $event->getParticipants();
-    
-    // Render the participants list view
-    return $this->render('event/participants.html.twig', [
-        'event' => $event,
-        'participants' => $participants,
-    ]);
-}
+    public function participants(Event $event): Response
+    {
+        // Get the list of participants for the event
+        $participants = $event->getParticipants();
+
+        // Render the participants list view
+        return $this->render('event/participants.html.twig', [
+            'event' => $event,
+            'participants' => $participants,
+        ]);
+    }
+
+    #[Route('/admin/events', name: 'list_events')]
+    public function Adminlist(EventRepository $eventRepository): Response
+    {
+        $events = $eventRepository->findAll();
+
+        return $this->render('Admin/listEvent.html.twig', [
+            'events' => $events,
+        ]);
+    }
 
 
+    #[Route('/category/{id}/events/count', name: 'count_category_events')]
+    public function countCategoryEvents(EventCategory $eventCategory): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $events = $entityManager->getRepository(Event::class)->findBy(['eventCategory' => $eventCategory]);
+        $count = count($events);
 
+        return $this->render('event/show.html.twig', [
+            'category' => $eventCategory,
+            'count' => $count,
+        ]);
+    }
 }

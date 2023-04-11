@@ -40,14 +40,18 @@
 						<h3 class="sidebar-title">Categories</h3>
 						<div class="sidebar-item categories">
 							<ul>
-								<li><a href="#">General<span>(25)</span></a></li>
-								<li><a href="#">Lifestyle<span>(12)</span></a></li>
-								<li><a href="#">Travel<span>(5)</span></a></li>
-								<li><a href="#">Design<span>(22)</span></a></li>
-								<li><a href="#">Creative<span>(8)</span></a></li>
-								<li><a href="#">Educaion<span>(14)</span></a></li>
+								{% for category in eventCategories %}
+									<li>
+										<a href="{{ path('event_category', {'id': category.id}) }}">
+											{{ category.name }}
+											<span>({{ category.eventCount }})</span>
+										</a>
+									</li>
+								{% endfor %}
 							</ul>
 						</div>
+
+
 						<!-- End sidebar categories-->
 
 						<h3 class="sidebar-title">Recent Posts</h3>
@@ -161,15 +165,11 @@
 						</div>
 
 						<div class="entry-footer">
-							<div class="float-right">
-								<a href="{{ path('participant_add', {'eventId': event.id}) }}">
-									<button type="submit" class="btn btn-primary" style="margin-left: 650px;">Participate</button>
-								</a>
-							</div>
+
 							<i class="bi bi-folder"></i>
 							<ul class="cats">
 								<li>
-									<a href="#">Category</a>
+									<a href="#">{{ event.getEventCategory().getName() }}</a>
 								</li>
 							</ul>
 
@@ -185,6 +185,10 @@
 									<a href="#">Marketing</a>
 								</li>
 							</ul>
+
+							<a href="{{ path('participant_add', {'eventId': event.id}) }}">
+								<button type="submit" class="btn btn-primary" style="margin-left: 700px;">Participate</button>
+							</a>
 						</div>
 
 					</article>

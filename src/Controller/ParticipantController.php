@@ -31,7 +31,7 @@ class ParticipantController extends AbstractController
         // Get the event and user entities based on their IDs
         $event = $em->getRepository(Event::class)->find($eventId);
         $user = $em->getRepository(User::class)->find(2);
-           // Check if the user has already participated in the event
+        // Check if the user has already participated in the event
         $participant = $em->getRepository(Participant::class)->findOneBy(['event' => $eventId, 'user' => 2]);
         if ($participant) {
             // User has already participated in the event, display error message
@@ -50,7 +50,7 @@ class ParticipantController extends AbstractController
 
             $message = 'You have successfully joined the event';
             $this->addFlash('success', $message);
-}
+        }
         // Redirect back to the event show page
         return $this->redirectToRoute('event_show', ['id' => $event->getId()]);
     }
@@ -78,43 +78,43 @@ class ParticipantController extends AbstractController
     public function withdraw(Event $eventId): Response
     {
         $em = $this->getDoctrine()->getManager();
-    
+
         $participant = $em->getRepository(Participant::class)->findOneBy(['user' => 2, 'event' => $eventId]);
 
-    
+
         // Check if the current user is the participant of the event
         if ($participant->getUser()->getId() !== 2) {
             $this->addFlash('error', 'You are not authorized to withdraw from this event.');
             return $this->redirectToRoute('my_participations');
         }
-    
+
         // Remove the participant from the database
         $em->remove($participant);
         $em->flush();
-    
+
         // Redirect back to the event show page
         return $this->redirectToRoute('my_participations');
     }
-    
+
     #[Route('/my-participations', name: 'my_participations')]
-public function MyParticipations(): Response
-{
-    $em = $this->getDoctrine()->getManager();
-    $user = $em->getRepository(User::class)->find(2);
+    public function MyParticipations(): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(User::class)->find(2);
 
-    $participations = $em->getRepository(Participant::class)
-        ->createQueryBuilder('p')
-        ->leftJoin('p.event', 'e')
-        ->where('p.user = :user')
-        ->setParameter('user', $user)
-        ->getQuery()
-        ->getResult();
+        $participations = $em->getRepository(Participant::class)
+            ->createQueryBuilder('p')
+            ->leftJoin('p.event', 'e')
+            ->where('p.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
 
-    return $this->render('participant/my_participations.html.twig', [
-        'participations' => $participations,
-    ]);
-}
-#[Route('/ban/participant/{participantId}', name: 'ban_participant')]
+        return $this->render('participant/my_participations.html.twig', [
+            'participations' => $participations,
+        ]);
+    }
+    #[Route('/ban/participant/{participantId}', name: 'ban_participant')]
     public function banParticipant(int $participantId, ParticipantRepository $participantRepository): Response
     {
         $participant = $participantRepository->find($participantId);
@@ -134,18 +134,27 @@ public function MyParticipations(): Response
     public function acceptParticipant(int $participantId, ParticipantRepository $participantRepository): Response
     {
         $participant = $participantRepository->find($participantId);
-    
+
         if (!$participant) {
             throw $this->createNotFoundException('Participant not found.');
         }
-    
+
         $participant->setStatus(Participant::STATUS_ACCEPTED);
-    
+
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->flush();
-    
+
         return $this->redirectToRoute('event_participants', ['id' => $participant->getEvent()->getId()]);
     }
-    
 
+
+    #[Route('/Admin/participants/total', name: 'total_participants')]
+    public function getTotalParticipants(ParticipantRepository $participantRepository): Response
+    {
+        $totalParticipants = $participantRepository->count([]);
+
+        return $this->render('participant/dashboard.html.twig', [
+            'totalParticipants' => $totalParticipants
+        ]);
+    }
 }
