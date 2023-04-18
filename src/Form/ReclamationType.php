@@ -22,18 +22,12 @@ class ReclamationType extends AbstractType
                 'choices' => [
                     'Help' => 'Help',
                     'FeedBack' => 'Feedback',
-                    'harcèlement' => 'harcèlement',
+                    'Harcèlement' => 'Harcèlement',
 
                 ],
                 'label' => 'Select your status',
             ])
-            ->add('statut',ChoiceType::class, [
-                'choices' => [
-                    'Traité' => 'Traité',
-                    'Non Traité' => 'non Traité',
-                ],
-                'label' => 'Select your status',
-            ])
+         
             ->add('idUser',EntityType::class,['class'=>User::class,'choice_label'=>'nom'])
 
         ;

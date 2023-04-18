@@ -60,7 +60,7 @@ class Reclamation
      * @ORM\Column(name="statut", type="string", length=50, options={"default"="NULL"})
      * @Assert\NotBlank
      */
-    private $statut = '';
+    private $statut = 'Null';
 
     /**
      * @var \User
@@ -126,5 +126,8 @@ class Reclamation
         return $this;
     }
 
-
+    public function __toString(): string
+    {
+        return $message;
+    }
 }
