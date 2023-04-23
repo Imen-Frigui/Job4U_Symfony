@@ -31,192 +31,161 @@
 							{% for notification in notifications %}
 								<li class="notification-item" style="margin-left: 10px;">
 									{% if notification.status == 'pennding' %}
-										<i class="bi bi-exclamation-circle text-warning margin-left: 50px;"></i>
+										<i class="bi bi-exclamation-circle text-warning"></i>
+										<a href="{{ path('notification_show', {'eventId': notification.getEvent().getId(), 'notificationId':notification.id}) }}">
+											<span class="badge rounded-pill bg-primary p-2 ms-2">View</span>
+										</a>
 									{% elseif notification.status == 'banned' %}
-										<i class="bi bi-x-circle text-danger"></i>
+										<i class="bi bi-x-circle text-danger">
+											<a href="{{ path('notification_show', {'eventId': notification.getEvent().getId(), 'notificationId':notification.id}) }}">
+												<span class="badge rounded-pill bg-primary p-2 ms-2">View</span>
+											</a>
+										</i>
 									{% elseif notification.status == 'accepted' %}
-										<i class="bi bi-check-circle text-success"></i>
+										<i class="bi bi-check-circle text-success">
+											<a href="{{ path('notification_show', {'eventId': notification.getEvent().getId(), 'notificationId':notification.id}) }}">
+												<span class="badge rounded-pill bg-primary p-2 ms-2">View</span>
+											</a>
+										</i>
+
 									{% else %}
 										<i class="bi bi-info-circle text-primary"></i>
+										<a href="{{ path('notification_show', {'eventId': notification.getEvent().getId(), 'notificationId':notification.id}) }}">
+											<span class="badge rounded-pill bg-primary p-2 ms-2">View</span>
+										</a>
 									{% endif %}
 									<div>
 										<p>{{ notification.message }}</p>
 										<p>{{ notification.createdAt|date('d M Y, H:i') }}</p>
 									</div>
+
 								</li>
-								<li>
-									<hr class="dropdown-divider">
-								</li>
-							{% endfor %}
-							<li class="dropdown-footer">
-								<a href="">Show all notifications</a>
 							</li>
-						</ul>
-					</li>
-
-					<li>
-						<a class="nav-link scrollto active" href="{{ path('total_participants') }}">Dashboard</a>
-					</li>
-					<li>
-						<a class="nav-link scrollto active" href="{{ path('app_event')}}">Home</a>
-					</li>
-					<li>
-						<a class="nav-link scrollto" href="{{ path('event_list')}}">Events</a>
-					</li>
-					<li class="dropdown">
-						<a href="#">
-							<span>Event Management</span>
-							<i class="bi bi-chevron-down"></i>
-						</a>
-						<ul>
 							<li>
-								<a href="{{ path('my_participations')}}">My participations</a>
+								<hr class="dropdown-divider">
 							</li>
-
-							<li>
-								<a href="{{ path('my_events')}}">My event</li>
-							</li>
-						</a>
+						{% endfor %}
 					</li>
-					<li>
-						<a href="{{path('event_add')}}">Add New Event</a>
-					</li>
-				</ul>
-			</li>
-		</ul>
-		<i class="bi bi-list mobile-nav-toggle"></i>
-	</nav>
-	<!-- .navbar -->
-</body></html></div></header><!-- End Header -->{% endblock %}{% block body %}<section id="blog" class="blog"><div class="container aos-init aos-animate" data-aos="fade-up"><div class="row">
-<div class="col-lg-4">
-
-	<div class="sidebar">
-
-		<h3 class="sidebar-title">Search</h3>
-		<div class="sidebar-item search-form">
-			<form action="">
-				<input type="text">
-				<button type="submit">
-					<i class="bi bi-search"></i>
-				</button>
-			</form>
-		</div>
-		<!-- End sidebar search formn-->
-
-		<h3 class="sidebar-title">Categories</h3>
-		<div class="sidebar-item categories">
-
-			<ul>
-				{% for category in eventCategories %}
-					<li>
-						<a href="{{ path('event_category', {'id': category.id}) }}">
-							{{ category.name }}
-							<span>({{ category.eventCount }})</span>
-						</a>
-					</li>
-				{% endfor %}
+				</li>
+				<li class="dropdown-footer">
+					<a href="">Show all notifications</a>
+				</li>
 			</ul>
+		</li>
 
-		</div>
-		<!-- End sidebar categories-->
-
-		<h3 class="sidebar-title">Recent Posts</h3>
-		<div class="sidebar-item recent-posts">
-			{% for e in events  %}
-
-				<div class="post-item clearfix">
-					<img src="{{('assets/img/blog/blog-recent-5.jpg')}}" alt="">
-					<h4>
-						<a href="{{ path('event_show', {'id': e.id}) }}">{{e.title}}</a>
-					</h4>
-					<time datetime="2020-01-01">{{ e.date|date('d-m-Y') }}</time>
-				</div>
-			{% endfor %}
-		</div>
-		<!-- End sidebar recent posts-->
-
-		<h3 class="sidebar-title">Tags</h3>
-		<div class="sidebar-item tags">
+		<li>
+			<a class="nav-link scrollto active" href="{{ path('total_participants') }}">Dashboard</a>
+		</li>
+		<li>
+			<a class="nav-link scrollto active" href="{{ path('app_event')}}">Home</a>
+		</li>
+		<li>
+			<a class="nav-link scrollto" href="{{ path('event_list')}}">Events</a>
+		</li>
+		<li class="dropdown">
+			<a href="#">
+				<span>Event Management</span>
+				<i class="bi bi-chevron-down"></i>
+			</a>
 			<ul>
-				<li><a href="#">App</a></li>
-				<li><a href="#">IT</a></li>
-				<li><a href="#">Business</a></li>
-				<li><a href="#">Mac</a></li>
-				<li><a href="#">Design</a></li>
-				<li><a href="#">Office</a></li>
-				<li><a href="#">Creative</a></li>
-				<li><a href="#">Studio</a></li>
-				<li><a href="#">Smart</a></li>
-				<li><a href="#">Tips</a></li>
-				<li><a href="#">Marketing</a></li>
-			</ul>
-		</div>
-		<!-- End sidebar tags-->
+				<li>
+					<a href="{{ path('my_participations')}}">My participations</a>
+				</li>
 
-	</div>
-	<!-- End sidebar -->
-</div><!-- End blog sidebar --><div class="col-lg-8 entries">
-	{% for e in events  %}
-		<article class="entry">
+				<li>
+					<a href="{{ path('my_events')}}">My event</li>
+				</li>
+			</a>
+		</li>
+		<li>
+			<a href="{{path('event_add')}}">Add New Event</a>
+		</li>
+	</ul>
+</li></ul><i class="bi bi-list mobile-nav-toggle"></i></nav><!-- .navbar --></body></html></div></header><!-- End Header -->{% endblock %}{% block body %}<section id="blog" class="blog"><div class="container aos-init aos-animate" data-aos="fade-up"><div class="row"><div class="col-lg-4"><div class="sidebar"><h3 class="sidebar-title">Search</h3><div class="sidebar-item search-form">
+<form action="">
+	<input type="text">
+	<button type="submit">
+		<i class="bi bi-search"></i>
+	</button>
+</form></div><!-- End sidebar search formn--><h3 class="sidebar-title">Categories</h3><div class="sidebar-item categories">
 
-			<div class="entry-img">
-				<img src="{{ asset('asset1/img/blog/blog-2.jpg') }}" alt="" class="img-fluid">
-			</div>
-
-			<h2 class="entry-title">
-				<a href="{{ path('event_show', {'id': e.id}) }}">{{ e.title }}</a>
-			</h2>
-
-			<div class="entry-meta">
-				<ul>
-					<li class="d-flex align-items-center">
-						<i class="bi bi-person"></i>
-						<a href="{{ path('event_show', {'id': e.id}) }}">{{ e.getCreator().getNom() }}</a>
-					</li>
-					<li class="d-flex align-items-center">
-						<i class="bi bi-clock"></i>
-						<a href="{{ path('event_show', {'id': e.id}) }}">
-							<time datetime="2020-01-01">{{ e.date|date('d-m-Y H:i:s') }}</time>
-						</a>
-					</li>
-					<li class="d-flex align-items-center">
-						<i class="bi bi-geo-alt"></i>
-						<a href="{{ path('event_show', {'id': e.id}) }}">{{ e.location }}</a>
-					</li>
-				</ul>
-			</div>
-
-			<div class="entry-content">
-				<p>
-					{{ e.description }}
-				</p>
-				<div class="read-more">
-					<a href="{{ path('event_show', {'id': e.id}) }}">Show</a>
-				</div>
-				{% if e.getCreator().getId() == 2 %}
-					<td>
-						<a class="btn btn-success" href="{{ path('event_edit', {'id': e.id}) }}">Edit</a>
-					</td>
-					<td>
-						<a class="btn btn-success" href="{{ path('event_delete',{'id':e.id}) }}">Delete</a>
-					</td>
-				{% endif %}
-			</div>
-
-		</article>
+<ul>
+	{% for category in eventCategories %}
+		<li>
+			<a href="{{ path('event_category', {'id': category.id}) }}">
+				{{ category.name }}
+				<span>({{ category.eventCount }})</span>
+			</a>
+		</li>
 	{% endfor %}
-	<!-- End blog entry -->
+</ul></div><!-- End sidebar categories--><h3 class="sidebar-title">Recent Posts</h3><div class="sidebar-item recent-posts">
+{% for e in events  %}
 
+	<div class="post-item clearfix">
+		<img src="{{('assets/img/blog/blog-recent-5.jpg')}}" alt="">
+		<h4>
+			<a href="{{ path('event_show', {'id': e.id}) }}">{{e.title}}</a>
+		</h4>
+		<time datetime="2020-01-01">{{ e.date|date('d-m-Y') }}</time>
+	</div>
+{% endfor %}</div><!-- End sidebar recent posts--><h3 class="sidebar-title">Tags</h3><div class="sidebar-item tags">
+<ul>
+	<li><a href="#">App</a></li>
+	<li><a href="#">IT</a></li>
+	<li><a href="#">Business</a></li>
+	<li><a href="#">Mac</a></li>
+	<li><a href="#">Design</a></li>
+	<li><a href="#">Office</a></li>
+	<li><a href="#">Creative</a></li>
+	<li><a href="#">Studio</a></li>
+	<li><a href="#">Smart</a></li>
+	<li><a href="#">Tips</a></li>
+	<li><a href="#">Marketing</a></li>
+</ul></div><!-- End sidebar tags--></div><!-- End sidebar --></div><!-- End blog sidebar --><div class="col-lg-8 entries">{% for e in events  %}<article class="entry">
 
-	<!-- End blog entries list -->
-</div><!-- End blog sidebar --></div><div class="blog-pagination">
-<ul class="justify-content-center">
-	{% if events.getTotalItemCount() > 1 %}
-		{% set paginationData = events.getPaginationData() %}
-		{% for page in paginationData.pagesInRange %}
-			<li class="{{ (page == paginationData.current) ? 'active' : '' }}">
-				<a href="{{ url(route, {pageParameterName: 'page', page: page}) }}">{{ page }}</a>
-			</li>
-		{% endfor %}
+<div class="entry-img">
+	<img src="{{ asset('asset1/img/blog/blog-2.jpg') }}" alt="" class="img-fluid">
+</div>
+
+<h2 class="entry-title">
+	<a href="{{ path('event_show', {'id': e.id}) }}">{{ e.title }}</a>
+</h2>
+
+<div class="entry-meta">
+	<ul>
+		<li class="d-flex align-items-center">
+			<i class="bi bi-person"></i>
+			<a href="{{ path('event_show', {'id': e.id}) }}">{{ e.getCreator().getNom() }}</a>
+		</li>
+		<li class="d-flex align-items-center">
+			<i class="bi bi-clock"></i>
+			<a href="{{ path('event_show', {'id': e.id}) }}">
+				<time datetime="2020-01-01">{{ e.date|date('d-m-Y H:i:s') }}</time>
+			</a>
+		</li>
+		<li class="d-flex align-items-center">
+			<i class="bi bi-geo-alt"></i>
+			<a href="{{ path('event_show', {'id': e.id}) }}">{{ e.location }}</a>
+		</li>
+	</ul>
+</div>
+
+<div class="entry-content">
+	<p>
+		{{ e.description }}
+	</p>
+	<div class="read-more">
+		<a href="{{ path('event_show', {'id': e.id}) }}">Show</a>
+	</div>
+	{% if e.getCreator().getId() == 2 %}
+		<td>
+			<a class="btn btn-success" href="{{ path('event_edit', {'id': e.id}) }}">Edit</a>
+		</td>
+		<td>
+			<a class="btn btn-success" href="{{ path('event_delete',{'id':e.id}) }}">Delete</a>
+		</td>
 	{% endif %}
-</ul></div></div></section>{% endblock %}
+</div></article>{% endfor %}<!-- End blog entry --><!-- End blog entries list --></div><!-- End blog sidebar --></div><div class="blog-pagination"><ul class="justify-content-center">{% if events.getTotalItemCount() > 1 %}{% set paginationData = events.getPaginationData() %}{% for page in paginationData.pagesInRange %}
+<li class="{{ (page == paginationData.current) ? 'active' : '' }}">
+	<a href="{{ url(route, {pageParameterName: 'page', page: page}) }}">{{ page }}</a>
+</li>{% endfor %}{% endif %}</ul></div></div></section>{% endblock %}
