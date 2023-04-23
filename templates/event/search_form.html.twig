@@ -1,0 +1,9 @@
+<div class="sidebar-item search-form">
+	{{ form_start(form, {'action': path('search_events')}) }}
+	{{ form_widget(form.title, {'attr': {'placeholder': 'Search by title'}}) }}
+	{{ form_widget(form.category, {'empty_data': null, 'placeholder': 'All categories'}) }}
+	<button type="submit">
+		<i class="bi bi-search"></i>
+	</button>
+	{{ form_end(form) }}
+</div>

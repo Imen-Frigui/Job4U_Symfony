@@ -6,8 +6,10 @@ use App\Entity\Event;
 use App\Entity\EventCategory;
 use App\Form\EventType;
 use App\Entity\User;
+use Symfony\Component\Form\Extension\Core\Type\EntityType;
 use App\Repository\EventCategoryRepository;
 use App\Repository\EventRepository;
+use SearchEventType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -108,12 +110,14 @@ class EventController extends AbstractController
     public function show(Event $event, EventCategoryRepository $eventCategoryRepository, EventRepository $eventRepository): Response
     {
         $events = $eventRepository->findAll();
+        $form = $this->createForm(SearchEventType::class);
 
         $eventCategories  = $eventCategoryRepository->findAll();
         return $this->render('event/show.html.twig', [
             'events' => $events,
             'event' => $event,
             'eventCategories' => $eventCategories,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -162,6 +166,44 @@ class EventController extends AbstractController
         return $this->render('event/show.html.twig', [
             'category' => $eventCategory,
             'count' => $count,
+        ]);
+    }
+
+    #[Route('/events/search', name: 'search_events')]
+    public function search(Request $request): Response
+    {
+        $form = $this->createForm(SearchEventType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $title = $data['title'];
+            $category = $data['category'];
+
+            if ($title !== null) {
+                $events = $this->getDoctrine()->getRepository(Event::class)->findByTitleAndCategory($title, $category);
+            } elseif ($category !== null) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $events = $entityManager->getRepository(Event::class)->findBy(['eventCategory' => $category]);
+            } else {
+                $entityManager = $this->getDoctrine()->getManager();
+                $events = $entityManager->getRepository(Event::class)->findAll();
+            }
+
+            return $this->render('event/search_results.html.twig', [
+                'events' => $events,
+                'form' => $form->createView(),
+            ]);
+        }
+        // Determine the template to render based on the request origin
+        $referer = $request->headers->get('referer');
+        $template = 'event/list.html.twig';
+        if (strpos($referer, '/events/') !== false) {
+            $template = 'event/show.html.twig';
+        }
+
+        return $this->render($template, [
+            'form' => $form->createView(),
         ]);
     }
 }

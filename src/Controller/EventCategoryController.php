@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\EventCategory;
 use App\Form\EventCategoryType;
 use App\Repository\EventCategoryRepository;
+use App\Repository\EventRepository;
+use SearchEventType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
