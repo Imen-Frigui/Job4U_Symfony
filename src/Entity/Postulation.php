@@ -16,15 +16,12 @@ class Postulation
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $idPos=null;
- 
-
-
 
     #[ORM\Column(length:255)]
-    #[Assert\NotBlank(message:"Simple User is required")]
-    private ?string $simpleUser=null;
+    #[Assert\NotBlank(message:"adresse is required")]
+    private ?string $adresse=null;
 
-   
+ 
     #[ORM\Column(length:50)]
     #[Assert\NotBlank(message:"Email is required")]
     #[Assert\Email(message:"The email '{{ value }}' is not a valid email ")]
@@ -35,6 +32,12 @@ class Postulation
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Assert\NotBlank(message: "Date of the event not assigned")]
     private ?\DateTimeInterface $date_pos = null;
+
+    #[ORM\ManyToOne(inversedBy: 'creator')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Users $creator = null;
+
+    
 
     
     public function __construct()
@@ -50,21 +53,18 @@ class Postulation
     {
         return $this->idPos;
     }
-
-
-  
-
-    public function getSimpleUser(): ?string
+    public function getAdresse(): ?string
     {
-        return $this->simpleUser;
+        return $this->adresse;
     }
 
-    public function setSimpleUser(string $simpleUser): self
+    public function setAdresse(string $adresse): self
     {
-        $this->simpleUser = $simpleUser;
+        $this->adresse = $adresse;
 
         return $this;
     }
+   
 
     public function getEmail(): ?string
     {
@@ -88,6 +88,19 @@ class Postulation
 
         return $this;
     }
+
+    public function getCreator(): ?Users
+    {
+        return $this->creator;
+    }
+
+    public function setCreator(?Users $creator): self
+    {
+        $this->creator = $creator;
+
+        return $this;
+    }
+
 
     /**
      * @return Collection<int, societe>
@@ -118,6 +131,9 @@ class Postulation
 
         return $this;
     }
+
+   
+    
 
    
 

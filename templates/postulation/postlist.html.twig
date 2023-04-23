@@ -1,0 +1,120 @@
+{% extends 'base1.html.twig' %}
+
+{% block body %}
+	<section id="blog" class="blog">
+		<div class="container aos-init aos-animate" data-aos="fade-up">
+			<div class="row">
+				<div class="col-lg-8 entries">
+					{% for pos in p %}
+						<article class="entry">
+
+							<div class="entry-img">
+								<img src="{{ asset('asset1/img/blog/blog-2.jpg') }}" alt="" class="img-fluid">
+							</div>
+
+							<h2 class="entry-title">
+								<a href="{{ path('display_pos', {'idPos': pos.idPos}) }}">{{ pos.idPos }}</a>
+							</h2>
+
+							<div class="entry-meta">
+								<ul>
+									<li class="d-flex align-items-center">
+										<i class="bi bi-person"></i>
+										<a href="{{ path('display_pos', {'idPos': pos.idPos}) }}">{{ pos.getCreator().getNom() }}</a>
+									</li>
+									<li class="d-flex align-items-center">
+										<i class="bi bi-clock"></i>
+										<a href="{{ path('display_pos', {'idPos': pos.idPos}) }}">
+											<time datetime="2020-01-01">{{ pos.date|date('d-m-Y H:i:s') }}</time>
+										</a>
+									</li>
+			
+								</ul>
+							</div>
+
+							<div class="entry-content">
+								
+								<div class="read-more">
+									<a href="{{ path('event_show', {'idPos': pos.id}) }}">Show</a>
+								</div>
+								{% if pos.getCreator().getId() == 1 %}
+									<td>
+										<a class="btn btn-success" href="{{ path('postulation_update', {'idPos': pos.idPos}) }}">Edit</a>
+									</td>
+									<td>
+										<a class="btn btn-success" href="{{ path('remove_pos',{'idPos':pos.idPos}) }}">Delete</a>
+									</td>
+								{% endif %}
+							</div>
+
+						</article>
+					{% endfor %}
+					<!-- End blog entry -->
+
+
+					<div class="blog-pagination">
+						<ul class="justify-content-center">
+							<li>
+								<a href="#">1</a>
+							</li>
+							<li class="active">
+								<a href="#">2</a>
+							</li>
+							<li>
+								<a href="#">3</a>
+							</li>
+						</ul>
+					</div>
+
+				</div>
+				<!-- End blog entries list -->
+
+				<div class="col-lg-4">
+
+					<div class="sidebar">
+
+						<h3 class="sidebar-title">Search</h3>
+						<div class="sidebar-item search-form">
+							<form action="">
+								<input type="text">
+								<button type="submit">
+									<i class="bi bi-search"></i>
+								</button>
+							</form>
+						</div>
+						<!-- End sidebar search formn-->
+
+						
+					
+						<!-- End sidebar recent posts-->
+
+						<h3 class="sidebar-title">Tags</h3>
+						<div class="sidebar-item tags">
+							<ul>
+								<li><a href="#">App</a></li>
+								<li><a href="#">IT</a></li>
+								<li><a href="#">Business</a></li>
+								<li><a href="#">Mac</a></li>
+								<li><a href="#">Design</a></li>
+								<li><a href="#">Office</a></li>
+								<li><a href="#">Creative</a></li>
+								<li><a href="#">Studio</a></li>
+								<li><a href="#">Smart</a></li>
+								<li><a href="#">Tips</a></li>
+								<li><a href="#">Marketing</a></li>
+							</ul>
+						</div>
+						<!-- End sidebar tags-->
+
+					</div>
+					<!-- End sidebar -->
+
+				</div>
+				<!-- End blog sidebar -->
+
+			</div>
+
+		</div>
+	</section>
+
+{% endblock %}

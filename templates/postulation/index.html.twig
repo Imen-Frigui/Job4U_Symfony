@@ -19,7 +19,7 @@
                     <thead>
                     <tr>    
                     
-                    <th> Simple user</th> 
+                    
                     <th>Email </th>
                     <th>Date </th>
                     
@@ -29,7 +29,7 @@
                         {%for pos in p  %}
                         <tr>
                         
-                        <td >{{pos.simpleUser}}</td>
+                        
                         <td >{{pos.email}}</td>
                         <td >{{pos.getDatePos()|date('Y-m-d') }}</td>
                         <td>
@@ -54,4 +54,5 @@
 
 
 </div>
+
 {% endblock %}

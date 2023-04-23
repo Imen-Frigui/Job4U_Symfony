@@ -22,9 +22,11 @@ class PosType extends AbstractType
     {
         $builder
             
-            ->add('simpleUser')
+            ->add('adresse')
             ->add('email')
             ->add('date_pos',DateTimeType::class)
+            ->add('creator')
+          
            // ->add('ajouter',SumbitType::class ,['label' => 'ajouter'],)
             ->getForm()
         ;

@@ -1,0 +1,39 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}Postulations{% endblock %}
+
+{% block body %}
+    <h1>postulations</h1>
+		{% for pos in p %}
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>IdPos</th>
+                <td>{{pos.idPos }}</td>
+            </tr>
+            
+            <tr>
+                <th>Email</th>
+                <td>{{pos.email }}</td>
+            </tr>
+            <tr>
+                <th>date</th>
+                <td>{{ pos.getDatePos()|date('Y-m-d') }}</td>
+            </tr>
+            <tr> 
+            <a href="{{ path('total_Postulations1') }}">back to list</a>
+       
+    
+    </tr>
+    <tr> 
+<a href="{{ path('postulation_update', {'idPos': pos.idPos}) }}">Edit</a>
+    
+    
+</tr>
+        </tbody>
+	{% endfor %}
+    </table>
+
+
+    
+{% endblock %}

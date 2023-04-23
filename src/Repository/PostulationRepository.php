@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Postulation;
+
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,6 +38,12 @@ class PostulationRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+    public function countPostulations(): int
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb->select('COUNT(p.idPos)');
+        return $qb->getQuery()->getSingleScalarResult();
     }
 
 //    /**
