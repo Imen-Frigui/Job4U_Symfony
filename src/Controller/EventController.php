@@ -14,17 +14,24 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 class EventController extends AbstractController
 {
     #[Route('/', name: 'app_event')]
-    public function index(EventRepository $eventRepository, EventCategoryRepository $eventCategoryRepository): Response
+    public function index(EventRepository $eventRepository, EventCategoryRepository $eventCategoryRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $events = $eventRepository->findAll();
+        $events = $paginator->paginate(
+            $eventRepository->findAll(),
+            $request->query->getInt('page', 1), // Get the page parameter or default to 1
+            2 // Number of items per page
+        );
         $eventCategories  = $eventCategoryRepository->findAll();
-
         return $this->render('event/list.html.twig', [
-            'events' => $events, 'eventCategories' => $eventCategories,
+            'eventCategories' => $eventCategories,
+            'events' => $events,
+            'pageCount' => $events->getPageCount(),
+            'route' => 'app_event'
         ]);
     }
 
