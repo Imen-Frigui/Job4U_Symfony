@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Event;
+use App\Entity\Notification;
 use App\Entity\Participant;
 use App\Entity\User;
+use App\Repository\NotificationRepository;
 use App\Repository\ParticipantRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,6 +48,17 @@ class ParticipantController extends AbstractController
 
             // Persist the new participant to the database
             $em->persist($participant);
+
+            // Create notification for the participant
+            $notification = new Notification();
+            $notification->setMessage('Wating For to be Accepted', $participant->getEvent()->getTitle())
+                ->setUser($participant->getUser())
+                ->setEvent($participant->getEvent())
+                ->setStatus(Notification::STATUS_PENDING)
+                ->setHasRead(false)
+                ->setCreatedAt(new \DateTime());
+            $em->persist($notification);
+
             $em->flush();
 
             $message = 'You have successfully joined the event';
@@ -97,8 +110,14 @@ class ParticipantController extends AbstractController
     }
 
     #[Route('/my-participations', name: 'my_participations')]
-    public function MyParticipations(): Response
+    public function MyParticipations(NotificationRepository $notificationRepository): Response
     {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(User::class)->find(2);
+        $notifications = $notificationRepository->findBy([
+            'user' => $user,
+            'hasRead' => false,
+        ]);
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository(User::class)->find(2);
 
@@ -111,6 +130,7 @@ class ParticipantController extends AbstractController
             ->getResult();
 
         return $this->render('participant/my_participations.html.twig', [
+            'notifications' => $notifications,
             'participations' => $participations,
         ]);
     }
@@ -126,6 +146,18 @@ class ParticipantController extends AbstractController
         $participant->setStatus(Participant::STATUS_BANNED);
 
         $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($participant);
+
+        // Create notification for the participant
+        $notification = new Notification();
+        $notification->setMessage('You ve been Banned from the event', $participant->getEvent()->getTitle())
+            ->setUser($participant->getUser())
+            ->setEvent($participant->getEvent())
+            ->setStatus(Notification::STATUS_BANNED)
+            ->setHasRead(false)
+            ->setCreatedAt(new \DateTime());
+        $entityManager->persist($notification);
+
         $entityManager->flush();
 
         return $this->redirectToRoute('event_participants', ['id' => $participant->getEvent()->getId()]);
@@ -142,6 +174,18 @@ class ParticipantController extends AbstractController
         $participant->setStatus(Participant::STATUS_ACCEPTED);
 
         $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($participant);
+
+        // Create notification for the participant
+        $notification = new Notification();
+        $notification->setMessage('Your participation request has been accepted')
+            ->setUser($participant->getUser())
+            ->setEvent($participant->getEvent())
+            ->setStatus(Notification::STATUS_ACCEPTED)
+            ->setHasRead(false)
+            ->setCreatedAt(new \DateTime());
+        $entityManager->persist($notification);
+
         $entityManager->flush();
 
         return $this->redirectToRoute('event_participants', ['id' => $participant->getEvent()->getId()]);

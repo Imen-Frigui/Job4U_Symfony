@@ -52,9 +52,13 @@ class Event
     #[Assert\NotBlank(message: "The event category is not assigned")]
     private ?EventCategory $eventCategory = null;
 
+    #[ORM\OneToMany(mappedBy: 'event', targetEntity: Notification::class)]
+    private Collection $notifications;
+
     public function __construct()
     {
         $this->participants = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -160,6 +164,36 @@ class Event
     public function setEventCategory(?EventCategory $eventCategory): self
     {
         $this->eventCategory = $eventCategory;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Notification>
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): self
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications->add($notification);
+            $notification->setEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notification $notification): self
+    {
+        if ($this->notifications->removeElement($notification)) {
+            // set the owning side to null (unless already changed)
+            if ($notification->getEvent() === $this) {
+                $notification->setEvent(null);
+            }
+        }
 
         return $this;
     }
