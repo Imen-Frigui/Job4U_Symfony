@@ -1,0 +1,21 @@
+{{form_start(form,{'attr':{'class':'form-horizontal',novalidate:'novalidate'}})}}
+<table class="table">
+                
+                  <tr>
+                    <td>{{form_label(form.messageRep,"Message")}}</td>
+<td>{{form_widget(form.messageRep,{ 'attr': {'class': 'form-control my-2'} })}}</td>              
+                    <td>{{form_errors(form.messageRep)}}</td>
+                  </tr>
+
+       
+    
+                                    <tr>
+                    <td>{{form_label(form.idReclamation,"idReclamation")}}</td>
+<td>{{form_widget(form.idReclamation,{ 'attr': {'class': 'form-control my-2'} })}}</td>        
+                    <td>{{form_errors(form.idReclamation)}}</td>
+                  </tr>
+             
+                
+              </table>
+    <button class="btn btn-primary">{{ button_label|default('Sauvegarder') }}</button>
+{{ form_end(form) }}

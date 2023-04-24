@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Reponse{% endblock %}
+
+{% block body %}
+    <h1>Liste des Reponses</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdReponse</th>
+                <th>IdReclamation</th>
+                <th>MessageRep</th>
+                <th>DateRep</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reponse in reponses %}
+            <tr>
+                <td>{{ reponse.idReponse }}</td>
+                <td>{{ reponse.idReclamation.idReclamation }}</td>
+                <td>{{ reponse.messageRep }}</td>
+                <td>{{ reponse.dateRep|date('d-m-Y')  }}</td>
+                <td>
+                    <a href="{{ path('app_reponse_show', {'idReponse': reponse.idReponse}) }}"><button class="btn btn-secondary">Details</button></a>
+                    <a href="{{ path('app_reponse_edit', {'idReponse': reponse.idReponse}) }}"><button class="btn btn-warning">Modifier</button></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_reponse_new') }}"><button class="btn btn-primary">Créer</button></a>
+{% endblock %}
