@@ -70,4 +70,21 @@ class PostulationRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function findByCriteria(Postulation $postulation): array
+{
+    $qb = $this->createQueryBuilder('p');
+
+    if ($postulation->getEmail()) {
+        $qb->andWhere('p.email LIKE :email')
+            ->setParameter('email', '%'.$postulation->getEmail().'%');
+    }
+
+    if ($postulation->getCreator()) {
+        $qb->andWhere('p.creator = :creator')
+            ->setParameter('creator', $postulation->getCreator());
+    }
+
+    return $qb->getQuery()->getResult();
+}
+
 }

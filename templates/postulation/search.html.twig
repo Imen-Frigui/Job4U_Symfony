@@ -1,0 +1,25 @@
+{% extends 'base1.html.twig' %}
+
+{% block body %}
+    <h1>Search</h1>
+    {{ form_start(form) }}
+        {{ form_row(form.email) }}
+       
+        {{ form_row(form.creator) }}
+        <button type="submit">Search</button>
+    {{ form_end(form) }}
+
+    {% if results is not empty %}
+    <h2>Search Results:</h2>
+    <ul>
+        {% for postulation in results %}
+            <li>
+                <h3>{{ postulation.email}}</h3>
+                
+                <p>Creator: {{ postulation.creator.nom }}</p>
+               
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endblock %}

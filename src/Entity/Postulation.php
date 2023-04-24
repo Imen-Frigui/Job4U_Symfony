@@ -132,7 +132,10 @@ class Postulation
         return $this;
     }
 
-   
+    public function __toString(): string
+    {
+        return $this->getEmail(); // or any other property you want to output
+    }
     
 
    
