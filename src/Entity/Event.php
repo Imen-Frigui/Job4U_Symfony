@@ -26,7 +26,7 @@ class Event
     #[Assert\NotBlank(message: "Description field is empty")]
     #[Assert\Length(
         min: 7,
-        max: 100,
+        max: 255,
         minMessage: "Description must be at least {{ min }} characters long",
         maxMessage: "Description cannot be longer than {{ max }} characters",
     )]
