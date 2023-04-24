@@ -1,0 +1,38 @@
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('build/app.css') }}"/>
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{ asset('build/runtime.js') }}"></script>
+	<script src="{{ asset('build/vendors~app.js') }}"></script>
+	<script src="{{ asset('build/app.js') }}"></script>
+{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/fullcalendar.min.css') }}"/>
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{ asset('js/moment.min.js') }}"></script>
+	<script src="{{ asset('js/fullcalendar.min.js') }}"></script>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+var calendarEl = document.getElementById('calendar');
+var calendar = new FullCalendar.Calendar(calendarEl, {
+initialView: 'dayGridMonth',
+// ... other options and callbacks
+});
+calendar.render();
+});
+	</script>
+{% endblock %}
+
+{% block body %}
+	<div id="calendar"></div>
+{% endblock %}
+
+
+{% block body %}
+	<div id="calendar"></div>
+{% endblock %}
