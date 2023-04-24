@@ -1,30 +1,22 @@
-{% include 'temp1.html.twig' %}
+{% include 'base.html.twig' %}
 
-{% block header %}
-{% endblock %}
-{% block body %}
-
-<table> 
-<h5 class="card-title">Liste of postulations</h5>
+<div>
+    <img src="{{ 'asset1/img/LOGO.png' }}" alt="Example Image">
+    <h5 class="card-title">Liste of postulations</h5>
+    <table> 
         <thead>
-        <tr>
-         
-            <th scope="col">email</th>
-            <th scope="col">date</th>
-
-        </tr>
-        </thead>
-   <tbody>
-    {%for pos in p  %}
-    <tr>
-    
-    
-    <td >{{pos.email}}</td>
-    <td >{{pos.getDatePos()|date('Y-m-d') }}</td>
-
-
+            <tr>
+                <th scope="col">email</th>
+                <th scope="col">date</th>
             </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% endblock %}
+        </thead>
+        <tbody>
+            {% for pos in p %}
+                <tr>
+                    <td>{{ pos.email }}</td>
+                    <td>{{ pos.getDatePos()|date('Y-m-d') }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
