@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	{#<div class="container-fluid">#}
+	<div
+		class="row" style="margin-left: 300px;margin-right: 50px;margin-top: 100px;">
+
+		{#<div class="row">#}
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<h4>Event Participation Statistics</h4>
+				</div>
+				<div class="card-body">
+					<div id="reportsChart" style="min-height: 365px;"></div>
+					{% block javascripts %}
+						<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+						{{ parent() }}
+
+						<script>
+							var eventData = {{ eventData|raw }};
+
+var options = {
+chart: {
+type: 'line',
+height: 350
+},
+series: [
+{
+name: "Accepted",
+data: []
+}, {
+name: "Pending",
+data: []
+}, {
+name: "Banned",
+data: []
+}
+],
+stroke: {
+width: [
+2, 2, 2
+],
+curve: 'smooth'
+},
+xaxis: {
+categories: []
+},
+legend: {
+position: 'top',
+horizontalAlign: 'right',
+floating: true,
+offsetY: -25,
+offsetX: -5
+},
+responsive: [
+{
+breakpoint: 600,
+options: {
+legend: {
+offsetY: -30,
+offsetX: -10
+}
+}
+}
+]
+};
+
+for (var i = 0; i < eventData.length; i++) {
+options.series[0].data.push(eventData[i].accepted);
+options.series[1].data.push(eventData[i].pending);
+options.series[2].data.push(eventData[i].banned);
+options.xaxis.categories.push(eventData[i].title);
+}
+
+var chart = new ApexCharts(document.querySelector("#reportsChart"), options);
+chart.render();
+						</script>
+					{% endblock %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>{% endblock %}

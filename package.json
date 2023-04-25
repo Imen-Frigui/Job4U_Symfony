@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "apexcharts": "^3.39.0",
     "bootstrap": "^5.2.3",
     "fullcalendar": "^3.10.2"
   }

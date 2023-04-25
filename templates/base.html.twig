@@ -6,10 +6,17 @@
 			{% block title %}Welcome!
 			{% endblock %}
 		</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.28.2/dist/apexcharts.min.css">
+		<link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}">
+
 		<link
 		rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
 		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
 		{% block stylesheets %}
+			<link href="{{ asset('path/to/apexcharts.css') }}" rel="stylesheet">
+			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.28.2/dist/apexcharts.min.css">
+			<link
+			rel="stylesheet" href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}">
 
 			<!-- Google Fonts -->
 			<link href="https://fonts.gstatic.com" rel="preconnect">
@@ -46,6 +53,9 @@
 		{% endblock %}
 	</head>
 	{% block header %}
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.28.2/dist/apexcharts.min.css">
+		<link
+		rel="stylesheet" href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}">
 		<!-- ======= Header ======= -->
 		<header id="header" class="header fixed-top d-flex align-items-center">
 
@@ -306,7 +316,7 @@
 
 			<ul class="sidebar-nav" id="sidebar-nav">
 				<li class="nav-item">
-					<a class="nav-link " href="{{ path('total_participants') }}">
+					<a class="nav-link " href="{{ path('event_list_stats') }}">
 						<i class="bi bi-grid"></i>
 						<span>Dashboard</span>
 					</a>
@@ -340,86 +350,86 @@
 					</ul>
 				</li>
 				<!--
-																																																																																<li class="nav-item">
-																																																																																	<a class="nav-link " href="index.html">
-																																																																																		<i class="bi bi-grid"></i>
-																																																																																		<span>Gestion des utilisateurs</span>
-																																																																																	</a>
-																																																																																</li>-->
+																																																																																																																<li class="nav-item">
+																																																																																																																	<a class="nav-link " href="index.html">
+																																																																																																																		<i class="bi bi-grid"></i>
+																																																																																																																		<span>Gestion des utilisateurs</span>
+																																																																																																																	</a>
+																																																																																																																</li>-->
 				<!-- End Dashboard Nav -->
 				<!-- 
-																																																																																<li class="nav-item">
-																																																																																	<a class="nav-link " href="index.html">
-																																																																																		<i class="bi bi-grid"></i>
-																																																																																		<span>Gestion des reclamations</span>
-																																																																																	</a>
-																																																																																</li>-->
+																																																																																																																<li class="nav-item">
+																																																																																																																	<a class="nav-link " href="index.html">
+																																																																																																																		<i class="bi bi-grid"></i>
+																																																																																																																		<span>Gestion des reclamations</span>
+																																																																																																																	</a>
+																																																																																																																</li>-->
 				<!-- End Dashboard Nav 
-																																																																																<li class="nav-item">
-																																																																																	<a class="nav-link " href="index.html">
-																																																																																		<i class="bi bi-grid"></i>
-																																																																																		<span>Gestion des offres</span>
-																																																																																	</a>
-																																																																																</li>-->
+																																																																																																																<li class="nav-item">
+																																																																																																																	<a class="nav-link " href="index.html">
+																																																																																																																		<i class="bi bi-grid"></i>
+																																																																																																																		<span>Gestion des offres</span>
+																																																																																																																	</a>
+																																																																																																																</li>-->
 				<!-- End Dashboard Nav 
-																																																																																<li class="nav-item">
-																																																																																	<a class="nav-link " href="index.html">
-																																																																																		<i class="bi bi-grid"></i>
-																																																																																		<span>Gestion des postulations</span>
-																																																																																	</a>
-																																																																																</li>-->
+																																																																																																																<li class="nav-item">
+																																																																																																																	<a class="nav-link " href="index.html">
+																																																																																																																		<i class="bi bi-grid"></i>
+																																																																																																																		<span>Gestion des postulations</span>
+																																																																																																																	</a>
+																																																																																																																</li>-->
 				<!-- End Dashboard Nav 
-																																																																																<li class="nav-item">
-																																																																																	<a class="nav-link " href="index.html">
-																																																																																		<i class="bi bi-grid"></i>
-																																																																																		<span>Gestion des publications</span>
-																																																																																	</a>
-																																																																																</li>-->
+																																																																																																																<li class="nav-item">
+																																																																																																																	<a class="nav-link " href="index.html">
+																																																																																																																		<i class="bi bi-grid"></i>
+																																																																																																																		<span>Gestion des publications</span>
+																																																																																																																	</a>
+																																																																																																																</li>-->
 				<!-- End Dashboard Nav 
-																																																																																<li class="nav-item">
-																																																																																	<a class="nav-link " href="index.html">
-																																																																																		<i class="bi bi-grid"></i>
-																																																																																		<span>Gestion des événements</span>
-																																																																																	</a>
-																																																																																</li>-->
+																																																																																																																<li class="nav-item">
+																																																																																																																	<a class="nav-link " href="index.html">
+																																																																																																																		<i class="bi bi-grid"></i>
+																																																																																																																		<span>Gestion des événements</span>
+																																																																																																																	</a>
+																																																																																																																</li>-->
 				<!-- End Dashboard Nav
-																																																																												
-																																																																												
-																																																																																<li class="nav-item">
-																																																																																	<a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-																																																																																		<i class="bi bi-bar-chart"></i>
-																																																																																		<span>Gestions des Statistiques</span>
-																																																																																		<i class="bi bi-chevron-down ms-auto"></i>
-																																																																																	</a>
-																																																																																	<ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-																																																																																		<li>
-																																																																																			<a href="charts-chartjs.html">
-																																																																																				<i class="bi bi-circle"></i>
-																																																																																				<span>Statistiques User</span>
-																																																																																			</a>
-																																																																																		</li>
-																																																																																		<li>
-																																																																																			<a href="charts-apexcharts.html">
-																																																																																				<i class="bi bi-circle"></i>
-																																																																																				<span>ApexCharts</span>
-																																																																																			</a>
-																																																																																		</li>
-																																																																																		<li>
-																																																																																			<a href="charts-echarts.html">
-																																																																																				<i class="bi bi-circle"></i>
-																																																																																				<span>ECharts</span>
-																																																																																			</a>
-																																																																																		</li>
-																																																																																	</ul>
-																																																																																</li> -->
+																																																																																																												
+																																																																																																												
+																																																																																																																<li class="nav-item">
+																																																																																																																	<a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+																																																																																																																		<i class="bi bi-bar-chart"></i>
+																																																																																																																		<span>Gestions des Statistiques</span>
+																																																																																																																		<i class="bi bi-chevron-down ms-auto"></i>
+																																																																																																																	</a>
+																																																																																																																	<ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+																																																																																																																		<li>
+																																																																																																																			<a href="charts-chartjs.html">
+																																																																																																																				<i class="bi bi-circle"></i>
+																																																																																																																				<span>Statistiques User</span>
+																																																																																																																			</a>
+																																																																																																																		</li>
+																																																																																																																		<li>
+																																																																																																																			<a href="charts-apexcharts.html">
+																																																																																																																				<i class="bi bi-circle"></i>
+																																																																																																																				<span>ApexCharts</span>
+																																																																																																																			</a>
+																																																																																																																		</li>
+																																																																																																																		<li>
+																																																																																																																			<a href="charts-echarts.html">
+																																																																																																																				<i class="bi bi-circle"></i>
+																																																																																																																				<span>ECharts</span>
+																																																																																																																			</a>
+																																																																																																																		</li>
+																																																																																																																	</ul>
+																																																																																																																</li> -->
 				<!-- End Charts Nav -->
 				<!--
-																																																																																<li class="nav-item">
-																																																																																	<a class="nav-link collapsed" href="pages-register.html">
-																																																																																		<i class="bi bi-card-list"></i>
-																																																																																		<span>Telechrager PDF</span>
-																																																																																	</a>
-																																																																																</li>-->
+																																																																																																																<li class="nav-item">
+																																																																																																																	<a class="nav-link collapsed" href="pages-register.html">
+																																																																																																																		<i class="bi bi-card-list"></i>
+																																																																																																																		<span>Telechrager PDF</span>
+																																																																																																																	</a>
+																																																																																																																</li>-->
 				<!-- End Register Page Nav -->
 					<li class="nav-heading"> Pages</li>
 
@@ -457,7 +467,12 @@
 		</aside>
 		<!-- End Sidebar-->
 	{% endblock %}
-	{% block body %}{% endblock %}
+	{% block body %}
+		<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.28.2/dist/apexcharts.min.js"></script>
+		<script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}"></script>
+		<script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+	{% endblock %}
 
 	{% block footer %}
 		<!-- ======= Footer ======= -->

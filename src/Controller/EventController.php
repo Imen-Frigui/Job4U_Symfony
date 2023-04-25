@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class EventController extends AbstractController
 {
@@ -210,6 +210,66 @@ class EventController extends AbstractController
         ]);
     }
 
+    #[Route('/admin/stats', name: 'eventstats')]
+    public function eventStat(Request $request): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        // Get all events
+        $events = $entityManager->getRepository(Event::class)->findAll();
+
+        // Get the selected event, if there is one
+        $selectedEventId = $request->query->get('event');
+
+        // Get the data for the selected event, if there is one
+        $selectedEvent = null;
+        $participantStatusCounts = [];
+        if ($selectedEventId) {
+            $selectedEvent = $entityManager->getRepository(Event::class)->find($selectedEventId);
+            if ($selectedEvent) {
+                // Count the number of participants for each status for the selected event
+                $participants = $selectedEvent->getParticipants();
+                $participantStatusCounts = [
+                    'accepted' => 0,
+                    'pending' => 0,
+                    'banned' => 0,
+                ];
+                foreach ($participants as $participant) {
+                    $status = $participant->getStatus();
+                    if (isset($participantStatusCounts[$status])) {
+                        $participantStatusCounts[$status]++;
+                    }
+                }
+            }
+        }
+
+        return $this->render('Admin/listEvent.html.twig', [
+            'events' => $events,
+            'selectedEvent' => $selectedEvent,
+            'participantStatusCounts' => $participantStatusCounts,
+        ]);
+    }
+
+    #[Route('/admin/list/stats', name: 'event_list_stats')]
+    public function eventList(EventRepository $eventRepository): Response
+    {
+        $events = $eventRepository->findAll();
+
+        $eventData = [];
+
+        foreach ($events as $event) {
+            $eventData[] = [
+                'title' => $event->getTitle(),
+                'accepted' => $eventRepository->getParticipantStatusCount($event->getId(), 'accepted'),
+                'pending' => $eventRepository->getParticipantStatusCount($event->getId(), 'pending'),
+                'banned' => $eventRepository->getParticipantStatusCount($event->getId(), 'banned')
+            ];
+        }
+
+        return $this->render('Admin/List.html.twig', [
+            'eventData' => json_encode($eventData)
+        ]);
+    }
 
     #[Route('/category/{id}/events/count', name: 'count_category_events')]
     public function countCategoryEvents(EventCategory $eventCategory): Response

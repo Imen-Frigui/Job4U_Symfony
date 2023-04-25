@@ -54,6 +54,21 @@ class EventRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function getParticipantStatusCount($eventId, $status)
+    {
+        $qb = $this->createQueryBuilder('e')
+            ->select('count(p.id)')
+            ->join('e.participants', 'p')
+            ->where('e.id = :eventId')
+            ->andWhere('p.status = :status')
+            ->setParameter('eventId', $eventId)
+            ->setParameter('status', $status);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+
+
 
 
     //    /**
