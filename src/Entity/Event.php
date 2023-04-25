@@ -9,8 +9,11 @@ use Doctrine\DBAL\Types\Types;
 use App\Entity\EventCategory;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
+#[Vich\Uploadable]
 class Event
 {
     #[ORM\Id]
@@ -54,6 +57,9 @@ class Event
 
     #[ORM\OneToMany(mappedBy: 'event', targetEntity: Notification::class)]
     private Collection $notifications;
+
+    #[ORM\Column(length: 250)]
+    private ?string $img = null;
 
     public function __construct()
     {
@@ -125,6 +131,18 @@ class Event
 
         return $this;
     }
+    public function getImg(): ?string
+    {
+        return $this->img;
+    }
+
+    public function setImg(string $img): self
+    {
+        $this->img = $img;
+
+        return $this;
+    }
+
 
     /**
      * @return Collection<int, Participant>

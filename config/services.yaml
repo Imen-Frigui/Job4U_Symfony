@@ -5,6 +5,8 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
 
+    uploads_directory: '../public/images/events'
+
 services:
     Knp\Component\Pager\Paginator:
         arguments:

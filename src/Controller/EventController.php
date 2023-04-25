@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Event;
 use App\Entity\EventCategory;
+use App\Entity\Thumbnail;
 use App\Form\EventType;
 use App\Entity\User;
 use Symfony\Component\Form\Extension\Core\Type\EntityType;
@@ -16,6 +17,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 
 class EventController extends AbstractController
 {
@@ -55,15 +58,31 @@ class EventController extends AbstractController
         $event = new Event();
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
 
+        if ($form->isSubmitted() && $form->isValid()) {
             $event->setCreator($creator);
+
+            $file = $form->get('img')->getData();
+
+            // Generate a unique name for the file before saving it
+            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+
+            // Move the file to the directory where brochures are stored
+            $file->move(
+                $this->getParameter('uploads_directory'),
+                $fileName
+            );
+
+            // ... other code to handle the $post object
+
+            $event->setImg($fileName);
 
             $em = $this->getDoctrine()->getManager();
             $category = $entityManager->getRepository(EventCategory::class)->find($form->get('eventCategory')->getData());
             $event->setEventCategory($category);
             $em->persist($event); //add
             $em->flush();
+
             return $this->redirectToRoute('event_list');
         }
         return $this->render('event/addEvent.html.twig', [

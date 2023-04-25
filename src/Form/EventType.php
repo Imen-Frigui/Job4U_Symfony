@@ -12,6 +12,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Karser\Recaptcha3Bundle\Form\Recaptcha3Type;
 use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3;
+use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class EventType extends AbstractType
 {
@@ -30,7 +34,32 @@ class EventType extends AbstractType
             ->add('captcha', Recaptcha3Type::class, [
                 'constraints' => new Recaptcha3(),
                 'action_name' => 'Event',
-            ]);
+            ])
+            ->add('img', FileType::class, [
+                'label' => 'Image (JPG, PNG or GIF file)',
+
+            ])
+            ->get('img')
+            ->addModelTransformer(new class implements DataTransformerInterface
+            {
+                public function transform($value)
+                {
+                    return null;
+                }
+
+                public function reverseTransform($value)
+                {
+                    if (!$value) {
+                        return;
+                    }
+
+                    if (is_string($value)) {
+                        return new File($this->uploadsDirectory . '/' . $value);
+                    }
+
+                    return $value;
+                }
+            });
     }
 
     public function configureOptions(OptionsResolver $resolver): void
