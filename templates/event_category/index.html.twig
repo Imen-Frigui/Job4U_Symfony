@@ -12,8 +12,12 @@
 					<!-- Table with stripped rows -->
 					<div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns" style="">
 						<div class="dataTable-top">
-							<div style="margin-left: 1150px;margin-top: 10px;margin-bottom: 10px;" class="dataTable-search"><input class="dataTable-input" placeholder="Search..." type="text"></div>
+							<form action="{{ path('app_event_category') }}" method="GET" class="dataTable-search">
+								<input class="dataTable-input" placeholder="Search..." type="text" name="search">
+								<button type="submit">Search</button>
+							</form>
 						</div>
+
 						<div class="dataTable-container">
 							<table class="table datatable dataTable-table">
 								<thead>

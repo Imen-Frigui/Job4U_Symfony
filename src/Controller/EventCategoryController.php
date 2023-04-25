@@ -15,7 +15,23 @@ use Symfony\Component\Routing\Annotation\Route;
 class EventCategoryController extends AbstractController
 {
     #[Route('/event/category', name: 'app_event_category')]
-    public function index(EventCategoryRepository $eventCategoryRepository): Response
+    public function index(Request $request, EventCategoryRepository $eventCategoryRepository): Response
+    {
+        $searchTerm = $request->query->get('search');
+
+        if ($searchTerm) {
+            $eventCategories = $eventCategoryRepository->findBySearchTerm($searchTerm);
+        } else {
+            $eventCategories = $eventCategoryRepository->findAll();
+        }
+
+        return $this->render('event_category/index.html.twig', [
+            'eventCategories' => $eventCategories,
+        ]);
+    }
+
+    #[Route('/event/jkjkjcategory', name: 'app_vvvevent_category')]
+    public function indexxx(EventCategoryRepository $eventCategoryRepository): Response
     {
         $eventCategories  = $eventCategoryRepository->findAll();
         return $this->render('event_category/index.html.twig', [

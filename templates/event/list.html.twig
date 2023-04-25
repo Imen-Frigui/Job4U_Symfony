@@ -102,12 +102,9 @@
 		</li>
 	</ul>
 </li></ul><i class="bi bi-list mobile-nav-toggle"></i></nav><!-- .navbar --></body></html></div></header><!-- End Header -->{% endblock %}{% block body %}<section id="blog" class="blog"><div class="container aos-init aos-animate" data-aos="fade-up"><div class="row"><div class="col-lg-4"><div class="sidebar"><h3 class="sidebar-title">Search</h3><div class="sidebar-item search-form">
-<form action="">
-	<input type="text">
-	<button type="submit">
-		<i class="bi bi-search"></i>
-	</button>
-</form></div><!-- End sidebar search formn--><h3 class="sidebar-title">Categories</h3><div class="sidebar-item categories">
+{% block search_form %}
+	{% include 'event/search_form.html.twig' %}
+{% endblock %}</div><!-- End sidebar search formn--><h3 class="sidebar-title">Categories</h3><div class="sidebar-item categories">
 
 <ul>
 	{% for category in eventCategories %}

@@ -38,6 +38,19 @@ class EventCategoryRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    public function findBySearchTerm($searchTerm)
+    {
+        $queryBuilder = $this->createQueryBuilder('ec');
+
+        if ($searchTerm) {
+            $queryBuilder->where('ec.name LIKE :searchTerm')
+                ->orWhere('ec.description LIKE :searchTerm')
+                ->setParameter('searchTerm', '%' . $searchTerm . '%');
+        }
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
 
 
 

@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\EntityType;
 use App\Repository\EventCategoryRepository;
 use App\Repository\EventRepository;
 use App\Repository\NotificationRepository;
+use App\Repository\ParticipantRepository;
 use SearchEventType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,6 +26,8 @@ class EventController extends AbstractController
     #[Route('/', name: 'app_event')]
     public function index(EventRepository $eventRepository, EventCategoryRepository $eventCategoryRepository, PaginatorInterface $paginator, NotificationRepository $notificationRepository, Request $request): Response
     {
+        $form = $this->createForm(SearchEventType::class);
+
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository(User::class)->find(2);
         $notifications = $notificationRepository->findBy([
@@ -38,6 +41,7 @@ class EventController extends AbstractController
         );
         $eventCategories  = $eventCategoryRepository->findAll();
         return $this->render('event/list.html.twig', [
+            'form' => $form->createView(),
             'notifications' => $notifications,
             'eventCategories' => $eventCategories,
             'events' => $events,
@@ -93,6 +97,8 @@ class EventController extends AbstractController
     #[Route('/event/list', name: 'event_list')]
     public function list(EventRepository $eventRepository, EventCategoryRepository $eventCategoryRepository, NotificationRepository $notificationRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $form = $this->createForm(SearchEventType::class);
+
         $events = $paginator->paginate(
             $eventRepository->findAll(),
             $request->query->getInt('page', 1), // Get the page parameter or default to 1
@@ -107,6 +113,7 @@ class EventController extends AbstractController
         $eventCategories  = $eventCategoryRepository->findAll();
 
         return $this->render('event/list.html.twig', [
+            'form' => $form->createView(),
             'notifications' => $notifications,
             'eventCategories' => $eventCategories,
             'events' => $events,
