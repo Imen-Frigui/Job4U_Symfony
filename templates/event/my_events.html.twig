@@ -21,7 +21,11 @@
 									<span>
 										/ Starting Date</span>
 								</div>
-								<img src="{{('asset1/img/pricing-ultimate.png')}}" class="img-fluid" alt="">
+								{% if event.img %}
+									<img src="{{ asset('images/events/' ~ event.img) }}" class="img-fluid" alt="">
+								{% else %}
+									<img src="{{('asset1/img/pricing-ultimate.png')}}" class="img-fluid" alt="">
+								{% endif %}
 								<ul>
 									<li>{{ event.description }}</li>
 								</ul>

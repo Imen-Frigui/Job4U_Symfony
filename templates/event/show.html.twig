@@ -115,10 +115,15 @@
 		</li>
 	{% endfor %}
 </ul></div><!-- End sidebar categories--><h3 class="sidebar-title">Recent Posts</h3><div class="sidebar-item recent-posts">
-{% for e in events %}
+{% for e in events|slice(0,3)  %}
+
 
 	<div class="post-item clearfix">
-		<img src="{{('assets/img/blog/blog-recent-5.jpg')}}" alt="">
+		{% if e.img %}
+			<img src="{{ asset('images/events/' ~ e.img) }}">
+		{% else %}
+			<img src="{{ asset('asset1/img/blog/blog-2.jpg') }}">
+		{% endif %}
 		<h4>
 			<a href="{{ path('event_show', {'id': e.id}) }}">{{e.title}}</a>
 		</h4>
@@ -138,7 +143,11 @@
 	<li><a href="#">Tips</a></li>
 	<li><a href="#">Marketing</a></li>
 </ul></div><!-- End sidebar tags--></div><!-- End sidebar --></div><!-- End blog sidebar --><div class="col-lg-8 entries"><a class="btn btn-secondary" style=" margin-top: 10px;margin-bottom: 10px;" href="{{ path('app_event') }}">Back To Events</a><article class="entry entry-single"><div class="entry-img">
-<img src="{{('asset1/img/blog/blog-1.jpg')}}" alt="" class="img-fluid"></div><h2 class="entry-title">
+{% if event.img %}
+	<img src="{{ asset('images/events/' ~ event.img) }}" class="img-fluid">>
+{% else %}
+	<img src="{{ asset('asset1/img/blog/blog-2.jpg') }}" class="img-fluid">>
+{% endif %}</div><h2 class="entry-title">
 <a href="{{ path('event_show', {'id': event.id}) }}">{{event.title}}</a></h2><div class="entry-meta">
 <ul>
 	<li class="d-flex align-items-center">
@@ -160,7 +169,7 @@
 	{{event.description}}
 </p>
 <p>
-	<img src="{{('asset1/img/blog/blog-inside-post.jpg')}}" class="img-fluid" alt="">
+	<img src="{{('asset1/img/blog/blog-inside-post.jpg')}}" alt="">
 </p></div><div class="entry-footer">
 
 <i class="bi bi-folder"></i>

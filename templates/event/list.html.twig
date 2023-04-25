@@ -119,10 +119,15 @@
 		</li>
 	{% endfor %}
 </ul></div><!-- End sidebar categories--><h3 class="sidebar-title">Recent Posts</h3><div class="sidebar-item recent-posts">
-{% for e in events  %}
+{% for e in events|slice(0,3)  %}
 
 	<div class="post-item clearfix">
-		<img src="{{('assets/img/blog/blog-recent-5.jpg')}}" alt="">
+		{% if e.img %}
+			<img src="{{ asset('images/events/' ~ e.img) }}">
+		{% else %}
+			<img src="{{ asset('asset1/img/blog/blog-2.jpg') }}">
+		{% endif %}
+
 		<h4>
 			<a href="{{ path('event_show', {'id': e.id}) }}">{{e.title}}</a>
 		</h4>
@@ -144,7 +149,12 @@
 </ul></div><!-- End sidebar tags--></div><!-- End sidebar --></div><!-- End blog sidebar --><div class="col-lg-8 entries">{% for e in events  %}<article class="entry">
 
 <div class="entry-img">
-	<img src="{{ asset('asset1/img/blog/blog-2.jpg') }}" alt="" class="img-fluid">
+	{% if e.img %}
+		<img src="{{ asset('images/events/' ~ e.img) }}">
+	{% else %}
+		<img src="{{ asset('asset1/img/blog/blog-2.jpg') }}">
+	{% endif %}
+
 </div>
 
 <h2 class="entry-title">

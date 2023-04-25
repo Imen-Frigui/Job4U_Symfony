@@ -79,9 +79,10 @@ class EventCategoryController extends AbstractController
     }
 
     #[Route('/event/category/{id}', name: 'event_category')]
-    public function showEventsByCategory(EventCategory $eventCategories): Response
+    public function showEventsByCategory(EventCategory $eventCategories, EventCategoryRepository $eventCategoryRepository): Response
     {
         $events = $eventCategories->getEvents();
+        $eventCategories  = $eventCategoryRepository->findAll();
         return $this->render('event_category/events_by_category.html.twig', [
             'events' => $events,
             'eventCategories' => $eventCategories,
