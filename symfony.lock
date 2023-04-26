@@ -35,6 +35,9 @@
             "./migrations/.gitignore"
         ]
     },
+    "knplabs/knp-paginator-bundle": {
+        "version": "v6.2.0"
+    },
     "knplabs/knp-snappy-bundle": {
         "version": "1.9",
         "recipe": {

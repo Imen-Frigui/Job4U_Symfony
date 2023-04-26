@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\Transport;
+use Symfony\Component\Mailer\Mailer;
+use Symfony\Component\Mime\Email;
 use App\Entity\Offre;
 use App\Entity\PropertySearch;
-use Knp\Snappy\Pdf;
 use App\Form\OffreType;
 use App\Form\PropertySearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,7 +15,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Mailer\MailerInterface;
 use App\Repository\OffreRepository;
+use App\Service\PdfService;
+use Knp\Component\Pager\PaginatorInterface;
 
 
 class OffreController extends AbstractController
@@ -32,17 +38,23 @@ class OffreController extends AbstractController
     }
 
     #[Route('/useroffre', name: 'user_offre')]
-    public function index1(ManagerRegistry $doctrine): Response
+    public function index1(OffreRepository $r,PaginatorInterface $paginator,Request $request): Response
     {
-        $offres=$doctrine
-        ->getRepository(offre::class)->findAll();
+      
+        $queryBuilder = $r->createQueryBuilder('p')
+        ->orderBy('p.id', 'DESC')
+        ->getQuery();
+    
+    $offres = $paginator->paginate(
+        $queryBuilder,
+        $request->query->getInt('page', 1),
+        6
+    );
         return $this->render('user/index.html.twig',
          ['c'=>$offres
             
         ]);
-        #return $this->render('offre/index.html.twig', [
-       #     'controller_name' => 'OffreController',
-     #   ]);
+
     }
 
     #[Route('/offre2', name: 'display_offre2')]
@@ -112,7 +124,47 @@ class OffreController extends AbstractController
      #   ]);
     }
 
-  
+    #[Route('/pdf/{id}',name:'pdfO')]
+    public function pdfpos($id,OffreRepository $r,PdfService $pdf,ManagerRegistry $doctrine)
+    {
+      $of=$doctrine->getRepository(Offre::class)->findBy(['id' => $id] );
+$html = $this->render('user/form.html.twig',
+['of'=>$of]);
+$pdf->showPdfFile($html);
+$transport = Transport::fromDsn('smtp://touati.ahmed@esprit.tn:ihhtpuvuwpdknuik@smtp.gmail.com:587');
+$off=$doctrine->getRepository(Offre::class)->findBy(['id' => $id] );
+
+foreach ($off as $value) {
+ // echo "$value <br>";
+
+$nom=$value->getNom();
+$description=$value->getDescription();
+$duree=$value->getDuree();
+
+}
+// Create a Mailer object
+$mailer = new Mailer($transport);
+                                $email = (new Email())
+                                ->from('touati-ahmed@esprit.tn')
+                                    ->to('spnahmed1@gmail.com')
+                                    //->cc('cc@example.com')
+                                    //->bcc('bcc@example.com')
+                                    //->replyTo('fabien@example.com')
+                                    //->priority(Email::PRIORITY_HIGH)
+                                    ->subject('Offre Printed!')
+                                    //->text('Text',$nom,'lol',$description,'duree',$duree)
+                                    ->text('The plain text version of the message.')
+                                    ->html('<p>Sir your Offre Has been printed and you can share it !</p>');
+                        
+                                $mailer->send($email);
+                        
+                                // ...
+                                return $this->redirectToRoute("user_offre");
+                                
+                          
+
+
+    }
 
 
     #[Route('/suppOffre/{id}', name: 'suppO')]
@@ -143,4 +195,39 @@ return $this->redirectToRoute('display_offre');
                                 }
                             }
 
+                            #[Route('/email/{id}', name: 'sendEmail')]
+                            public function sendEmail($id,ManagerRegistry $doctrine): Response
+                            {
+                              // Create a Transport object
+$transport = Transport::fromDsn('smtp://touati.ahmed@esprit.tn:ihhtpuvuwpdknuik@smtp.gmail.com:587');
+$off=$doctrine->getRepository(Offre::class)->findBy(['id' => $id] );
+
+foreach ($off as $value) {
+ // echo "$value <br>";
+
+$nom=$value->getNom();
+$description=$value->getDescription();
+$duree=$value->getDuree();
+
+}
+// Create a Mailer object
+$mailer = new Mailer($transport);
+                                $email = (new Email())
+                                ->from('touati-ahmed@esprit.tn')
+                                    ->to('spnahmed1@gmail.com')
+                                    //->cc('cc@example.com')
+                                    //->bcc('bcc@example.com')
+                                    //->replyTo('fabien@example.com')
+                                    //->priority(Email::PRIORITY_HIGH)
+                                    ->subject('Offre Printed!')
+                                    //->text('Text',$nom,'lol',$description,'duree',$duree)
+                                    ->text('The plain text version of the message.')
+                                    ->html('<p>See your Offre on Web !</p>');
+                        
+                                $mailer->send($email);
+                        
+                                // ...
+                                return $this->redirectToRoute("user_offre");
+                                
+                            }
 }

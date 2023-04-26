@@ -17,7 +17,7 @@
       <div class="container aos-init aos-animate" data-aos="fade-up">
 
         <header class="section-header">
-          <h2>Services</h2>
+          <h2>Offres</h2>
           {% if form is defined %}
 
           {{ form_start(form) }}
@@ -39,19 +39,23 @@
 
         <div class="row gy-4">
         
-        {% for i in offres %}
+        {% for i in c %}
 
           <div class="col-lg-4 col-md-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
             <div class="service-box blue">
               <h3 class="text-primary">{{i.nom}}</h3>
-              <p>{{i.description}}</p>
-              <p>{{ i.date|date('m/d/Y')}}</p>
-              <p>{{i.duree}}</p>
+              <p>Description: {{i.description}}</p>
+              <p>Date debut: {{ i.date|date('m/d/Y')}}</p>
+              <p>Duree: {{i.duree}}</p>
               <a class="btn btn-success" href="{{path('suppO',{'id':i.id}) }}">Postuler</a>
+              <a class="btn btn-success" href="{{path('pdfO',{'id':i.id}) }}">Print</a>
             </div>
           </div>
            
     {% endfor %}
+            </div>
+            <div class="navigation">
+            {{ knp_pagination_render(c) }}
             </div>
         </div>
 
