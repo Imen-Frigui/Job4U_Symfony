@@ -8,6 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
 
 class RegistrationController extends AbstractController
 {
@@ -20,7 +22,7 @@ class RegistrationController extends AbstractController
 
     
     #[Route('/registration', name: 'registration')]
-    public function index(Request $request)
+    public function index(Request $request,SessionInterface $session)
     {
         $user = new User();
         $users = new Users();
@@ -39,9 +41,9 @@ class RegistrationController extends AbstractController
     ////////////////////////////////////////////////////////////////////////////////////////
       /** @var UploadedFile $uploadedFile */
       $uploadedFile = $form['image']->getData();
-      $destination ='asset1/img/';
-      $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
-      $newFilename =$destination.'.'.$uploadedFile->guessExtension();
+      $destination = 'asset1/img/';
+            $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $newFilename = $destination . $originalFilename.'.' . $uploadedFile->guessExtension();
 
       if($uploadedFile){$uploadedFile->move(
         $destination,
@@ -62,11 +64,14 @@ class RegistrationController extends AbstractController
             $user->getId($users->getId());
 
             // Save
+           
             $em = $this->getDoctrine()->getManager();
             $em->persist($users);
             $em->persist($user);
             
             $em->flush();
+            $session->start();
+            $session->set('user',$users);
 
             return $this->redirectToRoute('captcha');
         }

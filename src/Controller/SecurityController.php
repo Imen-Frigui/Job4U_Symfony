@@ -22,12 +22,19 @@ use App\Form\CaptchaUserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Component\Mime\Part\DataPart;
+use Symfony\Component\Mime\Part\File;
+
+
 
 class SecurityController extends AbstractController
 {
@@ -42,16 +49,27 @@ class SecurityController extends AbstractController
     }
 
     #[Route(path: '/login', name: 'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(AuthenticationUtils $authenticationUtils,SessionInterface $session): Response
     {
         // if ($this->getUser()) {
         //     return $this->redirectToRoute('target_path');
         // }
-
+        
+         
+     
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
+
+
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
+
+      
+        $session->get('user');
+
+
+
+
 
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
@@ -120,9 +138,10 @@ class SecurityController extends AbstractController
         // $transport = Transport::fromDsn('smtp://jobforyou548@gmail.com:tsxlyqvduzkyasee@smtp.gmail.com:587');
         // $mailer = new Mailer($transport);
         $email=(new Email())
-                ->from('jobforyou548@gmail.com')
+                ->from('hamzaemailtest2323@gmail.com')
                 ->to($user->getEmail())
                 ->subject('Voici votre Token! veuillez copier le lien ci dessous')
+                
                 ->html('<p> Bonjour</p> unde demande de réinitialisation de mot de passe a été effectuée. Veuillez cliquer sur le lien suivant :"'.$url,'
                      text/html');
 
@@ -182,7 +201,7 @@ class SecurityController extends AbstractController
         }
     }
 
-    ///////////////////////: Captcha://////////////////////////////////////////////
+   ////////////////////////////////////////////: Captcha://////////////////////////////////////////////
  #[Route('/captcha', name: 'captcha')]
  public function captcha(Request $request) 
  {
