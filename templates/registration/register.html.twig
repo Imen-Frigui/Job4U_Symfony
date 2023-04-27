@@ -24,7 +24,7 @@
                         <div class="d-flex justify-content-center py-4">
                             <a href="index.html" class="logo d-flex align-items-center w-auto">
                                 <img src="assets/img/logo.png" alt="">
-                                <span class="d-none d-lg-block">NiceAdmin</span>
+                                <span class="d-none d-lg-block">Job4U</span>
                             </a>
                         </div><!-- End Logo -->
 
@@ -46,12 +46,14 @@
                                     {{ form_widget(form.name,{'attr':{'class':'form-control'}}) }}
 
                                 </div>
+                                  {{ form_errors(form.name,{'attr':{'class':'text-danger'}}) }}
 
                                     <div class="col-12">
                                         <label for="yourEmail" class="form-label">Your Email</label>
                                         {{ form_widget(form.email,{'attr':{'class':'form-control'}}) }}
                                         <div class="invalid-feedback">Please enter a valid Email adddress!</div>
                                     </div>
+                                    {{ form_errors(form.email,{'attr':{'class':'text-danger'}}) }}
 
 
 
@@ -60,12 +62,20 @@
                                         {{ form_widget(form.password.first,{'attr':{'class':'form-control'}}) }}
                                         <div class="invalid-feedback">Please enter your password!</div>
                                     </div>
+                                    {{ form_errors(form.password.first,{'attr':{'class':'text-danger'}}) }}
 
                                 <div class="col-12">
                                     <label for="yourPassword" class="form-label">Confirm Password</label>
                                     {{ form_widget(form.password.second,{'attr':{'class':'form-control'}}) }}
                                     <div class="invalid-feedback">Please confirm your password!</div>
                                 </div>
+                                   {{ form_errors(form.password.second,{'attr':{'class':'text-danger'}}) }}
+                                 <div class="col-12">
+                                    <label for="yourPassword" class="form-label">Image</label>
+                                    {{ form_widget(form.image,{'attr':{'class':'form-control'}}) }}
+
+                                </div>
+                                 {{ form_errors(form.image,{'attr':{'class':'text-danger'}}) }}
 
                                     <div class="col-12">
                                         <div class="form-check">
@@ -75,20 +85,13 @@
 
                                             
                                         </div>
-                                        {# <div class="form-check">
-                                            <input class="form-check-input" name="terms" type="checkbox" value="Candidat" id="acceptTerms" required="">
-                                            <label class="form-check-label" for="acceptTerms">Choisir<a href="#">Freelancer</a></label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" name="terms" type="checkbox" value="Chef Entreptrise" id="acceptTerms" required="">
-                                            <label class="form-check-label" for="acceptTerms">Choisir<a href="#">Chef Entreprise</a></label>
-                                        </div> #}
+                                       
                                     </div>
                                     <div class="col-12">
                                         <button class="btn btn-primary w-100" type="submit">Create Account</button>
                                     </div>
                                     <div class="col-12">
-                                        <p class="small mb-0">Already have an account? <a href="pages-login.html">Log in</a></p>
+                                        <p class="small mb-0">Already have an account? <a href="{{path('app_login')}}">Log in</a></p>
                                     </div>
                                 {{ form_end(form) }}
 

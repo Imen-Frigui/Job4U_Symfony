@@ -10,12 +10,12 @@
 
             <a href="index.html" class="logo d-flex align-items-center">
                 <img src="{{ asset('asset1/img/logo.png') }}" alt="">
-                <span>FlexStart</span>
+                <span>Job4U</span>
             </a>
 
             <nav id="navbar" class="navbar">
                 <ul>
-                    <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+                    <li><a class="nav-link scrollto active" href="{{path('display_client')}}">Home</a></li>
                     <li><a class="nav-link scrollto" href="#about">About</a></li>
                     <li><a class="nav-link scrollto" href="#services">Services</a></li>
                     <li><a class="nav-link scrollto" href="#portfolio">Portfolio</a></li>
@@ -41,7 +41,7 @@
                         </ul>
                     </li>
                     <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-                    <li><a class="getstarted scrollto" href="#about">Get Started</a></li>
+                    <li><a class="getstarted scrollto" href="{{path('app_logout')}}">Logout</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
@@ -137,30 +137,34 @@
                             <div class="row gy-4">
 
                                 <div class="col-md-6">
-                                    <input type="text" name="name" class="form-control" placeholder={{app.user.Name}} required>
+                                                     <label for="inputText" class="col-sm-4 col-form-label">Name</label>
+
+                                    <input type="text" name="name" class="form-control" placeholder={{app.user.Name}} >
                                 </div>
 
                                 <div class="col-md-6 ">
-                                    <input type="email" class="form-control" name="email" placeholder={{app.user.Email}} required>
+                                                     <label for="inputText" class="col-sm-4 col-form-label">Email</label>
+
+                                    <input type="email" class="form-control" name="email" placeholder={{app.user.Email}} >
                                 </div>
 
                                 <div class="col-md-12">
-                                    <input type="text" class="form-control" name="subject" placeholder={{app.user.Password}} required>
+                                                     <label for="inputText" class="col-sm-4 col-form-label">Password</label>
+
+                                    <input type="text" class="form-control" name="subject" placeholder={{app.user.Password}} >
                                 </div>
-                                 <div class="col-md-12">
-                                    <input type="text" class="form-control" name="subject" placeholder={{app.user.Roles[0]}} required>
-                                </div>
+                                
+                               
 
                                 {# <div class="col-md-12">
                                     <textarea class="form-control" name="message" rows="6" placeholder="Message" required></textarea>
                                 </div> #}
 
                                 <div class="col-md-12 text-center">
-                                    <div class="loading">Loading</div>
-                                    <div class="error-message"></div>
+                                    {# <div class="loading">Loading</div>
+                                    <div class="error-message"></div> #}
                                   
-
-                                    <button type="submit">Modifier votre profil</button>
+                                       <a class="btn btn-success" href="{{path('UpadateProfileUser',{'id':app.user.id})}}">Modifier profil</a>
                                 </div>
 
                             </div>

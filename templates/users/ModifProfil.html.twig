@@ -1,0 +1,127 @@
+
+{# {{form(users)}} #}
+
+{% extends 'base1.html.twig' %}
+{# <h1>{{app.user.Name}}</h1>
+<h1>{{app.user.Email}}</h1>
+<h1>{{app.user.Roles[1]}}</h1>
+<h1>{{app.user.Password}}</h1> #}
+
+{% block header %}
+    <header id="header" class="header fixed-top">
+        <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+            <a href="index.html" class="logo d-flex align-items-center">
+                <img src="{{ asset('asset1/img/logo.png') }}" alt="">
+                <span>Job4U</span>
+            </a>
+
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+                    <li><a class="nav-link scrollto" href="#about">About</a></li>
+                    <li><a class="nav-link scrollto" href="#services">Services</a></li>
+                    <li><a class="nav-link scrollto" href="#portfolio">Portfolio</a></li>
+
+                    <li><a class="nav-link scrollto" href="#profile">View Profile</a></li>
+                    <li><a class="nav-link scrollto" href="#team">Team</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
+                        <ul>
+                            <li><a href="#">Drop Down 1</a></li>
+                            <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
+                                <ul>
+                                    <li><a href="#">Deep Drop Down 1</a></li>
+                                    <li><a href="#">Deep Drop Down 2</a></li>
+                                    <li><a href="#">Deep Drop Down 3</a></li>
+                                    <li><a href="#">Deep Drop Down 4</a></li>
+                                    <li><a href="#">Deep Drop Down 5</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Drop Down 2</a></li>
+                            <li><a href="#">Drop Down 3</a></li>
+                            <li><a href="#">Drop Down 4</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+                    <li><a class="getstarted scrollto" href="{{path('app_logout')}}">Logout</a></li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav><!-- .navbar -->
+
+        </div>
+    </header><!-- End Header -->
+
+{% endblock %}
+
+{% block hero %}
+<!-- ======= Hero Section ======= -->
+
+{% endblock %}
+
+{% block body %}
+{% block contact  %}
+        <!-- ======= Contact Section ======= -->
+        <section id="contact" class="contact">
+
+            <div class="container" data-aos="fade-up">
+                    <br>
+                    <br>
+                <header class="section-header">
+                    <h2>Votre Profile</h2>
+                    <p>{{app.user.Name}}</p>
+                </header>
+
+                <div class="row gy-4">
+
+                 
+
+                    <div class="col-lg-6">
+                            <div class="row gy-4">
+                            {{ form_start(users,{attr:{novalidate:'novalidate'}}) }}
+                            <br>
+                     <label for="inputText" class="col-sm-4 col-form-label">Nom</label>
+                                <div class="col-md-6">
+                            {{ form_widget(users.name,{'attr':{'class':'form-control'}}) }}
+                                </div>
+                                
+ <br>
+                            <label for="inputText" class="col-sm-4 col-form-label">Email</label>
+                                <div class="col-md-6 ">
+                            {{ form_widget(users.email,{'attr':{'class':'form-control'}}) }}
+                                </div>
+ <br>
+                              <label for="inputText" class="col-sm-4 col-form-label">Mot de passe</label>
+                                <div class="col-md-12">
+                            {{ form_widget(users.password,{'attr':{'class':'form-control'}}) }}
+                                </div>
+                                 <br>
+                            <label for="inputText" class="col-sm-4 col-form-label">Image</label>
+       
+                                 <div class="col-md-12">
+                            {{ form_widget(users.image,{'attr':{'class':'form-control'}}) }}
+                                </div>
+                               
+
+                                {# <div class="col-md-12">
+                                    <textarea class="form-control" name="message" rows="6" placeholder="Message" required></textarea>
+                                </div> #}
+                                
+                            <a class="btn btn-danger" href="{{path('display_sessionClient')}}">Annuler</a>
+
+                                    {# <div class="loading">Loading</div>
+                                    <div class="error-message"></div> #}
+                                    {{ form_widget(users.Modifier_Profil,{'attr':{'class':'btn btn-primary'}}) }}
+                        
+                             {{ form_end(users) }}
+                            </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section><!-- End Contact Section -->
+{% endblock %}
+{% endblock %}
