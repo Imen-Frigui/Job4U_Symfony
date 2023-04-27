@@ -39,75 +39,92 @@ class UsersRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-    public function searchByNom($Nom):array
-   {
-       return $this->createQueryBuilder('u')
-           ->andWhere('u.Nom LIKE :nom')
-           ->setParameter('nom', $Nom)
-          
-        
-           ->getQuery()
-           ->getResult()
-       ;
-   }
+    public function searchByNom($Nom): array
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.Nom LIKE :nom')
+            ->setParameter('nom', $Nom)
 
 
-   public function searchByMail($Mail):object
-   {
-       return $this->createQueryBuilder('u')
-           ->andWhere('u.Mail LIKE :Mail')
-           ->setParameter('Mail', $Mail)
-          
-        
-           ->getQuery()
-           ->getResult()
-       ;
-   }
-
-   public function searchtri($Nom):array
-   {
-       return $this->createQueryBuilder('u')
-           ->andWhere('u.Nom LIKE :nom')
-           ->setParameter('nom', $Nom)
-          
-           ->orderBy('u.Nom', 'ASC')
-           ->getQuery()
-           ->getResult()
-       ;
-   }
-
-   
-  
-   public function search($mots=Null){
-    $query = $this->createQueryBuilder('u');
-   
-    if($mots != null){
-        $query->andWhere('MATCH_AGAINST(u.Nom, u.Role) AGAINST (:mots boolean)>0')
-            ->setParameter('mots', $mots);
-    }
-  
-    return $query->getQuery()->getResult();
+            ->getQuery()
+            ->getResult();
     }
 
 
-   public function findAlltri()
-   {
-       return $this->findBy(array(), array('Nom' => 'ASC'));
-   }
-   
+    public function searchByMail($Mail): object
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.Mail LIKE :Mail')
+            ->setParameter('Mail', $Mail)
 
-//    /**
-//     * @return Users[] Returns an array of Users objects
-//     */
-   
 
-//    public function findOneBySomeField($value): ?Users
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function searchtri($Nom): array
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.Nom LIKE :nom')
+            ->setParameter('nom', $Nom)
+
+            ->orderBy('u.Nom', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+
+
+    public function search($mots = Null)
+    {
+        $query = $this->createQueryBuilder('u');
+
+        if ($mots != null) {
+            $query->andWhere('MATCH_AGAINST(u.Nom, u.Role) AGAINST (:mots boolean)>0')
+                ->setParameter('mots', $mots);
+        }
+
+        return $query->getQuery()->getResult();
+    }
+    public function findByEmail($email)
+    {
+        //     $entityManager = $this->getEntityManager();
+        //    return $entityManager ->createQueryBuilder()
+        //         ->select( 'us.Mail')
+        //         ->from(Users::class, 'us')
+        //         ->where('us.Mail=:Mail')
+        //         ->setParameter('Mail', $email)->getQuery()->getResult();
+        $entityManager = $this->getEntityManager();
+        $userRepository = $entityManager->getRepository(Users::class);
+
+        $queryBuilder = $userRepository->createQueryBuilder('us');
+        $queryBuilder->where('us.Mail = :email');
+        $queryBuilder->setParameter('email', $email);
+
+       return  $user = $queryBuilder->getQuery()->getOneOrNullResult();
+    }
+
+
+
+
+    public function findAlltri()
+    {
+        return $this->findBy(array(), array('Nom' => 'ASC'));
+    }
+
+
+    //    /**
+    //     * @return Users[] Returns an array of Users objects
+    //     */
+
+
+    //    public function findOneBySomeField($value): ?Users
+    //    {
+    //        return $this->createQueryBuilder('u')
+    //            ->andWhere('u.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

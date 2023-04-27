@@ -80,20 +80,54 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 //            ->getOneOrNullResult()
 //        ;
 //    }
-public function findByEmail($email)
-{
-    $entityManager = $this->getEntityManager();
-    $query = $entityManager ->createQueryBuilder()
-        ->select('u.email', 'us.email')
-        ->from(User::class, 'u')
-        ->where('u.email=:email')
-        ->setParameter('email', $email)
-    ->innerJoin(Users::class, 'us', 'WITH','u.email = us.email');
+// public function findByEmail($email)
+// {
+//     $entityManager = $this->getEntityManager();
+//     $query = $entityManager ->createQueryBuilder()
+//         ->select('u.email', 'us.email')
+//         ->from(User::class, 'u')
+//         ->where('u.email=:email')
+//         ->setParameter('email', $email)
+//     ->innerJoin(Users::class, 'us', 'WITH','u.email = us.email');
 
 
+//     return $query->getQuery()->getResult();
+// }
+public function search($mots=Null){
+    $query = $this->createQueryBuilder('u');
+   
+    if($mots != null){
+        $query->andWhere('MATCH_AGAINST(u.Nom) AGAINST (:mots boolean)>0')
+            ->setParameter('mots', $mots);
+    }
+  
     return $query->getQuery()->getResult();
-}
+    }
 
+
+   public function findAlltri()
+   {
+       return $this->findBy(array(), array('Nom' => 'ASC'));
+   }
+
+
+   public function findByEmailUser($email)
+   {
+       //     $entityManager = $this->getEntityManager();
+       //    return $entityManager ->createQueryBuilder()
+       //         ->select( 'us.Mail')
+       //         ->from(Users::class, 'us')
+       //         ->where('us.Mail=:Mail')
+       //         ->setParameter('Mail', $email)->getQuery()->getResult();
+       $entityManager = $this->getEntityManager();
+       $userRepository = $entityManager->getRepository(User::class);
+
+       $queryBuilder = $userRepository->createQueryBuilder('u');
+       $queryBuilder->where('u.email = :email');
+       $queryBuilder->setParameter('email', $email);
+
+      return  $user = $queryBuilder->getQuery()->getOneOrNullResult();
+   }
 
 
 
