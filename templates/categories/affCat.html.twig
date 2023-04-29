@@ -10,29 +10,26 @@
 
         <div class="card">
             <div class="card-body">
-                <a href="{{ path('addProject') }}"><i class="bi bi-plus-circle-fill" style="font-size: 50px;"></i></a>
-                <h5 class="card-title">Liste des Projects</h5>
+                <a href="{{ path('addCat') }}"><i class="bi bi-plus-circle-fill" style="font-size: 50px;"></i></a>
+                <h5 class="card-title">Liste des Categories</h5>
 
                 <!-- Table with stripped rows -->
                 <table class="table table-striped">
                     <thead>
-                   <tr>
+                     <tr>
         <th>Nom</th>
-        <th>Societe </th>
-                <th>Modifer </th>
         <th>Supprimer </th>
+        <th>Modifer </th>
     </tr>
                     </thead>
                     <tbody>
-                     {% for i in c %}
+                    {% for i in cat %}
     <tr>
         <td>{{i.nom}}</td>
-        <td>{{i.societe}}</td>
-          <td><a class="btn btn-success" href="{{path('updateProject',{'id':i.id}) }}">Modifier</a></td>
-          <td><a class="btn btn-danger" href="{{path('suppP',{'id':i.id}) }}">Supprimer</a></td>
+        <td><a class="btn btn-success" href="{{path('suppCat',{'id':i.id}) }}">Supprimer</a></td>
+          <td><a class="btn btn-danger" href="{{path('updateCat',{'id':i.id}) }}">Modifier</a></td>
     </tr>
     {% endfor %}
-
 
                     </tbody>
                 </table>
@@ -47,8 +44,5 @@
 
 </div>
 {% endblock %}
-
-
-
 
 

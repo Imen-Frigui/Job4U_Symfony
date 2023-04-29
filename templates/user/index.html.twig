@@ -39,7 +39,7 @@
 
         <div class="row gy-4">
         
-        {% for i in c %}
+        {% for i in offres %}
 
           <div class="col-lg-4 col-md-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
             <div class="service-box blue">
@@ -47,18 +47,16 @@
               <p>Description: {{i.description}}</p>
               <p>Date debut: {{ i.date|date('m/d/Y')}}</p>
               <p>Duree: {{i.duree}}</p>
-              <a class="btn btn-success" href="{{path('suppO',{'id':i.id}) }}">Postuler</a>
-              <a class="btn btn-success" href="{{path('pdfO',{'id':i.id}) }}">Print</a>
+              <a class="btn btn-success" href="{{path('display_offr2',{'id':i.id}) }}">Details</a>
             </div>
           </div>
            
     {% endfor %}
             </div>
             <div class="navigation">
-            {{ knp_pagination_render(c) }}
+            {{ knp_pagination_render(offres) }}
             </div>
         </div>
-
     </div>
 
 

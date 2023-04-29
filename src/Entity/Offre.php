@@ -29,7 +29,7 @@ class Offre
     )]
     private ?string $description = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Assert\NotBlank(message: "Date de l'offre est vide")]
     private ?\DateTimeInterface $date = null;
 
@@ -39,6 +39,13 @@ class Offre
 
     #[ORM\ManyToOne(inversedBy: 'offres')]
     private ?Project $project = null;
+
+    #[ORM\ManyToOne(inversedBy: 'creator')]
+    private ?User $creator = null;
+
+    #[ORM\ManyToOne(inversedBy: 'categories')]
+    private ?Categories $categorie = null;
+
 
     public function getId(): ?int
     {
@@ -104,4 +111,36 @@ class Offre
 
         return $this;
     }
+
+    public function getCreator(): ?User
+    {
+        return $this->creator;
+    }
+
+    public function setCreator(?User $creator): self
+    {
+        $this->creator = $creator;
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+
+        return $this->getNom();
+    }
+
+    public function getCategorie(): ?Categories
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?Categories $categorie): self
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
+
+
 }

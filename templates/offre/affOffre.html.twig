@@ -10,8 +10,25 @@
 
         <div class="card">
             <div class="card-body">
-                <a href="{{ path('addOffre') }}"><i class="bi bi-plus-circle-fill" style="font-size: 50px;"></i></a>
+
                 <h5 class="card-title">Liste des Offres</h5>
+                  {% if form is defined %}
+
+          {{ form_start(form) }}
+
+<div class="form-row align-items-end" >
+ <div class="col">
+   {{ form_row(form.nom) }}
+ </div>
+
+  <div class="col">
+   <div class="form-group">
+      <button type="submit" class="btn btn-success">Rechercher</button>
+    </div>
+ </div>
+</div>
+ {{ form_end(form) }}
+ {% endif %}
 
                 <!-- Table with stripped rows -->
                 <table class="table table-striped">
@@ -22,20 +39,24 @@
         <th>description </th>
         <th>date </th>
         <th>duree </th>
-        <th>Supprimer </th>
-        <th>Modifer </th>
+        <th>Categories </th>
+        <th>project </th>
+        <th>Suprimer </th>
+
     </tr>
                     </thead>
                     <tbody>
-                    {% for i in c %}
+                    {% for i in of %}
     <tr>
         <td>{{i.id}}</td>
         <td>{{i.nom}}</td>
         <td>{{i.description}}</td>
         <td>{{ i.date|date('m/d/Y')}}</td>
         <td>{{i.duree}}</td>
-        <td><a class="btn btn-success" href="{{path('suppO',{'id':i.id}) }}">Supprimer</a></td>
-          <td><a class="btn btn-danger" href="{{path('updateOffre',{'id':i.id}) }}">Modifier</a></td>
+        <td>{{i.categorie}}</td>
+        <td>{{i.Project}}</td>
+        <td><a class="btn btn-danger" href="{{path('suppO',{'id':i.id}) }}">Supprimer</a></td>
+
     </tr>
     {% endfor %}
 
