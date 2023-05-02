@@ -260,30 +260,11 @@ WHERE rp.id IN (
     #[Route('/{id}/edit', name: 'app_reclamation_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Reclamation $reclamation, ReclamationRepository $reclamationRepository): Response
     {
+
         $form = $this->createForm(ReclamationType::class, $reclamation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            // Your Account SID and Auth Token from twilio.com/console
-            $sid = 'AC8f656b6aab0162ee8be3d35737158197';
-            $auth_token = 'd3bcc471da64c1d230dcecd5ed8c90fa';
-            // In production, these should be environment variables. E.g.:
-            // $auth_token = $_ENV["TWILIO_AUTH_TOKEN"]
-            // A Twilio number you own with SMS capabilities
-            $twilio_number = "+15674074471";
-
-            $client = new Client($sid, $auth_token);
-            $client->messages->create(
-                // the number you'd like to send the message to
-                '+21622800427',
-                [
-                    // A Twilio phone number you purchased at twilio.com/console
-                    'from' => '+15674074471',
-                    // the body of the text message you'd like to send
-                    'body' => 'votre reclamation a été traité merci de nous contacter pour plus de détail!'
-                ]
-            );
             $reclamationRepository->save($reclamation, true);
 
             return $this->redirectToRoute('app_reclamation_index', [], Response::HTTP_SEE_OTHER);
