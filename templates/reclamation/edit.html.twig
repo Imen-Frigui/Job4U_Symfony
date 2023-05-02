@@ -1,13 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier une Reclamation{% endblock %}
+{% block title %}Modifier une Reclamation
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Reclamation</h1>
+	<div class="row" style="display: flex;align-items: center;justify-content: center;margin-top: 150px;">
 
-    {{ include('reclamation/_form.html.twig', {'button_label': 'Modifier'}) }}
+		<div class="col-lg-6">
+			<h1>Edit Reclamation</h1>
 
-    <a href="{{ path('app_reclamation_index') }}"><button class="btn btn-secondary">Retour</button></a>
+			{{ include('reclamation/_form.html.twig', {'button_label': 'Modifier'}) }}
 
-    {{ include('reclamation/_delete_form.html.twig') }}
+			<a href="{{ path('app_reclamation_index') }}">
+				<button class="btn btn-secondary">Retour</button>
+			</a>
+
+			{{ include('reclamation/_delete_form.html.twig') }}
+		</div>
+	</div>
 {% endblock %}
