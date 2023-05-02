@@ -1,16 +1,59 @@
 {% extends 'base1.html.twig' %}
 
-{% block title %}Liste des postulations{% endblock %}
+{% block title %}Liste des postulations
+{% endblock %}
 
 {% block body %}
-    <h1>Liste des postulations</h1>
-    {% for   postulation in postulations %}
-    <tr>
-                        
-                        
-    <td >{{postulation.email}}</td>
-    <td >{{postulation.getDatePos()|date('Y-m-d') }}</td>
-    {% endfor %}
+	<section id="pricing" class="pricing">
 
-    {{ knp_pagination_render(postulations) }}
+		<div class="container aos-init aos-animate" data-aos="fade-up">
+
+			<header class="section-header">
+				<h2>postulation</h2>
+				<p>Liste des postulations</p>
+			</header>
+
+			<div class="row">
+				{% for   postulation in postulations %}
+					<div class="col-lg-3 col-md-6 aos-init aos-animate" data-aos="zoom-in" data-aos-delay="400">
+						<a href="">
+							<div class="box">
+								<h3 style="color: #ff0071; font-size: 24px;">{{ postulation.getAdresse() }}</h3>
+								<div class="price">
+									<sup class="bi bi-clock"></sup>
+									<small style="font-size: 14px;">{{postulation.getDatePos()|date('Y-m-d') }}</small>
+									<span>
+										/ Postulation Date</span>
+								</div>
+								<ul>
+									<li>{{postulation.email}}</li>
+								</ul>
+								<a href="" class="btn-buy" style="background-color: green; color: white;">Edit</a>
+								<a href="" class="btn-buy" style="background-color: red; color: white;">Delete</a>
+								<a href="" class="btn-buy" style="margin-top: 4px;">Participants List</a>
+							</div>
+						</a>
+					</div>
+					{% if loop.index is divisible by 4 %}
+					</div>
+					<div class="row">
+					{% endif %}
+				{% endfor %}
+			</div>
+
+		</div>
+
+	</div>
+
+</section>
+
+
+<h1>Liste des postulations</h1>
+{% for   postulation in postulations %}
+	<tr>
+		<td>{{postulation.email}}</td>
+		<td>{{postulation.getDatePos()|date('Y-m-d') }}</td>
+	{% endfor %}
+
+	{{ knp_pagination_render(postulations) }}
 {% endblock %}
