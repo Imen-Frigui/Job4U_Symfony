@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+
+<div class="row" style="display: flex;align-items: center;justify-content: center;margin-top: 150px;">
+
+    <div class="col-lg-6">
+
+        <div class="card">
+            <div class="card-body">
+
+                <h5 class="card-title">Liste des Offres</h5>
+                  {% if form is defined %}
+
+          {{ form_start(form) }}
+
+<div class="form-row align-items-end" >
+ <div class="col">
+   {{ form_row(form.nom) }}
+ </div>
+
+  <div class="col">
+   <div class="form-group">
+      <button type="submit" class="btn btn-success">Rechercher</button>
+    </div>
+ </div>
+</div>
+ {{ form_end(form) }}
+ {% endif %}
+
+                <!-- Table with stripped rows -->
+                <table class="table table-striped">
+                    <thead>
+                     <tr>
+        <th>Id</th>
+        <th>Nom</th>
+        <th>description </th>
+        <th>date </th>
+        <th>duree </th>
+        <th>Categories </th>
+        <th>project </th>
+        <th>Suprimer </th>
+
+    </tr>
+                    </thead>
+                    <tbody>
+                    {% for i in of %}
+    <tr>
+        <td>{{i.id}}</td>
+        <td>{{i.nom}}</td>
+        <td>{{i.description}}</td>
+        <td>{{ i.date|date('m/d/Y')}}</td>
+        <td>{{i.duree}}</td>
+        <td>{{i.categorie}}</td>
+        <td>{{i.Project}}</td>
+        <td><a class="btn btn-danger" href="{{path('suppO',{'id':i.id}) }}">Supprimer</a></td>
+
+    </tr>
+    {% endfor %}
+
+                    </tbody>
+                </table>
+                <!-- End small tables -->
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+

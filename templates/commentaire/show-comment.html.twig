@@ -1,0 +1,14 @@
+
+
+<div class="comment">
+              <img src="{{ asset('default.png') }}" alt="User profile image" width="100" height="auto" class="user-profile-img">
+              <div class="comment-info">
+                <div class="username">Username</div>
+                <div class="comment-text">{{ c.description }}</div>
+                <div class="comment-date">{{ c.date|date('Y-m-d') }}</div>
+                <form method="post" action="{{ path('app_commentaire_delete', {'id': c.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                  <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ c.id) }}">
+                  <button type="submit" class="delete-btn"><i class="fas fa-trash"></i> Delete</button>
+                </form>
+              </div>
+            </div>

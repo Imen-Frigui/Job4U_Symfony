@@ -1,0 +1,48 @@
+{% extends 'base1.html.twig' %}
+
+
+{% block body %}
+
+
+<div class="row" style="display: flex;align-items: center;justify-content: center;margin-top: 150px;">
+
+    <div class="col-lg-6">
+
+        <div class="card">
+            <div class="card-body">
+                <a href="{{ path('addCat') }}"><i class="bi bi-plus-circle-fill" style="font-size: 50px;"></i></a>
+                <h5 class="card-title">Liste des Categories</h5>
+
+                <!-- Table with stripped rows -->
+                <table class="table table-striped">
+                    <thead>
+                     <tr>
+        <th>Nom</th>
+        <th>Supprimer </th>
+        <th>Modifer </th>
+    </tr>
+                    </thead>
+                    <tbody>
+                    {% for i in cat %}
+    <tr>
+        <td>{{i.nom}}</td>
+        <td><a class="btn btn-success" href="{{path('suppCat',{'id':i.id}) }}">Supprimer</a></td>
+          <td><a class="btn btn-danger" href="{{path('updateCat',{'id':i.id}) }}">Modifier</a></td>
+    </tr>
+    {% endfor %}
+
+                    </tbody>
+                </table>
+                <!-- End small tables -->
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>
+{% endblock %}
+
+

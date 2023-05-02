@@ -1,0 +1,181 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}Forum{% endblock %}
+
+{% block body %}
+
+<style>
+.post-container {
+  margin: 20px auto;
+  max-width: 800px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.post-container:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.post-container img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.post-container h2 {
+  margin-top: 0;
+  font-size: 24px;
+  font-weight: bold;
+  color: #007bff;
+}
+
+.post-container p {
+  line-height: 1.5;
+}
+
+.post-container .actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.post-container .actions a {
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #007bff;
+  text-decoration: none;
+  border: none;
+  margin-right: 10px;
+  transition: all 0.2s ease-in-out;
+}
+
+.post-container .actions a:hover {
+  background-color: #0069d9;
+  cursor: pointer;
+}
+
+.post-container .actions .delete {
+  background-color: #dc3545;
+}
+
+.post-container .actions .delete:hover {
+  background-color: #c82333;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8f8f8;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.label span {
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 36px;
+  font-weight: bold;
+  color: #007bff;
+  margin-bottom: 20px;
+}
+
+
+a:hover {
+  color: #0056b3;
+}
+
+body {
+  background-color: #f5f5f5;
+  font-family: "Helvetica Neue", sans-serif;
+}
+
+</style>
+<section id="pricing" class="pricing">
+
+		<div class="container aos-init aos-animate" data-aos="fade-up">
+
+			<header class="section-header">
+      <h1>Forum</h1>
+	
+			</header>
+      <div style="display:flex;">
+       <div class="form-container mb-3">
+            <form method="get" action="{{ path('app_poste_indexFront') }}">
+                <div class="form-group">
+                    <label for="domaine">Filter by Domaine:</label>
+                    <select class="form-control" id="domaine" name="domaine">
+                        <option value="">All</option>
+                        
+                            <option value="INFO"> INFO</option>
+                            <option value="SANTE"> SANTE</option>
+                            <option value="ELECTROMECANIQUE"> ELECTROMECANIQUE</option>
+                        
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </form>
+        </div>
+        <div class="form-container mb-3">
+    <form method="get" action="{{ path('app_poste_indexFront') }}">
+        <div class="form-group">
+            <label for="search">Search by Title:</label>
+            <input type="text" class="form-control" id="search" name="search" value="{{ searchTerm }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+</div>
+</div>
+<br>
+<br>
+
+{% for poste in postes %}
+
+<div class="col-lg-3 col-md-6 aos-init aos-animate" data-aos="zoom-in" data-aos-delay="400">
+<a href="{{ path('app_poste_show', {'id': poste.id}) }}" class="show">
+<div class="box">
+  <img src="{{ asset('images/events/' ~ poste.img) }}" height="250" width="auto" class="img-fluid" alt="{{ poste.titre }}">
+  <div class="container">
+    <div class="label">
+      <span>Titre:</span> {{ poste.titre }}
+    </div>
+    <div class="label">
+      <span>Description:</span> {{ poste.description }}
+    </div>
+    <div class="label">
+      <span></span> Domaine :  {{ poste.domaine }}
+    </div>
+    <div class="label">
+      <span></span> {{ poste.date }}
+    </div>
+      {% if app.user.id == poste.idUser.getId() %}
+    <a href="{{ path('app_poste_edit', {'id': poste.id}) }}" class="btn-buy" style="background-color: green; color: white;">Edit</a>
+								<a href="{{ path('poste_delete', {'id': poste.id}) }}" class="btn-buy" style="background-color: red; color: white;">Delete</a>
+      {% endif %}
+  </div>
+</div>
+</a>
+</div>
+
+{% endfor %}
+
+</section>
+{% endblock %}

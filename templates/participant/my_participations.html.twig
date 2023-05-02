@@ -1,0 +1,95 @@
+{% extends 'base1.html.twig' %}
+{% block body %}
+	<div class="row" style="margin-left: 50px;margin-right: 50px;">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title text-dark">List Of The Events Paticipated In</h5>
+					<!-- Table with stripped rows -->
+					<div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns" style="">
+						<div class="dataTable-top">
+							<div style="margin-left: 1150px;margin-top: 10px;margin-bottom: 10px;" class="dataTable-search"><input class="dataTable-input" placeholder="Search..." type="text"></div>
+						</div>
+						<div class="dataTable-container">
+							<table class="table datatable dataTable-table">
+								<thead>
+									<tr>
+										<th scope="col" data-sortable="" style="width: 3%;" class="asc">
+											<a href="#" class="dataTable-sorter">#</a>
+										</th>
+										<th scope="col" data-sortable="" style="width: 10.0785%;">
+											<a href="#" class="dataTable-sorter">Title</a>
+										</th>
+										<th scope="col" data-sortable="" style="width: 10.7199%;">
+											<a href="#" class="dataTable-sorter">Event Host</a>
+										</th>
+										<th scope="col" data-sortable="" style="width: 11.30311%;">
+											<a href="#" class="dataTable-sorter">Start Date</a>
+										</th>
+										<th scope="col" data-sortable="" style="width: 7%;">
+											<a href="#" class="dataTable-sorter">Location</a>
+										</th>
+										<th scope="col" data-sortable="" style="width: 9.2828%;">
+											<a href="#" class="dataTable-sorter">Status</a>
+										</th>
+										<th scope="col" data-sortable="" style="width: 30.2828%;">
+											<a href="#" class="dataTable-sorter">Action</a>
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% if participations is empty %}
+										<tr>
+											<th scope="row">{{1}}</th>
+											<td>No events Found !</td>
+											<td>{{" "}}</td>
+										{% else %}
+											{% set i=0 %}
+											{% for participation in participations %}
+												{% set i=i+1 %}
+												<tr>
+													<th scope="row">{{i}}</th>
+													<td>{{ participation.event.title }}</td>
+													<td>{{ participation.event.getCreator().getNom()}}{{" "}}{{ participation.event.getCreator().getPrenom()}}</td>
+													<td>{{ participation.event.date|date('d-m-Y H:i:s') }}</td>
+													<td>{{ participation.event.location }}</td>
+													<td>
+														{% if participation.status == 'pending' %}
+															<span class="badge bg-warning">{{ participation.status}}</span>
+														{% elseif participation.status == 'banned' %}
+															<span class="badge bg-danger">{{ participation.status}}</span>
+														{% elseif participation.status == 'accepted' %}
+															<span class="badge bg-success">{{ participation.status}}</span>
+
+														{% endif %}
+													</td>
+
+													<td>
+														<a href="{{ path('participant_withdraw', {'eventId': participation.event.id}) }}">
+															<button type="button" class="btn btn-danger">Withdraw Participation</button>
+														</a>
+														<a href="{{ path('event_show', {'id': participation.event.id}) }}">
+															<button type="button" class="btn btn-info">View Event</button>
+														</a>
+													</td>
+												</tr>
+											{% endfor %}
+										{% endif %}
+									</tbody>
+								</tbody>
+							</table>
+						</div>
+						<div class="dataTable-bottom">
+							<nav class="dataTable-pagination">
+								<ul class="dataTable-pagination-list"></ul>
+							</nav>
+						</div>
+					</div>
+					<!-- End Table with stripped rows -->
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+{% endblock %}

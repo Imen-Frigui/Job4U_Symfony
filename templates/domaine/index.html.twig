@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Domaine index{% endblock %}
+
+{% block body %}
+<h5 class="card-title text-dark">liste des postulations
+</h5>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<div class="row" style="margin-left: 300px;margin-right: 50px;margin-top: 100px;">
+
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title text-dark">Domaine index
+                </h5>
+                <!-- Table with stripped rows -->
+                <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns" style="">
+                    <div class="dataTable-top">
+                        <div style="margin-left: 1150px;margin-top: 10px;margin-bottom: 10px;" class="dataTable-search"><input class="dataTable-input" placeholder="Search..." type="text"></div>
+                    </div>
+                    <div class="dataTable-container">
+
+                    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for domaine in domaines %}
+            <tr>
+                <td>{{ domaine.id }}</td>
+                <td>{{ domaine.nom }}</td>
+                <td>
+                    <a href="{{ path('app_domaine_show', {'id': domaine.id}) }}">show</a>
+                    <a href="{{ path('app_domaine_edit', {'id': domaine.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+                    </div>
+                </div>
+                <!-- End Table with stripped rows -->
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+    <a href="{{ path('app_domaine_new') }}">Create new</a>
+{% endblock %}

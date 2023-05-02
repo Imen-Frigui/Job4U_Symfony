@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Reclamation{% endblock %}
+
+{% block body %}
+    <h1>Liste des Reclamations </h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdReclamation</th>
+                <th>Message</th>
+                <th>Type</th>
+                <th>Statut</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody id="all">
+        {% for reclamation in reclamations %}
+            <tr>
+                <td>{{ reclamation.id }}</td>
+                <td>{{ reclamation.message }}</td>
+                <td>{{ reclamation.type }}</td>
+                <td>{{ reclamation.statut }}</td>
+                <td>
+                <div class="container">
+                    <a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}"><button class="btn btn-secondary">Details</button></a>
+                    <a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}"><button class="btn btn-warning">Modifier</button></a>
+                
+                    {{ include('reclamation/_delete_form.html.twig') }}
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">pas de données</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_reclamation_new') }}"><button class="btn btn-primary">Créer</button></a>
+
+        <a class="b" href="{{ path('pdf0') }}">Exporter PDF</a>
+
+{% endblock %}

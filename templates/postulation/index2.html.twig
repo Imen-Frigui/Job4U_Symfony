@@ -1,0 +1,16 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}Liste des postulations{% endblock %}
+
+{% block body %}
+    <h1>Liste des postulations</h1>
+    {% for   postulation in postulations %}
+    <tr>
+                        
+                        
+    <td >{{postulation.email}}</td>
+    <td >{{postulation.getDatePos()|date('Y-m-d') }}</td>
+    {% endfor %}
+
+    {{ knp_pagination_render(postulations) }}
+{% endblock %}

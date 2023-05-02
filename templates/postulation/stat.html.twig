@@ -1,0 +1,5 @@
+{% include 'base1.html.twig' %}
+{{ render_chart(chart) }}
+
+{# You can pass HTML attributes as a second argument to add them on the <canvas> tag #}
+{{ render_chart(chart, {'class': 'my-chart'}) }}

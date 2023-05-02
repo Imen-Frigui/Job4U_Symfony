@@ -1,0 +1,49 @@
+{% extends 'base1.html.twig' %}
+{% block body %}
+	<section id="pricing" class="pricing">
+
+		<div class="container aos-init aos-animate" data-aos="fade-up">
+
+			<header class="section-header">
+				<h2>event</h2>
+				<p>My Created Events</p>
+			</header>
+
+			<div class="row">
+				{% for event in events %}
+					<div class="col-lg-3 col-md-6 aos-init aos-animate" data-aos="zoom-in" data-aos-delay="400">
+						<a href="{{ path('event_show', {'id': event.id}) }}">
+							<div class="box">
+								<h3 style="color: #ff0071; font-size: 24px;">{{ event.title }}</h3>
+								<div class="price">
+									<sup class="bi bi-clock"></sup>
+									<small style="font-size: 14px;">{{ event.date|date('d-m-Y') }}</small>
+									<span>
+										/ Starting Date</span>
+								</div>
+								{% if event.img %}
+									<img src="{{ asset('images/events/' ~ event.img) }}" class="img-fluid" alt="">
+								{% else %}
+									<img src="{{('asset1/img/pricing-ultimate.png')}}" class="img-fluid" alt="">
+								{% endif %}
+								<ul>
+									<li>{{ event.description }}</li>
+								</ul>
+								<a href="{{ path('event_edit', {'id': event.id}) }}" class="btn-buy" style="background-color: green; color: white;">Edit</a>
+								<a href="{{ path('event_delete', {'id': event.id}) }}" class="btn-buy" style="background-color: red; color: white;">Delete</a>
+								<a href="{{ path('event_participants', {'id': event.id}) }}" class="btn-buy" style="margin-top: 4px;">Participants List</a>
+							</div>
+						</a>
+					</div>
+					{% if loop.index is divisible by 4 %}
+					</div>
+					<div class="row">
+					{% endif %}
+				{% endfor %}
+			</div>
+
+		</div>
+
+	</div>
+
+</section>{% endblock %}

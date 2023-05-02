@@ -1,0 +1,60 @@
+
+
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+<div class="row" style="display: flex;align-items: center;justify-content: center;margin-top: 150px;">
+
+    <div class="col-lg-6">
+
+         
+            <div class="card-body">
+                <a href="/addSos"><i class="ri-arrow-left-circle-fill" style="font-size: 50px;"></i></a>
+                <h5 class="card-title">Liste des Societes</h5>
+               
+
+                <!-- Table with stripped rows -->
+                <table class="table table-striped">
+                    <thead>
+                    <tr>    
+                    <th>adresse </th>
+                    <th> email</th> 
+                    <th>tel </th>
+                    <th>domaine</th>
+                    <th>sosImage </th>
+                    
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {%for sos in s  %}
+                        <tr>
+                    <td >{{sos.adresse}}</td>
+                    <td >{{sos.email}}</td>
+                    <td >{{sos.tel}}</td>
+                    <td >{{sos.domaine}}</td>
+                    <td >{{sos.sosImage}}</td>
+                        <td>
+                        <a href= "{{path('societe_update' ,{'id':sos.id})}}">Update </a>
+                            </td>
+                            <td>
+                            <a href= "{{path('remove_sos' ,{'id':sos.id})}}">Remove </a>
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+                <!-- End small tables -->
+
+            </div>
+        
+
+    </div>
+
+
+
+</div>
+{% endblock %}

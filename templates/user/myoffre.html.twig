@@ -1,0 +1,29 @@
+{% extends 'base1.html.twig' %}
+
+
+{% block body %}
+
+<div class="row gx-0">
+
+{% for i in offy %}
+          <div class="col-lg-6 d-flex flex-column justify-content-center aos-init aos-animate" data-aos="fade-up" data-aos-delay="200" style="margin-left: 20%;">
+            <div class="content">
+              <<h3 class="text-primary">{{i.nom}}</h3>
+              <p>Description: {{i.description}}</p>
+              <p>Date debut: {{ i.date|date('m/d/Y')}}</p>
+              <p>Duree: {{i.duree}}</p>
+              <div class="text-center text-lg-start">
+              <a style ="margin-left: 50%;"class="btn btn-primary" href="/addPos">Postuler</a>
+              <a class="btn btn-primary" href="{{path('pdfO',{'id':i.id}) }}">Print</a>
+              </div>
+            </div>
+          </div>
+
+         
+
+        </div>
+{% endfor %}
+
+
+
+{% endblock %}

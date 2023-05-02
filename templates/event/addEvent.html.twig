@@ -1,0 +1,72 @@
+{% extends 'base1.html.twig' %}
+
+{% block body %}
+	<div style="align-items: center;justify-content: center;margin-top: 10px; margin-right: 500px;margin-left: 500px;">
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">Create New Event</h5>
+
+				<!-- General Form Elements -->
+				{{ form_start(form,{attr:{novalidate:'novalidate'}}) }}
+				<div class="row mb-3">
+					<label for="inputText" style="width: 80%;" class="col-sm-2 col-form-label">Title</label>
+					<div class="col-sm-10">
+						{{ form_widget(form.title,{'attr':{'class':'form-control'}}) }}
+					</div>
+					{{ form_errors(form.title,{'attr':{'class':'text-danger'}}) }}
+				</div>
+
+				<div class="row mb-3">
+					<label for="inputDate" style="width: 80%;" class="col-sm-2 col-form-label">Date and Time</label>
+					<div class="input-group date">
+						{{ form_widget(form.date, {'attr': {'class': 'form-control', 'type':'datetime'} }) }}
+					</div>
+					{{ form_errors(form.date,{'attr':{'class':'text-danger'}}) }}
+				</div>
+
+
+				<div class="row mb-3">
+					<label for="inputPassword" style="width: 80%;" class="col-sm-2 col-form-label">Description</label>
+					<div class="col-sm-10">
+						{{form_widget(form.description,{'attr':{'class':'form-control'}}) }}
+					</div>
+					{{ form_errors(form.description,{'attr':{'class':'text-danger'}}) }}
+				</div>
+
+				<div class="row mb-3">
+					<label for="inputText" style="width: 80%;" class="col-sm-2 col-form-label">Location</label>
+					<div class="col-sm-10">
+						{{ form_widget(form.location,{'attr':{'class':'form-control'}}) }}
+					</div>
+					{{ form_errors(form.location,{'attr':{'class':'text-danger'}}) }}
+				</div>
+
+				<div class="row mb-3">
+					<label style="width: 80%;" class="col-sm-2 col-form-label">Category</label>
+					<div class="col-sm-10">
+						{{ form_widget(form.eventCategory, {'attr': {'class': 'form-select', 'aria-label': 'Default select example'}}) }}
+					</div>
+					{{ form_errors(form.eventCategory, {'attr': {'class': 'text-danger'}}) }}
+				</div>
+				<div class="row mb-3">
+					<label for="thumbnail" style="width: 80%;" class="col-sm-2 col-form-label">Thumbnail Image</label>
+					<div class="col-sm-10">
+						{{ form_widget(form.img, {'attr': {'class': 'form-control'}}) }}
+					</div>
+					{{ form_errors(form.img,{'attr':{'class':'text-danger'}}) }}
+				</div>
+
+				<div class="row mb-3">
+					<div class="col-sm-10">
+						<button type="submit" class="btn btn-primary">Create Event</button>
+					</div>
+				</div>
+				{{ form_end(form) }}
+
+				<!-- End General Form Elements -->
+
+			</div>
+		</div>
+
+	</div>
+{% endblock %}

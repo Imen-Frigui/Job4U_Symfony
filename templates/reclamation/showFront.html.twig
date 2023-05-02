@@ -1,0 +1,38 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}Liste des Reclamations{% endblock %}
+
+{% block body %}
+    <h1>Reclamation</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>IdReclamation</th>
+                <td>{{ reclamation.id }}</td>
+            </tr>
+            <tr>
+                <th>Message</th>
+                <td>{{ reclamation.message }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ reclamation.type }}</td>
+            </tr>
+            <tr>
+                <th>Statut</th>
+                <td>{{ reclamation.statut }}</td>
+            </tr>
+            <tr>
+                                        <div class="img-fluid"><img style="min-width: 20%;" src="{{ qrCodes['simple'] }}" /></div>
+
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('reclamationsFront') }}"><button class="btn btn-secondary">back to list</button></a>
+
+    <a href="{{ path('app_reclamationFront_edit', {'id': reclamation.id}) }}"><button class="btn btn-warning">edit</button></a>
+
+    {{ include('reclamation/_delete_form.html.twig') }}
+{% endblock %}

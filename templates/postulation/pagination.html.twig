@@ -1,0 +1,20 @@
+<div class="pagination">
+    <ul>
+        {% for   postulation in postulations %}
+        {% if postulations.hasPreviousPage %}
+            <li><a href="{{path('postulation_update') }}">«</a></li>
+        {% endif %}
+ 
+        {% for postulation in postulations.pagesInRange %}
+            {% if postulation is same as postulations.currentPageNumber %}
+                <li class="active"><a href="#">{{ postulation}}</a></li>
+            {% else %}
+                <li><a href="{{ path('postulation_update')}}">{{ postulation }}</a></li>
+            {% endif %}
+        {% endfor %}
+ 
+        {% if postulations.hasNextPage %}
+            <li><a href="{{path('remove_pos') }}">»</a></li>
+        {% endif %}
+    </ul>
+</div>

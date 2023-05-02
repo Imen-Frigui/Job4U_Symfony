@@ -1,0 +1,31 @@
+{{% extends 'base1.html.twig' %}}
+
+{% block title %}Search Results{% endblock %}
+
+{% block body %}
+    <h1>Search Results</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Creator</th>
+                <th>role</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for postulation in postulations %}
+                <tr>
+                    <td>{{ postulation.idPos }}</td>
+                    <td>{{ postulation.email }}</td>
+               
+                    <td>{{ postulation.creator.Nom}}</td>
+                   
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% include 'event/searchdata.html.twig' %}
+    <a href="{{ path('search') }}">Back to Search</a>
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}Nouvelle Reclamation{% endblock %}
+
+{% block body %}
+
+<div class="row">
+
+<form id="searchForm" action="{{ path('recSearch') }}" method="GET">
+    <select id="searchType" name="searchType">
+        <option value="type">Type</option>
+        <option value="statut">Statut</option>
+        <option value="message">Message</option>
+    </select>
+    <input id="searchValue" type="text" name="searchValue" />
+    <button type="submit">Search</button>
+</form>
+
+</div>
+
+<div class="container">
+<div class="d-flex flex-column justify-content-center">
+ <div class="row">
+
+            <h1>Liste des Reclamation</h1>
+
+    <table class="table" >
+        <thead>
+            <tr>
+                <th>Message</th>
+                <th>Type</th>
+                <th>Statut</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody id="searchResults">
+        {% for reclamation in reclamations %}
+            <tr>
+                <td>{{ reclamation.message }}</td>
+                <td>{{ reclamation.type }}</td>
+                <td>{{ reclamation.statut }}</td>
+                <td>
+                    <a href="{{ path('showRecFront', {'id': reclamation.id}) }}"><button class="btn btn-secondary">show</button></a>
+                    <a href="{{ path('app_reclamationFront_edit', {'id': reclamation.id}) }}"><button class="btn btn-warning">edit</button></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+                <a class="nav-link scrollto" href="{{path('app_reclamation_new')}}"><button class="btn btn-primary">Créer Reclamation</button> </a>
+
+        </tbody>
+    </table>
+
+
+
+        </div>
+  </div>
+    </div>
+
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ 
+
+<script>
+// AJAX call for search form submission
+jQuery('#searchForm').on('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission behavior
+
+    // Get the form data
+    var searchType = $('#searchType').val();
+    var searchValue = $('#searchValue').val();
+
+    // Make the AJAX call
+    jQuery.ajax({
+        url: $(this).attr('action'),
+        type: $(this).attr('method'),
+        data: {
+            'searchType': searchType,
+            'searchValue': searchValue
+        },
+        success: function(data) {
+            console.log(data);
+            // Clear existing search results
+            jQuery('#searchResults').empty();
+
+            // Check if events data is available
+            if (data.hasOwnProperty('reclamations')) {
+                console.log(data);
+                // Iterate through the retrieved events and append them to the searchResults div
+                
+                data.reclamations.forEach(function(reclamation) {
+                    var evenementHtml = `
+                         <tr>
+                <td>${ reclamation.message }</td>
+                <td>${ reclamation.type }</td>
+                <td>${ reclamation.statut }</td>
+              
+            </tr>
+                    `;
+                    console.log(evenementHtml);
+                    jQuery('#searchResults').append(evenementHtml);
+                });
+            } else {
+                // If no events found, append a message to the searchResults div
+                jQuery('#searchResults').append('<div>no events found</div>');
+            }
+
+            jQuery('#searchResults').show(); // Show the search results
+            
+        }
+    });
+});
+</script>
+
+{% endblock %}

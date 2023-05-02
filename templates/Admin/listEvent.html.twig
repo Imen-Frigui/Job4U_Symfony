@@ -1,0 +1,226 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	<div class="row" style="margin-left: 300px;margin-right: 50px;margin-top: 100px;">
+
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title text-dark">The Event List
+					</h5>
+					<!-- Table with stripped rows -->
+					<div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns" style="">
+						<div class="dataTable-top">
+							<div style="margin-left: 1150px;margin-top: 10px;margin-bottom: 10px;" class="dataTable-search"><input class="dataTable-input" placeholder="Search..." type="text"></div>
+						</div>
+						<div class="dataTable-container">
+							<table class="table datatable dataTable-table">
+								<thead>
+									<tr>
+										<th scope="col" data-sortable="" style="width: 5%;" class="asc">
+											<a href="#" class="dataTable-sorter">#</a>
+										</th>
+										<th scope="col" data-sortable="" style="width: 15.7199%;">
+											<a href="#" class="dataTable-sorter">Creator</a>
+										</th>
+										<th scope="col" data-sortable="" style="width: 15.7199%;">
+											<a href="#" class="dataTable-sorter">Title</a>
+										</th>
+										<th scope="col" data-sortable="" style="width: 10.30311%;">
+											<a href="#" class="dataTable-sorter">Category</a>
+										</th>
+										<th scope="col" data-sortable="" style="width: 30.2828%;">
+											<a href="#" class="dataTable-sorter">Description</a>
+										</th>
+										<th scope="col" data-sortable="" style="width: 20.2828%;">
+											<a href="#" class="dataTable-sorter">Date</a>
+										</th>
+										<th scope="col" data-sortable="" style="width: 15.2828%;">
+											<a href="#" class="dataTable-sorter">Location
+											</a>
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% set i=0 %}
+									{% for event in events %}
+										{% set i=i+1 %}
+										<tr>
+											<th scope="row">{{i}}</th>
+											<td>{{ event.getCreator().getName() }}{{" "}}</td>
+											<td>{{ event.title }}</td>
+											<td>{{ event.getEventCategory().getName() }}</td>
+											<td>{{ event.description }}</td>
+											<td>{{ event.Date|date('d-m-Y H:i:s')  }}</td>
+											<td>{{ event.location }}</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+
+						</table>
+					</div>
+				</div>
+				<!-- End Table with stripped rows -->
+
+			</div>
+		</div>
+
+	</div>
+</div>
+<div class="row" style="margin-left: 300px;margin-right: 50px;margin-top: 100px;">
+
+	<div class="col-lg-12">
+		<div class="card">
+			<div class="filter">
+				<a class="icon" href="#" data-bs-toggle="dropdown">
+					<i class="bi bi-three-dots"></i>
+				</a>
+				<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+					<li class="dropdown-header text-start">
+						<h6>Filter by event title</h6>
+					</li>
+					{% for event in events %}
+						<li>
+							<a class="dropdown-item" href="{{ path('list_events', {'id': event.id}) }}">{{ event.title }}</a>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+
+			<div class="card-body">
+				<h5 class="card-title">Reports
+					<span>/Today</span>
+				</h5>
+
+				<!-- Line Chart -->
+				<!-- Line Chart -->
+				<div id="reportsChart" style="min-height: 365px;"></div>
+				<script>
+					$(function () {
+var options = {
+chart: {
+type: 'line',
+height: 350
+},
+series: [
+{
+name: "Accept",
+data: [
+30,
+40,
+25,
+50,
+49,
+21,
+70,
+51,
+30,
+40,
+25,
+50,
+49,
+21,
+70,
+51
+]
+}, {
+name: "Pending",
+data: [
+23,
+12,
+54,
+61,
+32,
+56,
+81,
+19,
+23,
+12,
+54,
+61,
+32,
+56,
+81,
+19
+]
+}, {
+name: "Banned",
+data: [
+62,
+14,
+28,
+51,
+22,
+12,
+50,
+28,
+62,
+14,
+28,
+51,
+22,
+12,
+50,
+28
+]
+}
+],
+stroke: {
+width: [
+2, 2, 2
+],
+curve: 'smooth'
+},
+xaxis: {
+categories: [
+'01 Jan',
+'02 Jan',
+'03 Jan',
+'04 Jan',
+'05 Jan',
+'06 Jan',
+'07 Jan',
+'08 Jan',
+'09 Jan',
+'10 Jan',
+'11 Jan',
+'12 Jan',
+'13 Jan',
+'14 Jan',
+'15 Jan',
+'16 Jan'
+]
+},
+legend: {
+position: 'top',
+horizontalAlign: 'right',
+floating: true,
+offsetY: -25,
+offsetX: -5
+},
+responsive: [
+{
+breakpoint: 600,
+options: {
+legend: {
+offsetY: -30,
+offsetX: -10
+}
+}
+}
+]
+};
+
+var chart = new ApexCharts(document.querySelector("#reportsChart"), options);
+chart.render();
+});
+				</script>
+				<!-- End Line Chart -->
+
+				<!-- End Line Chart -->
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

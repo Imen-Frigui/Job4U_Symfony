@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Domaine{% endblock %}
+
+{% block body %}
+    <h5 class="card-title text-dark">liste des postulations
+    </h5>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <div class="row" style="margin-left: 300px;margin-right: 50px;margin-top: 100px;">
+
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title text-dark">Domaine
+                    </h5>
+                    <!-- Table with stripped rows -->
+                    <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns" style="">
+                        <div class="dataTable-top">
+                            <div style="margin-left: 1150px;margin-top: 10px;margin-bottom: 10px;" class="dataTable-search"><input class="dataTable-input" placeholder="Search..." type="text"></div>
+                        </div>
+
+                        <div class="dataTable-container">
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ domaine.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ domaine.nom }}</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    </div>
+    <!-- End Table with stripped rows -->
+
+    </div>
+    </div>
+
+    </div>
+    </div>
+
+    <a href="{{ path('app_domaine_index') }}">back to list</a>
+
+    <a href="{{ path('app_domaine_edit', {'id': domaine.id}) }}">edit</a>
+
+    {{ include('domaine/_delete_form.html.twig') }}
+{% endblock %}

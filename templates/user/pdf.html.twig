@@ -1,0 +1,62 @@
+{% extends 'base1.html.twig' %}
+
+
+{% block body %}
+
+
+<div class="row" style="display: flex;align-items: center;justify-content: center;margin-top: 150px;">
+
+    <div class="col-lg-6">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Liste des Offres</h5>
+
+                <!-- Table with stripped rows -->
+                <section id="services" class="services">
+      <div class="container aos-init aos-animate" data-aos="fade-up">
+
+        <header class="section-header">
+          <h2>Offres</h2>
+          {% if form is defined %}
+
+          {{ form_start(form) }}
+
+<div class="form-row align-items-end" >
+ <div class="col">
+   {{ form_row(form.nom) }}
+ </div>
+
+  <div class="col">
+   <div class="form-group">
+      <button type="submit" class="btn btn-success">Rechercher</button>
+    </div>
+ </div>
+</div>
+ {{ form_end(form) }}
+ {% endif %}
+        </header>
+
+        <div class="row gy-4">
+        
+        {% for i in of %}
+
+          <div class="col-lg-4 col-md-6 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+            <div class="service-box blue">
+              <h3 class="text-primary">{{i.nom}}</h3>
+              <p>Description: {{i.description}}</p>
+              <p>Date debut: {{ i.date|date('m/d/Y')}}</p>
+              <p>Duree: {{i.duree}}</p>
+              <a class="btn btn-success" href="{{path('suppO',{'id':i.id}) }}">Postuler</a>
+              <a class="btn btn-success" href="{{path('pdfO',{'id':i.id}) }}">Print</a>
+            </div>
+          </div>
+           
+    {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}
