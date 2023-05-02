@@ -1,37 +1,78 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des Reponse{% endblock %}
+{% block title %}Liste des Reponse
+{% endblock %}
 
 {% block body %}
-    <h1>Liste des Reponses</h1>
+	<div class="row" style="display: flex;align-items: center;justify-content: center;margin-top: 150px;">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>IdReclamation</th>
-                <th>MessageRep</th>
-                <th>DateRep</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for reponse in reponses %}
-            <tr>
-                <td>{{ reponse.idReclamation.id }}</td>
-                <td>{{ reponse.messageRep }}</td>
-                <td>{{ reponse.dateRep|date('d-m-Y')  }}</td>
-                <td>
-                    <a href="{{ path('app_reponse_show', {'id': reponse.id}) }}"><button class="btn btn-secondary">Details</button></a>
-                    <a href="{{ path('app_reponse_edit', {'id': reponse.id}) }}"><button class="btn btn-warning">Modifier</button></a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+		<div class="col-lg-6">
 
-    <a href="{{ path('app_reponse_new') }}"><button class="btn btn-primary">Créer</button></a>
-{% endblock %}
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">Liste des Reponses</h5>
+					<a href="{{ path('app_reponse_new') }}">
+						<button class="btn btn-primary">Créer</button>
+					</a>
+					{% if form is defined %}
+
+						{{ form_start(form) }}
+
+						<div class="form-row align-items-end">
+							<div class="col">
+								{{ form_row(form.nom) }}
+							</div>
+
+							<div class="col">
+								<div class="form-group">
+									<button type="submit" class="btn btn-success">Rechercher</button>
+								</div>
+							</div>
+						</div>
+						{{ form_end(form) }}
+					{% endif %}
+
+					<!-- Table with stripped rows -->
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>MessageRep</th>
+								<th>DateRep</th>
+								<th>actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% if reponses %}
+								{% for reponse in reponses %}
+									<tr>
+										<td>{{ reponse.idReclamation.id }}</td>
+										<td>{{ reponse.messageRep }}</td>
+										<td>{{ reponse.dateRep|date('d-m-Y')  }}</td>
+										<td>
+											<a href="{{ path('app_reponse_show', {'id': reponse.id}) }}">
+												<button class="btn btn-secondary">Details</button>
+											</a>
+											<a href="{{ path('app_reponse_edit', {'id': reponse.id}) }}">
+												<button class="btn btn-warning">Modifier</button>
+											</a>
+										</td>
+									</tr>
+								</tr>
+							{% endfor %}
+						{% else %}
+							<tr>
+								<td colspan="5">pas de données</td>
+							</tr>
+						{% endif %}
+
+					</tbody>
+				</table>
+				<!-- End small tables -->
+
+			</div>
+		</div>
+
+	</div>
+
+
+</div>{% endblock %}

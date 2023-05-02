@@ -1,11 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nouveau Reponse{% endblock %}
+{% block title %}Nouveau Reponse
+{% endblock %}
 
 {% block body %}
-    <h1>Create new Reponse</h1>
+	<div class="row" style="display: flex;align-items: center;justify-content: center;margin-top: 150px;">
 
-    {{ include('reponse/_form.html.twig') }}
+		<div class="col-lg-6">
 
-    <a href="{{ path('app_reponse_index') }}"><button class="btn btn-secondary">Retour</button></a>
+			<div class="card">
+				<h1>Create new Reponse</h1>
+
+				{{ include('reponse/_form.html.twig') }}
+
+				<a href="{{ path('app_reponse_index') }}">
+					<button class="btn btn-secondary">Retour</button>
+				</a>
+			</div>
+		</div>
+	</div>
 {% endblock %}
