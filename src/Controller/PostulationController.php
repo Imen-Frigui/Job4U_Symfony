@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Postulation;
+use App\Entity\User;
 use App\Form\PosType;
 use App\Entity\Users;
 use App\service\Pdf;
@@ -50,6 +51,20 @@ class PostulationController extends AbstractController
     #[Route('/pos', name: 'display')]
     public function displayPostulations(Request $request, PaginatorInterface $paginator, PostulationRepository $postulationRepository): Response
     {
+        $creators = $this->getDoctrine()->getRepository(User::class)->findAll();
+
+        $form = $this->createForm(SearchType::class, null, [
+            'creators' => $creators,
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $search = $form->getData();
+            $postulations = $postulationRepository->findByCreator($search['creator']);
+        } else {
+            $postulations = [];
+        }
         $queryBuilder = $postulationRepository->createQueryBuilder('p')
             ->orderBy('p.idPos', 'DESC')
             ->getQuery();
@@ -62,6 +77,7 @@ class PostulationController extends AbstractController
 
         return $this->render('postulation/index2.html.twig', [
             'postulations' => $postulations,
+            'form' => $form->createView(),
 
         ]);
     }
@@ -272,6 +288,29 @@ class PostulationController extends AbstractController
 
         return $this->renderForm('postulation/mail.html.twig', [
             'formulaire' => $form,
+        ]);
+    }
+
+    #[Route('/Psearch', name: 'possearch')]
+    public function search(Request $request, PostulationRepository $postulationRepository): Response
+    {
+        $creators = $this->getDoctrine()->getRepository(User::class)->findAll();
+
+        $form = $this->createForm(SearchType::class, null, [
+            'creators' => $creators,
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $search = $form->getData();
+            $postulations = $postulationRepository->findByCreator($search['creator']);
+        } else {
+            $postulations = [];
+        }
+        return $this->render('postulation/index2.html.twig', [
+            'form' => $form->createView(),
+            'postulations' => $postulations,
         ]);
     }
 }

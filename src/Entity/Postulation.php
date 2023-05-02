@@ -8,27 +8,28 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PostulationRepository;
 use Symfony\Component\Validator\Constraints as Assert;
-#[ORM\Entity(repositoryClass:PostulationRepository::class)]
+
+#[ORM\Entity(repositoryClass: PostulationRepository::class)]
 
 class Postulation
-{ 
+{
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $idPos=null;
+    private ?int $idPos = null;
 
-    #[ORM\Column(length:255)]
-    #[Assert\NotBlank(message:"adresse is required")]
-    private ?string $adresse=null;
-
- 
-    #[ORM\Column(length:50)]
-    #[Assert\NotBlank(message:"Email is required")]
-    #[Assert\Email(message:"The email '{{ value }}' is not a valid email ")]
-    private ?string $email=null;
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "adresse is required")]
+    private ?string $adresse = null;
 
 
-    
+    #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "Email is required")]
+    #[Assert\Email(message: "The email '{{ value }}' is not a valid email ")]
+    private ?string $email = null;
+
+
+
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Assert\NotBlank(message: "Date of the event not assigned")]
     private ?\DateTimeInterface $date_pos = null;
@@ -37,9 +38,7 @@ class Postulation
     #[ORM\JoinColumn(nullable: false)]
     private ?User $creator = null;
 
-    
 
-    
     public function __construct()
     {
         $this->societe = new ArrayCollection();
@@ -64,7 +63,7 @@ class Postulation
 
         return $this;
     }
-   
+
 
     public function getEmail(): ?string
     {
@@ -136,8 +135,4 @@ class Postulation
     {
         return $this->getEmail(); // or any other property you want to output
     }
-    
-
-   
-
 }

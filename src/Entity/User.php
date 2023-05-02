@@ -19,44 +19,39 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Assert\NotBlank(message:"Email is required")]
-    #[Assert\Email(message:"The email '{{ value }}' is not a valid email ")]
-    #[ORM\Column(length: 180,type:"string", unique: true)]
+    #[Assert\NotBlank(message: "Email is required")]
+    #[Assert\Email(message: "The email '{{ value }}' is not a valid email ")]
+    #[ORM\Column(length: 180, type: "string", unique: true)]
     private string $email;
 
     #[ORM\Column]
     private array $roles = [];
 
 
-      
-    #[Assert\NotBlank(message:"Nom Obligatoire")]
-    #[Assert\Length(min : 5, minMessage :" Entrer un Nom au mini de 5 caracteres")]
+
+    #[Assert\NotBlank(message: "Nom Obligatoire")]
+    #[Assert\Length(min: 5, minMessage: " Entrer un Nom au mini de 5 caracteres")]
     #[Assert\Regex(
         pattern: '/\d/',
         match: false,
         message: 'Votre Nom ne peux pas comporter un nombre',
     )]
-    #[ORM\Column(length: 180,type:"string")]
+    #[ORM\Column(length: 180, type: "string")]
     private $name;
     /**
      * @var string The hashed password
      */
-    #[Assert\NotBlank(message:"Password Obligatoire")]
-    #[Assert\Length(min : 4, minMessage :" Entrer un Mot de passe au minimum de 4 caracteres")]
-   
+    #[Assert\NotBlank(message: "Password Obligatoire")]
+    #[Assert\Length(min: 4, minMessage: " Entrer un Mot de passe au minimum de 4 caracteres")]
+
     #[ORM\Column]
     private ?string $password = null;
 
+    #[ORM\Column(length: 180, type: "string")]
+    private $reset_token = "";
 
-     
-    #[ORM\Column(length: 180,type:"string")]
-    private $reset_token="";
-
-
-    #[ORM\Column(length: 180,type:"string")]
-    private $image="";
-
-
+    #[ORM\Column(length: 180, type: "string")]
+    private $image = "";
 
     #[ORM\OneToMany(mappedBy: 'creator_id', targetEntity: Event::class)]
     private Collection $events;
@@ -79,8 +74,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->notifications = new ArrayCollection();
         $this->creator = new ArrayCollection();
         $this->reclamations = new ArrayCollection();
-
-
     }
 
     public function getImage(): ?string
@@ -187,7 +180,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * Get the value of name
-     */ 
+     */
     public function getName()
     {
         return $this->name;
@@ -197,7 +190,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * Set the value of name
      *
      * @return  self
-     */ 
+     */
     public function setName($name)
     {
         $this->name = $name;
@@ -205,7 +198,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-     /**
+    /**
      * @return mixed
      */
     public function getResetToken()

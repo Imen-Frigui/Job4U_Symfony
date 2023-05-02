@@ -10,10 +10,24 @@
 
 			<header class="section-header">
 				<h2>postulation</h2>
-				<p>Liste des postulations</p>
-			</header>
+				<div>
+					{{ form_start(form, {'action': path('possearch')}) }}
+					<div class="d-flex">
+						{{ form_row(form.creator, { 'attr': {'class': 'form-control me-2'} }) }}
+						<button type="submit" class="btn btn-primary">
+							<i class="bi bi-search"></i>
+						</button>
+					</div>
+					{{ form_end(form) }}
+				</div>
 
-			<div class="row">
+				<p>Liste des postulations</p>
+			</header<divclass="row">
+			{% if postulations is empty %}
+				<p style="color:red; mt:700;">
+					404 NOTHIG FOUND</p>
+			{% endif %}
+			{% if postulations|length %}
 				{% for   postulation in postulations %}
 					<div class="col-lg-3 col-md-6 aos-init aos-animate" data-aos="zoom-in" data-aos-delay="400">
 						<a href="">
@@ -42,21 +56,8 @@
 					<div class="row">
 					{% endif %}
 				{% endfor %}
-			</div>
-
+			{% endif %}
 		</div>
 
 	</div>
-
-</section>
-
-
-<h1>Liste des postulations</h1>
-{% for   postulation in postulations %}
-	<tr>
-		<td>{{postulation.email}}</td>
-		<td>{{postulation.getDatePos()|date('Y-m-d') }}</td>
-	{% endfor %}
-
-	{{ knp_pagination_render(postulations) }}
-{% endblock %}
+</div></section>{# knp_pagination_render(postulations) #}{% endblock %}
