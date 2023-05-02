@@ -4,49 +4,57 @@
 {% block body %}
 
 
-<div class="row" style="display: flex;align-items: center;justify-content: center;margin-top: 150px;">
+	<div class="row" style="display: flex;align-items: center;justify-content: center;margin-top: 150px;">
 
-    <div class="col-lg-6">
+		<div class="col-lg-6">
 
-        <div class="card">
-            <div class="card-body">
-                <!--a href="{{ path('addOffre') }}"><i class="bi bi-plus-circle-fill" style="font-size: 50px;"></i></a>
-                <h5 class="card-title">Liste des Offres</h5>
-
-                <!-- Table with stripped rows -->
-
-                
-                <table class="table table-striped">
-                    <thead>
-                     <tr>
-        <th>Nom</th>
-        <th>description </th>
-        <th>date </th>
-        <th>duree </th>
-        <th>Postuler </th>
-    </tr>
-                    </thead>
-                    <tbody>
-                    {% for i in c %}
-    <tr>
-        <td>{{i.nom}}</td>
-        <td>{{i.description}}</td>
-        <td>{{ i.date|date('m/d/Y')}}</td>
-        <td>{{i.duree}}</td>
-        <td><a class="btn btn-success" href="#">Postuler</a></td>
-    </tr>
-    {% endfor %}
-
-                    </tbody>
-                </table>
-                <!-- End small tables -->
-
-            </div>
-        </div>
-
-    </div>
+			<div class="card">
+				<div
+					class="card-body">
+					<!--a href="{{ path('addOffre') }}"><i class="bi bi-plus-circle-fill" style="font-size: 50px;"></i></a>
+															                <h5 class="card-title">Liste des Offres</h5>
+															
+															                <!-- Table with stripped rows -->
 
 
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>Nom</th>
+								<th>description
+								</th>
+								<th>date
+								</th>
+								<th>duree
+								</th>
+								<th>Postuler
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for i in c %}
+								<tr>
+									<td>{{i.nom}}</td>
+									<td>{{i.description}}</td>
+									<td>{{ i.date|date('m/d/Y')}}</td>
+									<td>{{i.duree}}</td>
+									{% if app.user !=null %}
+										<td>
+											<a class="btn btn-success" href="/addPos">Postuler</a>
+										</td>
+									{% endif %}
+								</tr>
+							{% endfor %}
 
-</div>
+						</tbody>
+					</table>
+					<!-- End small tables -->
+
+				</div>
+			</div>
+
+		</div>
+
+
+	</div>
 {% endblock %}
