@@ -139,7 +139,7 @@ class PostulationController extends AbstractController
 
         $totalPostulations = $PostulationRepository->countPostulations();
         $pos = $this->getDoctrine()->getManager()->getRepository(Postulation::class)->findAll();
-        return $this->render('postulation/showPos.html.twig', [
+        return $this->render('postulation/dashboard.html.twig', [
             'totalPostulations' => $totalPostulations,
             'p' => $pos
         ]);
