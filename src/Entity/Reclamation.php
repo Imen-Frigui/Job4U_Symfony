@@ -22,21 +22,18 @@ class Reclamation
     #[ORM\Column(length: 255)]
     #[Assert\Length(
         min: 5,
-        max : 50,
-        minMessage : "Votre message doit avoir au minimum 5 caractéres",
-        maxMessage : "Votre message doit avoir au maximum 50 caractéres",
+        minMessage: "Votre message doit avoir au minimum 5 caractéres",
+        maxMessage: "Votre message doit avoir au maximum 50 caractéres",
     )]
     #[Assert\Regex(
-        pattern:"/^[A-Z]/",
-        max : 50,
-        match :true,
-        message :"Votre message doit commencer par une lettre majuscule"
+        pattern: "/^[A-Z]/",
+        match: true,
+        message: "Votre message doit commencer par une lettre majuscule",
     )]
     #[Assert\Regex(
-        pattern:"/[#?!@$%^&*-]+/i",
-        max : 50,
-        match :false,
-        message :"Votre message ne doit pas contenir un caractére spéciale"
+        pattern: "/[#?!@$%^&*-]+/i",
+        match: false,
+        message: "Votre message ne doit pas contenir un caractére spéciale",
     )]
     private ?string $message;
 
@@ -108,8 +105,4 @@ class Reclamation
     {
         return $this->message;
     }
-
-
-
-
 }
