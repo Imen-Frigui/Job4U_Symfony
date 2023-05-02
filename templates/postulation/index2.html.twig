@@ -18,19 +18,22 @@
 					<div class="col-lg-3 col-md-6 aos-init aos-animate" data-aos="zoom-in" data-aos-delay="400">
 						<a href="">
 							<div class="box">
-								<h3 style="color: #ff0071; font-size: 24px;">{{ postulation.getAdresse() }}</h3>
+								<h3 style="color: #ff0071; font-size: 24px;">{{ postulation.getCreator().getName() }}</h3>
 								<div class="price">
 									<sup class="bi bi-clock"></sup>
 									<small style="font-size: 14px;">{{postulation.getDatePos()|date('Y-m-d') }}</small>
 									<span>
 										/ Postulation Date</span>
 								</div>
+								<img src="{{('asset1/img/pricing-ultimate.png')}}" class="img-fluid" alt="">
 								<ul>
 									<li>{{postulation.email}}</li>
 								</ul>
-								<a href="" class="btn-buy" style="background-color: green; color: white;">Edit</a>
-								<a href="" class="btn-buy" style="background-color: red; color: white;">Delete</a>
-								<a href="" class="btn-buy" style="margin-top: 4px;">Participants List</a>
+								<ul>
+									<li>{{postulation.getAdresse()}}</li>
+								</ul>
+								<a href="" class="btn-buy" style="background-color: green; color: white;">Accept</a>
+								<a href="" class="btn-buy" style="background-color: red; color: white;">Refuse</a>
 							</div>
 						</a>
 					</div>
