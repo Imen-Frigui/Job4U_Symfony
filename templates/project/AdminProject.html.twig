@@ -10,34 +10,38 @@
 
 			<div class="card">
 				<div class="card-body">
-					<a href="{{ path('addCat') }}">
+					<a href="{{ path('addProject') }}">
 						<i class="bi bi-plus-circle-fill" style="font-size: 50px;"></i>
 					</a>
-					<h5 class="card-title">Liste des Categories</h5>
+					<h5 class="card-title">Liste des Projects</h5>
 
 					<!-- Table with stripped rows -->
 					<table class="table table-striped">
 						<thead>
 							<tr>
 								<th>Nom</th>
-								<th>Supprimer
+								<th>Societe
 								</th>
 								<th>Modifer
+								</th>
+								<th>Supprimer
 								</th>
 							</tr>
 						</thead>
 						<tbody>
-							{% for i in cat %}
+							{% for i in c %}
 								<tr>
 									<td>{{i.nom}}</td>
+									<td>{{i.societe}}</td>
 									<td>
-										<a class="btn btn-danger" href="{{path('suppCat',{'id':i.id}) }}">Supprimer</a>
+										<a class="btn btn-success" href="{{path('updateProject',{'id':i.id}) }}">Modifier</a>
 									</td>
 									<td>
-										<a class="btn btn-success" href="{{path('updateCat',{'id':i.id}) }}">Modifier</a>
+										<a class="btn btn-danger" href="{{path('suppP',{'id':i.id}) }}">Supprimer</a>
 									</td>
 								</tr>
 							{% endfor %}
+
 
 						</tbody>
 					</table>

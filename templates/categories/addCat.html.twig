@@ -1,30 +1,31 @@
-{% extends 'base1.html.twig' %}
-{% block body%}
-<div style="display: flex;align-items: center; justify-content: center;margin-top:65px;padding:10px;">
+{% extends 'base.html.twig' %}
+{% block body %}
+	<div style="display: flex;align-items: center; justify-content: center;margin-top:65px;padding:10px;">
 
-          <div class="card">
-            <div class="card-body">
-            <a href="{{ path('display_offre') }}"><i class="ri-arrow-left-circle-fill" style="font-size: 50px;"></i></a>
-              <h5 class="card-title">Ajouter Categorie</h5>
-
-
-              <!-- General Form Elements -->
-              {{ form_start(f,{attr:{novalidate:'novalidate'}})}}
-  <label for="inputText" class="col-sm-4 col-form-label">nom</label>
-                        <div class="col-sm-10">
-                            {{ form_widget(f.nom,{'attr':{'class':'form-control'}}) }}
-							
-
-                    </div>
-                    {{ form_errors(f.nom,{'attr':{'class':'text-danger'}}) }}
+		<div class="card">
+			<div class="card-body">
+				<a href="{{ path('display_offre') }}">
+					<i class="ri-arrow-left-circle-fill" style="font-size: 50px;"></i>
+				</a>
+				<h5 class="card-title">Ajouter Categorie</h5>
 
 
-               
-                 {{ form_end(f) }}
-                 <!-- End General Form Elements -->
+				<!-- General Form Elements -->
+				{{ form_start(f,{attr:{novalidate:'novalidate'}})}}
+				<label for="inputText" class="col-sm-4 col-form-label">nom</label>
+				<div class="col-sm-10">
+					{{ form_widget(f.nom,{'attr':{'class':'form-control'}}) }}
 
-            </div>
-          </div>
 
-        </div>
+				</div>
+				{{ form_errors(f.nom,{'attr':{'class':'text-danger'}}) }}
+
+
+				{{ form_end(f) }}
+				<!-- End General Form Elements -->
+
+			</div>
+		</div>
+
+	</div>
 {% endblock %}

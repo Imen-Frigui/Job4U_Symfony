@@ -43,21 +43,18 @@ class ProjectController extends AbstractController
             'f' => $form->createView(),
         ]);
     }
-    #[Route('/admin/addProject', name: 'addProject')]
-    public function AdminaddOffre(ManagerRegistry $doctrine, Request $request)
+    #[Route('/admin/Projects', name: 'adminProjects')]
+    public function AdminProjects(ManagerRegistry $doctrine): Response
     {
-        $project = new project();
-        $form = $this->createForm(ProjectType::class, $project);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $doctrine->getManager();
-            $em->persist($project); //add
-            $em->flush();
-            return $this->redirectToRoute("display_project");
-        }
-        return $this->render('project/AdminProject.html.twig', [
-            'f' => $form->createView(),
-        ]);
+        $projects = $doctrine
+            ->getRepository(project::class)->findAll();
+        return $this->render(
+            'project/affProject.html.twig',
+            [
+                'c' => $projects
+
+            ]
+        );
     }
 
 
