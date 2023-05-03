@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Commentaire;
 use App\Form\CommentaireType;
 use App\Repository\CommentaireRepository;
+use App\Repository\NotificationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,17 +18,29 @@ use App\Repository\PosteRepository;
 class CommentaireController extends AbstractController
 {
     #[Route('/', name: 'app_commentaire_index', methods: ['GET'])]
-    public function index(CommentaireRepository $commentaireRepository): Response
+    public function index(CommentaireRepository $commentaireRepository, NotificationRepository $notificationRepository): Response
     {
+        $user =$this->getUser();
+        $notifications = $notificationRepository->findBy([
+            'user' => $user,
+            'hasRead' => false,
+        ]);
         return $this->render('commentaire/index.html.twig', [
+            'notifications' => $notifications,
             'commentaires' => $commentaireRepository->findAll(),
         ]);
     }
     #[Route('/postcomments', name: 'app_commentaire_index', methods: ['GET'])]
-    public function indexpost(CommentaireRepository $commentaireRepository): Response
+    public function indexpost(CommentaireRepository $commentaireRepository, NotificationRepository $notificationRepository): Response
     {
+        $user =$this->getUser();
+        $notifications = $notificationRepository->findBy([
+            'user' => $user,
+            'hasRead' => false,
+        ]);
         return $this->render('commentaire/showposts.html.twig', [
             'commentaires' => $commentaireRepository->allcomments(),
+            'notifications' => $notifications
         ]);
     }
 

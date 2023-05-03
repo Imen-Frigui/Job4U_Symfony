@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Notification;
 use App\Entity\Users;
 use App\Entity\User;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -24,6 +25,7 @@ use App\Form\ModifierProfilType;
 use App\Form\RechercheUserType;
 use App\Form\TriformType;
 use App\Form\SearchUserType;
+use App\Repository\NotificationRepository;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 // use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mailer\MailerInterface;
@@ -215,7 +217,7 @@ class UsersController extends AbstractController
     }
 
     #[Route('/afficherUserBySession', name: 'display_sessionClient')]
-    public function indexClientProfile(SessionInterface $session, Request $request, UsersRepository $r, UserRepository $rr): Response
+    public function indexClientProfile(SessionInterface $session, Request $request, UsersRepository $r, UserRepository $rr, NotificationRepository $notificationRepository): Response
     {
 
         $user = new Users();
@@ -244,10 +246,16 @@ class UsersController extends AbstractController
 
         //['user'=>$user3adi]
 
+        $user =$this->getUser();
+        $notifications = $notificationRepository->findBy([
+            'user' => $user,
+            'hasRead' => false,
+        ]);
 
 
-
-        return $this->render('users/profil.html.twig');
+        return $this->render('users/profil.html.twig',[
+            'notifications' => $notifications,
+        ]);
     }
 
     #[Route('/modifierProfil/{id}', name: 'UpadateProfileUser')]

@@ -2,16 +2,15 @@
 {% block header %}
 	<header id="header" class="header fixed-top">
 		<div class="container-fluid container-xl d-flex align-items-center justify-content-between">
-			<a href="{{ path('app_event')}}" class="logo d-flex align-items-center">
-				<img src="{{ asset('asset1/img/job_logo.png') }}" alt="">
-				<span></span>
+			<a href="index.html" class="logo d-flex align-items-center">
+				<img src="{{ asset('asset1/img/logo.png') }}" alt="">
+				<span>Job4U</span>
 			</a>
-
-			<nav id="navbar" class="navbar">
+				<nav id="navbar" class="navbar">
 
 				<ul>
 					<li class="nav-item dropdown">
-						{% if app.user !=null %}
+						{% if app.user != null %}
 
 							<a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
 								<i class="bi bi-bell"></i>
@@ -75,7 +74,6 @@
 				</ul>
 			{% endif %}
 		</li>
-
 		<li>
 			<a class="nav-link scrollto active" href="{{ path('total_participants') }}">Dashboard</a>
 		</li>
@@ -94,7 +92,7 @@
 							<li>
 								<a class="nav-link scrollto active" href="/poste/forum">Posts</a>
 							</li>
-							{% if app.user !=null %}
+							{% if app.user != null %}
 
 								<li class="dropdown">
 									<a href="#">
@@ -104,26 +102,12 @@
 									<ul>
 										<li><a href="{{path('mesoffers')}}">My offres</a></li>
 										<li><a href="{{path('addOffre')}}">Add New offre</a></li>
+										<li><a href="{{path('addProject')}}">Add New projects</a></li>
 										<li><a href="{{path('display')}}">Postulation</a></li>
 									</ul>
 								</li>
-
-
 							{% endif %}
-							{% if app.user !=null %}
-
-								<li class="dropdown">
-									<a href="#">
-										<span>Projects Management</span>
-										<i class="bi bi-chevron-down"></i>
-									</a>
-									<ul>
-										<li><a href="{{path('addProject')}}">Add New projects</a></li>
-									</ul>
-								</li>
-							{% endif %}
-		{% if app.user !=null %}
-
+		{% if app.user != null %}
 			<li class="dropdown">
 				<a href="#">
 					<span>Event Management</span>
@@ -131,45 +115,22 @@
 				</a>
 				<ul>
 					<li><a href="{{path('my_participations')}}">My participations</a></li>
-
 					<li><a href="{{path('my_events')}}">My event</a></li>
 					<li><a href="{{path('event_add')}}">Add New Event</a></li>
+					<li><a href="{{path('app_poste_new')}}">Add New Poste</a></li>
 				</ul>
 			</li>
 		{% endif %}
-		{% if app.user !=null %}
-
-			<li class="dropdown">
-				<a href="#">
-					<span>Offre Management</span>
-					<i class="bi bi-chevron-down"></i>
-				</a>
-				<ul>
-					<li><ahref="{{path('mesoffers')}}">My offres</a></li>
-					<li><ahref="{{path('addOffre')}}">Add New offre</a></li>
-				</ul>
-			</li>
-		{% endif %}
-		{% if app.user !=null %}
-
-			<li class="dropdown">
-				<a href="#">
-					<span>Projects Management</span>
-					<i class="bi bi-chevron-down"></i>
-				</a>
-				<ul>
-					<li><ahref="{{path('addProject')}}">Add New projects</a></li>
-				</ul>
-			</li>
-		{% endif %}
-		{% if app.user ==null %}
-
+		{% if app.user == null %}
 			<li>
 				<a class="nav-link scrollto active" href="/login">Login</a>
 			</li>
 		{% else %}
 			<li>
-				<a class="nav-link scrollto active" href="/logout">Logout</a>
+				<a class="nav-link scrollto" href="{{path('display_sessionClient')}}">View Profile</a>
+			</li>
+			<li>
+				<a class="getstarted scrollto" href="{{path('app_logout')}}">Logout</a>
 			</li>
 		{% endif %}
 	</ul>

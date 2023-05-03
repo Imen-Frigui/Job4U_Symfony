@@ -14,75 +14,136 @@
 			</a>
 
 			<nav id="navbar" class="navbar">
+
 				<ul>
-					<li>
-						<a class="nav-link scrollto active" href="{{path('display_client')}}">Home</a>
-					</li>
-					<li>
-						<a class="nav-link scrollto" href="#about">About</a>
-					</li>
-					<li>
-						<a class="nav-link scrollto" href="#services">Services</a>
-					</li>
-					<li>
-						<a class="nav-link scrollto" href="#portfolio">Portfolio</a>
-					</li>
+					<li class="nav-item dropdown">
+						{% if app.user != null %}
 
-					<li>
-						<a class="nav-link scrollto" href="#profile">View Profile</a>
-					</li>
-					<li>
-						<a class="nav-link scrollto" href="#team">Team</a>
-					</li>
-					<li>
-						<a href="blog.html">Blog</a>
-					</li>
-					<li class="dropdown">
-						<a href="#">
-							<span>Drop Down</span>
-							<i class="bi bi-chevron-down"></i>
-						</a>
-						<ul>
-							<li>
-								<a href="#">Drop Down 1</a>
-							</li>
-							<li class="dropdown">
-								<a href="#">
-									<span>Deep Drop Down</span>
-									<i class="bi bi-chevron-right"></i>
-								</a>
-								<ul>
-									<li><a href="#">Deep Drop Down 1</a></li>
-									<li><a href="#">Deep Drop Down 2</a></li>
-									<li><a href="#">Deep Drop Down 3</a></li>
-									<li><a href="#">Deep Drop Down 4</a></li>
-									<li><a href="#">Deep Drop Down 5</a></li>
-								</ul>
-							</li>
-							<li>
-								<a href="#">Drop Down 2</a>
-							</li>
-							<li>
-								<a href="#">Drop Down 3</a>
-							</li>
-							<li>
-								<a href="#">Drop Down 4</a>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<a class="nav-link scrollto" href="#contact">Contact</a>
-					</li>
+							<a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
+								<i class="bi bi-bell"></i>
+								<span class="badge bg-primary badge-number">{{ notifications|length }}</span>
+							</a>
+							<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications show" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate(-25px, 35px);" data-popper-placement="bottom-end">
+								<li class="dropdown-header">
+									{% if notifications|length > 0 %}
+										You have
+										{{ notifications|length }}
+										new notification{{ notifications|length > 1 ? 's' : '' }}
+									{% else %}
+										No new notifications
+									{% endif %}
+								</li>
+								<li>
+									<hr class="dropdown-divider">
+								</li>
+								{% for notification in notifications %}
+									<li class="notification-item" style="margin-left: 10px;">
+										{% if notification.status == 'pennding' %}
+											<i class="bi bi-exclamation-circle text-warning"></i>
+											<a href="{{ path('notification_show', {'eventId': notification.getEvent().getId(), 'notificationId':notification.id}) }}">
+												<span class="badge rounded-pill bg-primary p-2 ms-2">View</span>
+											</a>
+										{% elseif notification.status == 'banned' %}
+											<i class="bi bi-x-circle text-danger">
+												<a href="{{ path('notification_show', {'eventId': notification.getEvent().getId(), 'notificationId':notification.id}) }}">
+													<span class="badge rounded-pill bg-primary p-2 ms-2">View</span>
+												</a>
+											</i>
+										{% elseif notification.status == 'accepted' %}
+											<i class="bi bi-check-circle text-success">
+												<a href="{{ path('notification_show', {'eventId': notification.getEvent().getId(), 'notificationId':notification.id}) }}">
+													<span class="badge rounded-pill bg-primary p-2 ms-2">View</span>
+												</a>
+											</i>
 
-					<li>
-						<a class="getstarted scrollto" href="{{path('app_logout')}}">Logout</a>
+										{% else %}
+											<i class="bi bi-info-circle text-primary"></i>
+											<a href="{{ path('notification_show', {'eventId': notification.getEvent().getId(), 'notificationId':notification.id}) }}">
+												<span class="badge rounded-pill bg-primary p-2 ms-2">View</span>
+											</a>
+										{% endif %}
+										<div>
+											<p>{{ notification.message }}</p>
+											<p>{{ notification.createdAt|date('d M Y, H:i') }}</p>
+										</div>
+
+									</li>
+								</li>
+								<li>
+									<hr class="dropdown-divider">
+								</li>
+							{% endfor %}
+						</li>
+					</li>
+					<li class="dropdown-footer">
+						<a href="">Show all notifications</a>
 					</li>
 				</ul>
-				<i class="bi bi-list mobile-nav-toggle"></i>
-			</nav>
-			<!-- .navbar -->
+			{% endif %}
+		</li>
+		<li>
+			<a class="nav-link scrollto active" href="{{ path('total_participants') }}">Dashboard</a>
+		</li>
+		<li>
+			<a class="nav-link scrollto active" href="{{ path('app_event')}}">Home</a>
+		</li>
+		<li>
+			<a class="nav-link scrollto" href="{{ path('event_list')}}">Events</a>
+		</li>
+		<li>
+			<a class="nav-link scrollto active" href="/useroffre">Offre</a>
+		</li>
+				<li>
+								<a class="nav-link scrollto active" href="/project">Projects</a>
+							</li>
+							<li>
+								<a class="nav-link scrollto active" href="/poste/forum">Posts</a>
+							</li>
+							{% if app.user != null %}
 
-		</div>
+								<li class="dropdown">
+									<a href="#">
+										<span>Offre Management</span>
+										<i class="bi bi-chevron-down"></i>
+									</a>
+									<ul>
+										<li><a href="{{path('mesoffers')}}">My offres</a></li>
+										<li><a href="{{path('addOffre')}}">Add New offre</a></li>
+										<li><a href="{{path('addProject')}}">Add New projects</a></li>
+										<li><a href="{{path('display')}}">Postulation</a></li>
+									</ul>
+								</li>
+							{% endif %}
+		{% if app.user != null %}
+			<li class="dropdown">
+				<a href="#">
+					<span>Event Management</span>
+					<i class="bi bi-chevron-down"></i>
+				</a>
+				<ul>
+					<li><a href="{{path('my_participations')}}">My participations</a></li>
+					<li><a href="{{path('my_events')}}">My event</a></li>
+					<li><a href="{{path('event_add')}}">Add New Event</a></li>
+					<li><a href="{{path('app_poste_new')}}">Add New Poste</a></li>
+				</ul>
+			</li>
+		{% endif %}
+		{% if app.user == null %}
+			<li>
+				<a class="nav-link scrollto active" href="/login">Login</a>
+			</li>
+		{% else %}
+			<li>
+				<a class="nav-link scrollto" href="{{path('display_sessionClient')}}">View Profile</a>
+			</li>
+			<li>
+				<a class="getstarted scrollto" href="{{path('app_logout')}}">Logout</a>
+			</li>
+		{% endif %}
+	</ul>
+	<i class="bi bi-list mobile-nav-toggle"></i>
+</nav>
+<!-- .navbar --></div>
 	</header>
 	<!-- End Header -->
 

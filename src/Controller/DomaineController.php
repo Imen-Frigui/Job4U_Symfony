@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Domaine;
 use App\Form\DomaineType;
 use App\Repository\DomaineRepository;
+use App\Repository\NotificationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,16 +15,27 @@ use Symfony\Component\Routing\Annotation\Route;
 class DomaineController extends AbstractController
 {
     #[Route('/', name: 'app_domaine_index', methods: ['GET'])]
-    public function index(DomaineRepository $domaineRepository): Response
+    public function index(DomaineRepository $domaineRepository, NotificationRepository $notificationRepository): Response
     {
+        $user =$this->getUser();
+        $notifications = $notificationRepository->findBy([
+            'user' => $user,
+            'hasRead' => false,
+        ]);
         return $this->render('domaine/index.html.twig', [
             'domaines' => $domaineRepository->findAll(),
+            'notifications' => $notifications
         ]);
     }
 
     #[Route('/new', name: 'app_domaine_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, DomaineRepository $domaineRepository): Response
+    public function new(Request $request, DomaineRepository $domaineRepository, NotificationRepository $notificationRepository): Response
     {
+        $user =$this->getUser();
+        $notifications = $notificationRepository->findBy([
+            'user' => $user,
+            'hasRead' => false,
+        ]);
         $domaine = new Domaine();
         $form = $this->createForm(DomaineType::class, $domaine);
         $form->handleRequest($request);
