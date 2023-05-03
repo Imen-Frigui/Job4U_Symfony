@@ -1,61 +1,71 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Domaine index{% endblock %}
+{% block title %}Domaine index
+{% endblock %}
 
 {% block body %}
-<h5 class="card-title text-dark">liste des postulations
-</h5>
+	<div class="row" style="display: flex;align-items: center;justify-content: center;margin-top: 150px;">
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<div class="col-lg-6">
 
-<div class="row" style="margin-left: 300px;margin-right: 50px;margin-top: 100px;">
+			<div class="card">
+				<div class="card-body">
 
-    <div class="col-lg-12">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title text-dark">Domaine index
-                </h5>
-                <!-- Table with stripped rows -->
-                <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns" style="">
-                    <div class="dataTable-top">
-                        <div style="margin-left: 1150px;margin-top: 10px;margin-bottom: 10px;" class="dataTable-search"><input class="dataTable-input" placeholder="Search..." type="text"></div>
-                    </div>
-                    <div class="dataTable-container">
+					<h5 class="card-title">Liste des Domaines</h5>
+					<a href="{{ path('app_domaine_new') }}">
+						<button class="btn btn-primary">Create new</button>
+					</a>
+					{% if form is defined %}
 
-                    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for domaine in domaines %}
-            <tr>
-                <td>{{ domaine.id }}</td>
-                <td>{{ domaine.nom }}</td>
-                <td>
-                    <a href="{{ path('app_domaine_show', {'id': domaine.id}) }}">show</a>
-                    <a href="{{ path('app_domaine_edit', {'id': domaine.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-                    </div>
-                </div>
-                <!-- End Table with stripped rows -->
+						{{ form_start(form) }}
 
-            </div>
-        </div>
+						<div class="form-row align-items-end">
+							<div class="col">
+								{{ form_row(form.nom) }}
+							</div>
 
-    </div>
-</div>
+							<div class="col">
+								<div class="form-group">
+									<button type="submit" class="btn btn-success">Rechercher</button>
+								</div>
+							</div>
+						</div>
+						{{ form_end(form) }}
+					{% endif %}
 
-    <a href="{{ path('app_domaine_new') }}">Create new</a>
+					<!-- Table with stripped rows -->
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>Id</th>
+								<th>Nom</th>
+								<th>actions</th>
+
+							</tr>
+						</thead>
+						<tbody>
+							{% for domaine in domaines %}
+								<tr>
+									<td>{{domaine.id}}</td>
+									<td>{{domaine.nom}}</td>
+									<td>
+										<a class="btn btn-danger" href="{{path('app_domaine_delete',{'id':domaine.id}) }}">Supprimer</a>
+										<a class="btn btn-success" href="{{path('app_domaine_edit',{'id':domaine.id}) }}">Edit</a>
+									</td>
+								</tr>
+							{% endfor %}
+
+						</tbody>
+					</table>
+					<!-- End small tables -->
+
+				</div>
+			</div>
+
+		</div>
+
+
+	</div>
+
+
 {% endblock %}

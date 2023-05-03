@@ -1,13 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Domaine{% endblock %}
+{% block title %}Edit Domaine
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Domaine</h1>
+	<h1>Edit Domaine</h1>
+	<div class="row" style="display: flex;align-items: center;justify-content: center;margin-top: 150px;">
 
-    {{ include('domaine/_form.html.twig', {'button_label': 'Update'}) }}
+		<div class="col-lg-6">
+			<div class="card">
+				<div class="card-body">
+					<a href="{{ path('app_domaine_index') }}">
+						<button class="btn btn-primary">back to list</button>
+					</a>
+					<a>
+						<button class="btn btn-danger">
+							{{ include('domaine/_delete_form.html.twig') }}
+						</button>
+					</a>
 
-    <a href="{{ path('app_domaine_index') }}">back to list</a>
-
-    {{ include('domaine/_delete_form.html.twig') }}
+					{{ include('domaine/_form.html.twig', {'button_label': 'Update'}) }}
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}
