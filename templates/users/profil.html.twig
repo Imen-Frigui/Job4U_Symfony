@@ -5,177 +5,223 @@
 <h1>{{app.user.Password}}</h1> #}
 
 {% block header %}
-    <header id="header" class="header fixed-top">
-        <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+	<header id="header" class="header fixed-top">
+		<div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
-            <a href="index.html" class="logo d-flex align-items-center">
-                <img src="{{ asset('asset1/img/logo.png') }}" alt="">
-                <span>Job4U</span>
-            </a>
+			<a href="index.html" class="logo d-flex align-items-center">
+				<img src="{{ asset('asset1/img/logo.png') }}" alt="">
+				<span>Job4U</span>
+			</a>
 
-            <nav id="navbar" class="navbar">
-                <ul>
-                    <li><a class="nav-link scrollto active" href="{{path('display_client')}}">Home</a></li>
-                    <li><a class="nav-link scrollto" href="#about">About</a></li>
-                    <li><a class="nav-link scrollto" href="#services">Services</a></li>
-                    <li><a class="nav-link scrollto" href="#portfolio">Portfolio</a></li>
+			<nav id="navbar" class="navbar">
+				<ul>
+					<li>
+						<a class="nav-link scrollto active" href="{{path('display_client')}}">Home</a>
+					</li>
+					<li>
+						<a class="nav-link scrollto" href="#about">About</a>
+					</li>
+					<li>
+						<a class="nav-link scrollto" href="#services">Services</a>
+					</li>
+					<li>
+						<a class="nav-link scrollto" href="#portfolio">Portfolio</a>
+					</li>
 
-                    <li><a class="nav-link scrollto" href="#profile">View Profile</a></li>
-                    <li><a class="nav-link scrollto" href="#team">Team</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
-                        <ul>
-                            <li><a href="#">Drop Down 1</a></li>
-                            <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
-                                <ul>
-                                    <li><a href="#">Deep Drop Down 1</a></li>
-                                    <li><a href="#">Deep Drop Down 2</a></li>
-                                    <li><a href="#">Deep Drop Down 3</a></li>
-                                    <li><a href="#">Deep Drop Down 4</a></li>
-                                    <li><a href="#">Deep Drop Down 5</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="#">Drop Down 2</a></li>
-                            <li><a href="#">Drop Down 3</a></li>
-                            <li><a href="#">Drop Down 4</a></li>
-                        </ul>
-                    </li>
-                    <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-                    <li><a class="getstarted scrollto" href="{{path('app_logout')}}">Logout</a></li>
-                </ul>
-                <i class="bi bi-list mobile-nav-toggle"></i>
-            </nav><!-- .navbar -->
+					<li>
+						<a class="nav-link scrollto" href="#profile">View Profile</a>
+					</li>
+					<li>
+						<a class="nav-link scrollto" href="#team">Team</a>
+					</li>
+					<li>
+						<a href="blog.html">Blog</a>
+					</li>
+					<li class="dropdown">
+						<a href="#">
+							<span>Drop Down</span>
+							<i class="bi bi-chevron-down"></i>
+						</a>
+						<ul>
+							<li>
+								<a href="#">Drop Down 1</a>
+							</li>
+							<li class="dropdown">
+								<a href="#">
+									<span>Deep Drop Down</span>
+									<i class="bi bi-chevron-right"></i>
+								</a>
+								<ul>
+									<li><a href="#">Deep Drop Down 1</a></li>
+									<li><a href="#">Deep Drop Down 2</a></li>
+									<li><a href="#">Deep Drop Down 3</a></li>
+									<li><a href="#">Deep Drop Down 4</a></li>
+									<li><a href="#">Deep Drop Down 5</a></li>
+								</ul>
+							</li>
+							<li>
+								<a href="#">Drop Down 2</a>
+							</li>
+							<li>
+								<a href="#">Drop Down 3</a>
+							</li>
+							<li>
+								<a href="#">Drop Down 4</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a class="nav-link scrollto" href="#contact">Contact</a>
+					</li>
 
-        </div>
-    </header><!-- End Header -->
+					<li>
+						<a class="getstarted scrollto" href="{{path('app_logout')}}">Logout</a>
+					</li>
+				</ul>
+				<i class="bi bi-list mobile-nav-toggle"></i>
+			</nav>
+			<!-- .navbar -->
+
+		</div>
+	</header>
+	<!-- End Header -->
 
 {% endblock %}
 
 {% block hero %}
-<!-- ======= Hero Section ======= -->
-<section id="hero" class="hero d-flex align-items-center">
+	<!-- ======= Hero Section ======= -->
+	<section id="hero" class="hero d-flex align-items-center">
 
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 d-flex flex-column justify-content-center">
-                <h1 data-aos="fade-up">Bienvenue {{app.user.Name}} dans votre espace privé   </h1>
-                <h2 data-aos="fade-up" data-aos-delay="400">Voici vos coordonnées vous pouvez les modifier, vous étes {{app.user.Email}}</h2>
-                <div data-aos="fade-up" data-aos-delay="600">
-                    {# <div class="text-center text-lg-start">
-                        <a href="#about" class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">
-                            <span>Get Started</span>
-                            <i class="bi bi-arrow-right"></i>
-                        </a>
-                    </div> #}
-                </div>
-            </div>
-            <div class="col-lg-6 hero-img" data-aos="zoom-out" data-aos-delay="200">
-                {# <img src="{{ asset('asset1/img/profile.jpg') }}" class="img-fluid" alt=""> #}
-                 <img src={{ app.user.image}} class="img-fluid" alt=""> 
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 d-flex flex-column justify-content-center">
+					<h1 data-aos="fade-up">Bienvenue
+						{{app.user.Name}}
+						dans votre espace privé
+					</h1>
+					<h2 data-aos="fade-up" data-aos-delay="400">Voici vos coordonnées vous pouvez les modifier, vous étes
+						{{app.user.Email}}</h2>
+					<div
+						data-aos="fade-up" data-aos-delay="600">{# <div class="text-center text-lg-start">
+							                        <a href="#about" class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">
+							                            <span>Get Started</span>
+							                            <i class="bi bi-arrow-right"></i>
+							                        </a>
+							                    </div> #}
+					</div>
+				</div>
+				<div
+					class="col-lg-6 hero-img" data-aos="zoom-out" data-aos-delay="200">
+					{# <img src="{{ asset('asset1/img/profile.jpg') }}" class="img-fluid" alt=""> #}
+					<img src={{ app.user.image}} class="img-fluid" alt="">
 
 
+				</div>
+			</div>
+		</div>
 
-
-            </div>
-        </div>
-    </div>
-
-</section><!-- End Hero -->
+	</section>
+	<!-- End Hero -->
 {% endblock %}
 
 {% block body %}
-{% block contact  %}
-        <!-- ======= Contact Section ======= -->
-        <section id="contact" class="contact">
+	{% block contact  %}
+		<!-- ======= Contact Section ======= -->
+		<section id="contact" class="contact">
 
-            <div class="container" data-aos="fade-up">
+			<div class="container" data-aos="fade-up">
 
-                <header class="section-header">
-                    <h2>Votre Profile</h2>
-                    <p>{{app.user.Name}}</p>
-                </header>
+				<header class="section-header">
+					<h2>Votre Profile</h2>
+					<p>{{app.user.Name}}</p>
+					<li>
+						<a class="danger" Style="color:red" href="/reclamation/new">Report</a>
+					</li>
 
-                <div class="row gy-4">
+				</header>
 
-                    <div class="col-lg-6">
+				<div class="row gy-4">
 
-                        <div class="row gy-4">
-                            <div class="col-md-6">
-                                <div class="info-box">
-                                    <i class="bi bi-geo-alt"></i>
-                                    <h3>Address</h3>
-                                    <p>A108 Adam Street,<br>New York, NY 535022</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="info-box">
-                                    <i class="bi bi-telephone"></i>
-                                    <h3>Call Us</h3>
-                                    <p>+1 5589 55488 55<br>+1 6678 254445 41</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="info-box">
-                                    <i class="bi bi-envelope"></i>
-                                    <h3>Email Us</h3>
-                                    <p>info@example.com<br>contact@example.com</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="info-box">
-                                    <i class="bi bi-clock"></i>
-                                    <h3>Open Hours</h3>
-                                    <p>Monday - Friday<br>9:00AM - 05:00PM</p>
-                                </div>
-                            </div>
-                        </div>
+					<div class="col-lg-6">
 
-                    </div>
+						<div class="row gy-4">
+							<div class="col-md-6">
+								<div class="info-box">
+									<i class="bi bi-geo-alt"></i>
+									<h3>Address</h3>
+									<p>A108 Adam Street,<br>New York, NY 535022</p>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="info-box">
+									<i class="bi bi-telephone"></i>
+									<h3>Call Us</h3>
+									<p>+1 5589 55488 55<br>+1 6678 254445 41</p>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="info-box">
+									<i class="bi bi-envelope"></i>
+									<h3>Email Us</h3>
+									<p>info@example.com<br>contact@example.com</p>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="info-box">
+									<i class="bi bi-clock"></i>
+									<h3>Open Hours</h3>
+									<p>Monday - Friday<br>9:00AM - 05:00PM</p>
+								</div>
+							</div>
+						</div>
 
-                    <div class="col-lg-6">
-                        <form action="forms/contact.php" method="post" class="php-email-form">
-                            <div class="row gy-4">
+					</div>
 
-                                <div class="col-md-6">
-                                                     <label for="inputText" class="col-sm-4 col-form-label">Name</label>
+					<div class="col-lg-6">
+						<form action="forms/contact.php" method="post" class="php-email-form">
+							<div class="row gy-4">
 
-                                    <input type="text" name="name" class="form-control" placeholder={{app.user.Name}} >
-                                </div>
+								<div class="col-md-6">
+									<label for="inputText" class="col-sm-4 col-form-label">Name</label>
 
-                                <div class="col-md-6 ">
-                                                     <label for="inputText" class="col-sm-4 col-form-label">Email</label>
+									<input type="text" name="name" class="form-control" placeholder={{app.user.Name}}>
+								</div>
 
-                                    <input type="email" class="form-control" name="email" placeholder={{app.user.Email}} >
-                                </div>
+								<div class="col-md-6 ">
+									<label for="inputText" class="col-sm-4 col-form-label">Email</label>
 
-                                <div class="col-md-12">
-                                                     <label for="inputText" class="col-sm-4 col-form-label">Password</label>
+									<input type="email" class="form-control" name="email" placeholder={{app.user.Email}}>
+								</div>
 
-                                    <input type="text" class="form-control" name="subject" placeholder={{app.user.Password}} >
-                                </div>
-                                
-                               
+								<div class="col-md-12">
+									<label for="inputText" class="col-sm-4 col-form-label">Password</label>
 
-                                {# <div class="col-md-12">
-                                    <textarea class="form-control" name="message" rows="6" placeholder="Message" required></textarea>
-                                </div> #}
+									<input type="text" class="form-control" name="subject" placeholder={{app.user.Password}}>
+								</div>
 
-                                <div class="col-md-12 text-center">
-                                    {# <div class="loading">Loading</div>
-                                    <div class="error-message"></div> #}
-                                  
-                                       <a class="btn btn-success" href="{{path('UpadateProfileUser',{'id':app.user.id})}}">Modifier profil</a>
-                                </div>
 
-                            </div>
-                        </form>
+								{# <div class="col-md-12">
+								                                    <textarea class="form-control" name="message" rows="6" placeholder="Message" required></textarea>
+								                                </div> #}
 
-                    </div>
+								<div
+									class="col-md-12 text-center">
+									{# <div class="loading">Loading</div>
+									                                    <div class="error-message"></div> #}
 
-                </div>
+									<a class="btn btn-success" href="{{path('UpadateProfileUser',{'id':app.user.id})}}">Modifier profil</a>
+								</div>
 
-            </div>
+							</div>
+						</form>
 
-        </section><!-- End Contact Section -->
-{% endblock %}
+					</div>
+
+				</div>
+
+			</div>
+
+		</section>
+		<!-- End Contact Section -->
+	{% endblock %}
 {% endblock %}

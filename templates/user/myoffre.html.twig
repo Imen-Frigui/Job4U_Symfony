@@ -22,6 +22,7 @@
 							</td>
 						{% endif %}
 						<a class="btn btn-primary" href="{{path('pdfO',{'id':i.id}) }}">Print</a>
+						<a href="{{ path('sendEmail', {'id': i.id}) }}">Send Mail</a>
 					</div>
 				</div>
 			</div>
