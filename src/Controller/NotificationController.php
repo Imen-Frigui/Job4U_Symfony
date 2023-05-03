@@ -19,7 +19,8 @@ class NotificationController extends AbstractController
     public function getNotifications(NotificationRepository $notificationRepository): Response
     {
         $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository(User::class)->find(2);
+        $user = $this->getUser();
+        //$user = $em->getRepository(User::class)->find(2);
         $notifications = $notificationRepository->findBy([
             'user' => $user,
             'hasRead' => false,
@@ -33,7 +34,9 @@ class NotificationController extends AbstractController
     public function markNotificationAsRead(Event $eventId, Notification $notificationId, EventCategoryRepository $eventCategoryRepository, EventRepository $eventRepository, NotificationRepository $notificationRepository): Response
     {
         $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository(User::class)->find(2);
+        //$user = $em->getRepository(User::class)->find(2);
+        $user = $this->getUser();
+
         $notifications = $notificationRepository->findBy([
             'user' => $user,
             'hasRead' => false,

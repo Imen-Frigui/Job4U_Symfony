@@ -34,7 +34,7 @@ class ParticipantController extends AbstractController
         $event = $em->getRepository(Event::class)->find($eventId);
         $user = $this->getUser();
         // Check if the user has already participated in the event
-        $participant = $em->getRepository(Participant::class)->findOneBy(['event' => $eventId, 'user' => 2]);
+        $participant = $em->getRepository(Participant::class)->findOneBy(['event' => $eventId, 'user' => $user]);
         if ($participant) {
             // User has already participated in the event, display error message
             $message = 'You are already a participant in this event';
@@ -91,11 +91,12 @@ class ParticipantController extends AbstractController
     public function withdraw(Event $eventId): Response
     {
         $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
 
-        $participant = $em->getRepository(Participant::class)->findOneBy(['user' => 1, 'event' => $eventId]);
+        $participant = $em->getRepository(Participant::class)->findOneBy(['user' => $user, 'event' => $eventId]);
 
         // Check if the current user is the participant of the event
-        if ($participant->getUser()->getId() !== 1) {
+        if ($participant->getUser()->getId() !== $user) {
             $this->addFlash('error', 'You are not authorized to withdraw from this event.');
             return $this->redirectToRoute('my_participations');
         }
@@ -112,13 +113,16 @@ class ParticipantController extends AbstractController
     public function MyParticipations(NotificationRepository $notificationRepository): Response
     {
         $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository(User::class)->find(2);
+        $user = $this->getUser();
+
+        //$user = $em->getRepository(User::class)->find(2);
         $notifications = $notificationRepository->findBy([
             'user' => $user,
             'hasRead' => false,
         ]);
         $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository(User::class)->find(2);
+       // $user = $em->getRepository(User::class)->find(2);
+        $user = $this->getUser();
 
         $participations = $em->getRepository(Participant::class)
             ->createQueryBuilder('p')

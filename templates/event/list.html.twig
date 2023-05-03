@@ -88,12 +88,40 @@
 		<li>
 			<a class="nav-link scrollto active" href="/useroffre">Offre</a>
 		</li>
-		<li>
-			<a class="nav-link scrollto active" href="/project">Projects</a>
-		</li>
-		<li>
-			<a class="nav-link scrollto active" href="/poste/forum">Posts</a>
-		</li>
+				<li>
+								<a class="nav-link scrollto active" href="/project">Projects</a>
+							</li>
+							<li>
+								<a class="nav-link scrollto active" href="/poste/forum">Posts</a>
+							</li>
+							{% if app.user !=null %}
+
+								<li class="dropdown">
+									<a href="#">
+										<span>Offre Management</span>
+										<i class="bi bi-chevron-down"></i>
+									</a>
+									<ul>
+										<li><a href="{{path('mesoffers')}}">My offres</a></li>
+										<li><a href="{{path('addOffre')}}">Add New offre</a></li>
+										<li><a href="{{path('display')}}">Postulation</a></li>
+									</ul>
+								</li>
+
+
+							{% endif %}
+							{% if app.user !=null %}
+
+								<li class="dropdown">
+									<a href="#">
+										<span>Projects Management</span>
+										<i class="bi bi-chevron-down"></i>
+									</a>
+									<ul>
+										<li><a href="{{path('addProject')}}">Add New projects</a></li>
+									</ul>
+								</li>
+							{% endif %}
 		{% if app.user !=null %}
 
 			<li class="dropdown">
@@ -102,10 +130,10 @@
 					<i class="bi bi-chevron-down"></i>
 				</a>
 				<ul>
-					<li><ahref="{{path('my_participations')}}">My participations</a></li>
+					<li><a href="{{path('my_participations')}}">My participations</a></li>
 
-					<li><ahref="{{path('my_events')}}">My event</a></li>
-					<li><ahref="{{path('event_add')}}">Add New Event</a></li>
+					<li><a href="{{path('my_events')}}">My event</a></li>
+					<li><a href="{{path('event_add')}}">Add New Event</a></li>
 				</ul>
 			</li>
 		{% endif %}
@@ -222,7 +250,7 @@
 					<ul>
 						<li class="d-flex align-items-center">
 							<i class="bi bi-person"></i>
-							<a href="{{ path('event_show', {'id': e.id}) }}">{{ e.getCreator().getName() }}</a>
+							<a href="/afficherUserBySession">{{ e.getCreator().getName() }}</a>
 						</li>
 						<li class="d-flex align-items-center">
 							<i class="bi bi-clock"></i>

@@ -126,12 +126,13 @@ class EventController extends AbstractController
     public function delete(Event $event): Response
     {
         // Check if the logged-in user is the creator of the event
-        if ($event->getCreator() !== 1) {
-            $this->addFlash('error', 'You are not authorized to edit this event.');
+        $creator = $this->getUser();
+        if ($event->getCreator()->getId() !== $creator) {
+            $this->addFlash('error', 'You are not authorized to delete this event.');
             return $this->redirectToRoute('app_event');
         }
         $em = $this->getDoctrine()->getManager();
-        if ($event->getCreator()->getId() === 1) {
+        if ($event->getCreator()->getId() === $creator) {
             $em->remove($event);
             $em->flush();
             $this->addFlash('success', 'The event has been deleted successfully.');
@@ -153,6 +154,21 @@ class EventController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form->get('img')->getData();
+
+            // Generate a unique name for the file before saving it
+            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+
+            // Move the file to the directory where brochures are stored
+            $file->move(
+                $this->getParameter('uploads_directory'),
+                $fileName
+            );
+
+            // ... other code to handle the $post object
+
+            $event->setImg($fileName);
+
             $em = $this->getDoctrine()->getManager();
             $em->flush();
 

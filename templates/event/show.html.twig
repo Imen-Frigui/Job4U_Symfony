@@ -11,68 +11,70 @@
 
 				<ul>
 					<li class="nav-item dropdown">
-						<a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
-							<i class="bi bi-bell"></i>
-							<span class="badge bg-primary badge-number">{{ notifications|length }}</span>
-						</a>
-						<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications show" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate(-25px, 35px);" data-popper-placement="bottom-end">
-							<li class="dropdown-header">
-								{% if notifications|length > 0 %}
-									You have
-									{{ notifications|length }}
-									new notification{{ notifications|length > 1 ? 's' : '' }}
-								{% else %}
-									No new notifications
-								{% endif %}
-							</li>
-							<li>
-								<hr class="dropdown-divider">
-							</li>
-							{% for notification in notifications %}
-								<li class="notification-item" style="margin-left: 10px;">
-									{% if notification.status == 'pennding' %}
-										<i class="bi bi-exclamation-circle text-warning"></i>
-										<a href="{{ path('notification_show', {'eventId': notification.getEvent().getId(), 'notificationId':notification.id}) }}">
-											<span class="badge rounded-pill bg-primary p-2 ms-2">View</span>
-										</a>
-									{% elseif notification.status == 'banned' %}
-										<i class="bi bi-x-circle text-danger">
-											<a href="{{ path('notification_show', {'eventId': notification.getEvent().getId(), 'notificationId':notification.id}) }}">
-												<span class="badge rounded-pill bg-primary p-2 ms-2">View</span>
-											</a>
-										</i>
-									{% elseif notification.status == 'accepted' %}
-										<i class="bi bi-check-circle text-success">
-											<a href="{{ path('notification_show', {'eventId': notification.getEvent().getId(), 'notificationId':notification.id}) }}">
-												<span class="badge rounded-pill bg-primary p-2 ms-2">View</span>
-											</a>
-										</i>
+						{% if app.user !=null %}
 
+							<a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
+								<i class="bi bi-bell"></i>
+								<span class="badge bg-primary badge-number">{{ notifications|length }}</span>
+							</a>
+							<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications show" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate(-25px, 35px);" data-popper-placement="bottom-end">
+								<li class="dropdown-header">
+									{% if notifications|length > 0 %}
+										You have
+										{{ notifications|length }}
+										new notification{{ notifications|length > 1 ? 's' : '' }}
 									{% else %}
-										<i class="bi bi-info-circle text-primary"></i>
-										<a href="{{ path('notification_show', {'eventId': notification.getEvent().getId(), 'notificationId':notification.id}) }}">
-											<span class="badge rounded-pill bg-primary p-2 ms-2">View</span>
-										</a>
+										No new notifications
 									{% endif %}
-									<div>
-										<p>{{ notification.message }}</p>
-										<p>{{ notification.createdAt|date('d M Y, H:i') }}</p>
-									</div>
-
 								</li>
-							</li>
-							<li>
-								<hr class="dropdown-divider">
-							</li>
-						{% endfor %}
-					</li>
-				</li>
-				<li class="dropdown-footer">
-					<a href="">Show all notifications</a>
-				</li>
-			</ul>
-		</li>
+								<li>
+									<hr class="dropdown-divider">
+								</li>
+								{% for notification in notifications %}
+									<li class="notification-item" style="margin-left: 10px;">
+										{% if notification.status == 'pennding' %}
+											<i class="bi bi-exclamation-circle text-warning"></i>
+											<a href="{{ path('notification_show', {'eventId': notification.getEvent().getId(), 'notificationId':notification.id}) }}">
+												<span class="badge rounded-pill bg-primary p-2 ms-2">View</span>
+											</a>
+										{% elseif notification.status == 'banned' %}
+											<i class="bi bi-x-circle text-danger">
+												<a href="{{ path('notification_show', {'eventId': notification.getEvent().getId(), 'notificationId':notification.id}) }}">
+													<span class="badge rounded-pill bg-primary p-2 ms-2">View</span>
+												</a>
+											</i>
+										{% elseif notification.status == 'accepted' %}
+											<i class="bi bi-check-circle text-success">
+												<a href="{{ path('notification_show', {'eventId': notification.getEvent().getId(), 'notificationId':notification.id}) }}">
+													<span class="badge rounded-pill bg-primary p-2 ms-2">View</span>
+												</a>
+											</i>
 
+										{% else %}
+											<i class="bi bi-info-circle text-primary"></i>
+											<a href="{{ path('notification_show', {'eventId': notification.getEvent().getId(), 'notificationId':notification.id}) }}">
+												<span class="badge rounded-pill bg-primary p-2 ms-2">View</span>
+											</a>
+										{% endif %}
+										<div>
+											<p>{{ notification.message }}</p>
+											<p>{{ notification.createdAt|date('d M Y, H:i') }}</p>
+										</div>
+
+									</li>
+								</li>
+								<li>
+									<hr class="dropdown-divider">
+								</li>
+							{% endfor %}
+						</li>
+					</li>
+					<li class="dropdown-footer">
+						<a href="">Show all notifications</a>
+					</li>
+				</ul>
+			{% endif %}
+		</li>
 		<li>
 			<a class="nav-link scrollto active" href="{{ path('total_participants') }}">Dashboard</a>
 		</li>
@@ -82,28 +84,56 @@
 		<li>
 			<a class="nav-link scrollto" href="{{ path('event_list')}}">Events</a>
 		</li>
-		<li class="dropdown">
-			<a href="#">
-				<span>Event Management</span>
-				<i class="bi bi-chevron-down"></i>
-			</a>
-			<ul>
-				<li>
-					<a href="{{ path('my_participations')}}">My participations</a>
-				</li>
-
-				<li>
-					<a href="{{ path('my_events')}}">My event</li>
-				</li>
-			</a>
-		</li>
 		<li>
-			<a href="{{path('event_add')}}">Add New Event</a>
+			<a class="nav-link scrollto active" href="/useroffre">Offre</a>
 		</li>
+				<li>
+								<a class="nav-link scrollto active" href="/project">Projects</a>
+							</li>
+							<li>
+								<a class="nav-link scrollto active" href="/poste/forum">Posts</a>
+							</li>
+							{% if app.user !=null %}
+
+								<li class="dropdown">
+									<a href="#">
+										<span>Offre Management</span>
+										<i class="bi bi-chevron-down"></i>
+									</a>
+									<ul>
+										<li><a href="{{path('mesoffers')}}">My offres</a></li>
+										<li><a href="{{path('addOffre')}}">Add New offre</a></li>
+										<li><a href="{{path('addProject')}}">Add New projects</a></li>
+										<li><a href="{{path('display')}}">Postulation</a></li>
+									</ul>
+								</li>
+							{% endif %}
+		{% if app.user !=null %}
+			<li class="dropdown">
+				<a href="#">
+					<span>Event Management</span>
+					<i class="bi bi-chevron-down"></i>
+				</a>
+				<ul>
+					<li><a href="{{path('my_participations')}}">My participations</a></li>
+					<li><a href="{{path('my_events')}}">My event</a></li>
+					<li><a href="{{path('event_add')}}">Add New Event</a></li>
+				</ul>
+			</li>
+		{% endif %}
+		{% if app.user ==null %}
+			<li>
+				<a class="nav-link scrollto active" href="/login">Login</a>
+			</li>
+		{% else %}
+			<li>
+				<a class="nav-link scrollto active" href="/logout">Logout</a>
+			</li>
+		{% endif %}
 	</ul>
-</li></ul><i class="bi bi-list mobile-nav-toggle"></i></nav>
-			<!-- .navbar -->
-			</body></html></div></header><!-- End Header -->{% endblock %}{% block title %}{{ event.title }}{% endblock %}{% block body %}<section id="blog" class="blog"><div class="container aos-init aos-animate" data-aos="fade-up">{% for message in app.flashes('success') %}<div class="alert alert-success alert-dismissible fade show" style="display: flex;align-items: center;justify-content: center;margin-top: 10px; padding: 5px;" role=" alert"><i class="bi bi-check-circle me-1"></i>{{ message }}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>{% endfor %}{% for message in app.flashes('warning') %}<div class="alert alert-warning alert-dismissible fade show" style="justify-content: center;margin-top: 10px;" role="alert"><i class="bi bi-exclamation-triangle me-1"></i>{{ message }}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>{% endfor %}<div class="row"><div class="col-lg-4"><div class="sidebar"><h3 class="sidebar-title">Search</h3><div class="sidebar-item search-form">
+	<i class="bi bi-list mobile-nav-toggle"></i>
+</nav>
+<!-- .navbar --></div></header><!-- End Header -->{% endblock %}{% block title %}{{ event.title }}{% endblock %}{% block body %}<section id="blog" class="blog"><div class="container aos-init aos-animate" data-aos="fade-up">{% for message in app.flashes('success') %}<div class="alert alert-success alert-dismissible fade show" style="display: flex;align-items: center;justify-content: center;margin-top: 10px; padding: 5px;" role=" alert"><i class="bi bi-check-circle me-1"></i>{{ message }}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>{% endfor %}{% for message in app.flashes('warning') %}<div class="alert alert-warning alert-dismissible fade show" style="justify-content: center;margin-top: 10px;" role="alert"><i class="bi bi-exclamation-triangle me-1"></i>{{ message }}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>{% endfor %}<div class="row"><div class="col-lg-4"><div class="sidebar"><h3 class="sidebar-title">Search</h3><div class="sidebar-item search-form">
 {% block search_form %}
 	{% include 'event/search_form.html.twig' %}
 {% endblock %}</div><!-- End sidebar search formn--><h3 class="sidebar-title">Categories</h3><div class="sidebar-item categories">
@@ -154,7 +184,7 @@
 <ul>
 	<li class="d-flex align-items-center">
 		<i class="bi bi-person"></i>
-		<a href="{{ path('event_show', {'id': event.id}) }}">{{event.getCreator().getName()}}{{" "}}</a>
+		<a href="/afficherUserBySession">{{event.getCreator().getName()}}{{" "}}</a>
 	</li>
 	<li class="d-flex align-items-center">
 		<i class="bi bi-clock"></i>
@@ -177,7 +207,7 @@
 <i class="bi bi-folder"></i>
 <ul class="cats">
 	<li>
-		<a href="#">{{ event.getEventCategory().getName() }}</a>
+		<a href="{{ path('event_category', {'id': event.getEventCategory().getId()}) }}">{{ event.getEventCategory().getName() }}</a>
 	</li>
 </ul>
 
@@ -193,10 +223,13 @@
 		<a href="#">Marketing</a>
 	</li>
 </ul>
-
+{% if (not app.user) or (event.getCreator().getId() != app.user.id) %}
 <a href="{{ path('participant_add', {'eventId': event.id}) }}">
 	<button type="submit" class="btn btn-primary" style="margin-left: 700px;">Participate</button>
-</a></div></article><!-- End blog entry --><div class="blog-author d-flex align-items-center"><img src="{{('asset1/img/blog/blog-author.jpg')}}" class="rounded-circle float-left" alt=""><div>
+</a>
+{% endif %}
+
+</div></article><!-- End blog entry --><div class="blog-author d-flex align-items-center"><img src="{{('asset1/img/blog/blog-author.jpg')}}" class="rounded-circle float-left" alt=""><div>
 <h4>{{event.getCreator().getName()}}{{" "}}</h4>
 <div class="social-links">
 	<a href="https://twitters.com/#">

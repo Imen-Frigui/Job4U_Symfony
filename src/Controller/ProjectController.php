@@ -49,7 +49,7 @@ class ProjectController extends AbstractController
         $projects = $doctrine
             ->getRepository(project::class)->findAll();
         return $this->render(
-            'project/affProject.html.twig',
+            'project/AdminProject.html.twig',
             [
                 'c' => $projects
 
