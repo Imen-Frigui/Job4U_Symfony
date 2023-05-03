@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+
+	<div class="row" style="display: flex;align-items: center;justify-content: center;margin-top: 150px;">
+
+		<div class="col-lg-6">
+
+			<div class="card">
+				<div class="card-body">
+
+					<h5 class="card-title">Liste des Reports</h5>
+					{% if form is defined %}
+
+						{{ form_start(form) }}
+
+						<div class="form-row align-items-end">
+							<div class="col">
+								{{ form_row(form.nom) }}
+							</div>
+
+							<div class="col">
+								<div class="form-group">
+									<button type="submit" class="btn btn-success">Rechercher</button>
+								</div>
+							</div>
+						</div>
+						{{ form_end(form) }}
+					{% endif %}
+
+					<!-- Table with stripped rows -->
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>Id</th>
+								<th>User</th>
+								<th>Poste</th>
+								<th>type</th>
+								<th>description</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for report in reports %}
+								<tr>
+									<td>{{ report.id }}</td>
+									<td>{{ report.user.name }}</td>
+									<td>{{ report.poste.titre }}</td>
+									<td>{{ report.type }}</td>
+									<td>{{ report.description }}</td>
+								</tr>
+							{% endfor %}
+
+
+						</tbody>
+					</table>
+					<!-- End small tables -->
+
+				</div>
+			</div>
+
+		</div>
+
+
+	</div>
+{% endblock %}

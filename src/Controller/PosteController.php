@@ -12,6 +12,7 @@ use App\Entity\User;
 use App\Form\PosteType;
 use App\Repository\PosteRepository;
 use App\Repository\CommentaireRepository;
+use App\Repository\ReportRepository;
 use App\Repository\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -190,6 +191,7 @@ class PosteController extends AbstractController
     {
         $like = new Likez();
         $user = $this->getUser();
+        $id = $poste->getId();
 
         //$user = $userrepo->findOneById(1);
         $like->setIdUser($user);
@@ -201,7 +203,8 @@ class PosteController extends AbstractController
         $this->addFlash('success', 'Like ajouté avec succès!');
 
         return $this->redirectToRoute(
-            'app_poste_indexFront'
+            'app_poste_show',
+            ['id' => $id]
         );
     }
     #[Route('/{id}/dislike', name: 'app_poste_dislike', methods: ['GET', 'POST'])]
@@ -221,7 +224,10 @@ class PosteController extends AbstractController
         } else {
             $this->addFlash('error', 'Vous ne pouvez pas enlever un like que vous n\'avez pas mis.');
         }
-        return $this->redirectToRoute('app_poste_indexFront');
+        return $this->redirectToRoute(
+            'app_poste_show',
+            ['id' => $id]
+        );
     }
 
     #[Route('/{id}/edit', name: 'app_poste_edit', methods: ['GET', 'POST'])]

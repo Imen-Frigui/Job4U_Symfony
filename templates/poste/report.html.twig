@@ -1,70 +1,71 @@
-{% extends 'base.html.twig' %}
+{% extends 'base1.html.twig' %}
 
-{% block title %}Signaler un contenu{% endblock %}
+{% block title %}Signaler un contenu
+{% endblock %}
 
 {% block body %}
-    <div class="container mt-5">
-        <h1 class="mb-5">Signaler un contenu</h1>
-        <div class="form-container">
-        <form method="POST" action="{{ path('app_poste_report', {'id': poste.id}) }}">
-            {{ form_widget(form) }}
-            <button type="submit" class="btn btn-primary mt-3">Envoyer</button>
-        </form>
-        </div>
-        <style>
-.form-container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f2f2f2;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
+	<div class="container mt-5">
+		<h1 class="mb-5">Signaler un contenu</h1>
+		<div class="form-container">
+			<form method="POST" action="{{ path('app_poste_report', {'id': poste.id}) }}">
+				{{ form_widget(form) }}
+				<button type="submit" class="btn btn-primary mt-3">Envoyer</button>
+			</form>
+		</div>
+		<style>
+			.form-container {
+				max-width: 600px;
+				margin: 0 auto;
+				padding: 20px;
+				background-color: #f2f2f2;
+				border-radius: 10px;
+				box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+			}
 
-.form-container form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+			.form-container form {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+			}
 
-.form-container label {
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: 20px;
-}
+			.form-container label {
+				font-size: 18px;
+				font-weight: bold;
+				margin-top: 20px;
+			}
 
-.form-container input[type="text"],
-.form-container textarea {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 5px;
-  border: none;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-}
+			.form-container input[type="text"],
+			.form-container textarea {
+				width: 100%;
+				padding: 10px;
+				margin-top: 10px;
+				border-radius: 5px;
+				border: none;
+				box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+			}
 
-.form-container select {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 5px;
-  border: none;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-}
+			.form-container select {
+				width: 100%;
+				padding: 10px;
+				margin-top: 10px;
+				border-radius: 5px;
+				border: none;
+				box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+			}
 
-.form-container button[type="submit"] {
-  padding: 10px 20px;
-  margin-top: 20px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
+			.form-container button[type="submit"] {
+				padding: 10px 20px;
+				margin-top: 20px;
+				background-color: #007bff;
+				color: #fff;
+				border: none;
+				border-radius: 5px;
+				cursor: pointer;
+			}
 
-.form-container button[type="submit"]:hover {
-  background-color: #0069d9;
-}
-        </style>
-    </div>
+			.form-container button[type="submit"]:hover {
+				background-color: #0069d9;
+			}
+		</style>
+	</div>
 {% endblock %}
