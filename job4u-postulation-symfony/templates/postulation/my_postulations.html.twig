@@ -1,0 +1,77 @@
+{% extends 'base1.html.twig' %}
+{% block body %}
+	<div class="row" style="margin-left: 50px;margin-right: 50px;">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title text-dark">List Of The postulations</h5>
+					<!-- Table with stripped rows -->
+					<div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns" style="">
+						<div class="dataTable-top">
+							<div style="margin-left: 1150px;margin-top: 10px;margin-bottom: 10px;" class="dataTable-search"><input class="dataTable-input" placeholder="Search..." type="text"></div>
+						</div>
+						<div class="dataTable-container">
+							<table class="table datatable dataTable-table">
+								<thead>
+									<tr>
+										<th scope="col" data-sortable="" style="width: 3%;" class="asc">
+											<a href="#" class="dataTable-sorter">#</a>
+										</th>
+										
+
+										<th scope="col" data-sortable="" style="width: 10.7199%;">
+											<a href="#" class="dataTable-sorter">email</a>
+										</th>
+										<th scope="col" data-sortable="" style="width: 11.30311%;">
+											<a href="#" class="dataTable-sorter">date</a>
+										</th>
+						
+									</tr>
+								</thead>
+								<tbody>
+							
+											{% set i=0 %}
+											{% for pos in p %}
+												{% set i=i+1 %}
+												<tr>
+													<th scope="row">{{i}}</th>
+                                                    
+                        						
+												<td >{{pos.email}}</td>
+												<td >{{pos.getDatePos()|date('Y-m-d') }}</td>
+												
+												<td>
+												<a href= "{{path('postulation_update' ,{'idPos':pos.idPos})}}">Update </a>
+                                                </td>
+                                                <td>
+                                                <a href= "{{path('remove_pos' ,{'idPos':pos.idPos})}}">Remove </a>
+                                                </td>
+												<td>
+                                                <a href= "{{path('total_Postulations2' ,{'idPos':pos.idPos})}}">show </a>
+                                                </td>
+							
+												
+													
+
+													
+												</tr>
+											{% endfor %}
+										
+									</tbody>
+								</tbody>
+							</table>
+						</div>
+						<div class="dataTable-bottom">
+							<nav class="dataTable-pagination">
+								<ul class="dataTable-pagination-list"></ul>
+							</nav>
+						</div>
+					</div>
+					<!-- End Table with stripped rows -->
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+{% endblock %}
