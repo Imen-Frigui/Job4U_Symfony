@@ -9,8 +9,8 @@ use Doctrine\DBAL\Types\Types;
 use App\Entity\EventCategory;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
 #[Vich\Uploadable]
