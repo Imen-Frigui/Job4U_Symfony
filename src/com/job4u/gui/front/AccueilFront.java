@@ -40,7 +40,7 @@ public class AccueilFront extends Form {
         menuContainer.addAll(
                 userContainer,
                 makeEventsButton(),
-                makeEventCategorysButton(),
+                //makeEventCategorysButton(),
                 makeParticipantsButton(),
                 makeNotificationsButton()
 
@@ -58,13 +58,13 @@ public class AccueilFront extends Form {
         return button;
     }
 
-    private Button makeEventCategorysButton() {
-        Button button = new Button("EventCategorys");
-        button.setUIID("buttonMenu");
+   // private Button makeEventCategorysButton() {
+     //   Button button = new Button("EventCategorys");
+       // button.setUIID("buttonMenu");
         //button.setMaterialIcon(FontImage.MATERIAL_BOOKMARK);
-        button.addActionListener(action -> new com.job4u.gui.front.eventCategory.AfficherToutEventCategory(MainApp.res).show());
-        return button;
-    }
+        //button.addActionListener(action -> new com.job4u.gui.front.eventCategory.AfficherToutEventCategory(MainApp.res).show());
+      //  return button;
+    //}
 
     private Button makeParticipantsButton() {
         Button button = new Button("Participants");

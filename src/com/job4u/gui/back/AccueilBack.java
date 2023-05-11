@@ -40,8 +40,8 @@ public class AccueilBack extends Form {
                 userContainer,
                 makeEventsButton(),
                 makeEventCategorysButton(),
-                makeParticipantsButton(),
-                makeNotificationsButton()
+                makeParticipantsButton()
+                //makeNotificationsButton()
 
 
         );
@@ -73,12 +73,5 @@ public class AccueilBack extends Form {
         return button;
     }
 
-    private Button makeNotificationsButton() {
-        Button button = new Button("Notifications");
-        button.setUIID("buttonMenu");
-        //button.setMaterialIcon(FontImage.MATERIAL_BOOKMARK);
-        button.addActionListener(action -> new com.job4u.gui.back.notification.AfficherToutNotification(this).show());
-        return button;
-    }
 
 }

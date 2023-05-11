@@ -9,7 +9,6 @@ import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
 import com.job4u.gui.Login;
 import com.job4u.gui.front.event.AfficherToutEvent;
-import com.job4u.gui.front.eventCategory.AfficherToutEventCategory;
 import com.job4u.gui.front.notification.AfficherToutNotification;
 import com.job4u.gui.front.participant.AfficherToutParticipant;
 
@@ -67,7 +66,6 @@ public class BaseForm extends Form {
 
         tb.addMaterialCommandToSideMenu("Profile", FontImage.MATERIAL_SETTINGS, e -> new ProfileForm(res).show());
         tb.addMaterialCommandToSideMenu("Events", FontImage.MATERIAL_EVENT, e -> new AfficherToutEvent(res).show());
-        tb.addMaterialCommandToSideMenu("Event categories", FontImage.MATERIAL_CATEGORY, e -> new AfficherToutEventCategory(res).show());
         tb.addMaterialCommandToSideMenu("Participants", FontImage.MATERIAL_PERSON, e -> new AfficherToutParticipant(res).show());
         tb.addMaterialCommandToSideMenu("Notifications", FontImage.MATERIAL_NOTIFICATIONS, e -> new AfficherToutNotification(res).show());
 

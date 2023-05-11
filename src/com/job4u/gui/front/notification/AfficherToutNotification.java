@@ -39,7 +39,6 @@ public class AfficherToutNotification extends BaseForm {
         }
 
         addGUIs();
-        addActions();
 
 
     }
@@ -47,7 +46,6 @@ public class AfficherToutNotification extends BaseForm {
     public void refresh() {
         this.removeAll();
         addGUIs();
-        addActions();
         this.refreshTheme();
     }
 
@@ -57,9 +55,6 @@ public class AfficherToutNotification extends BaseForm {
         container.setPreferredH(250);
         this.add(container);
 
-        addBtn = new Button("Ajouter");
-        addBtn.setUIID("buttonWhiteCenter");
-        this.add(addBtn);
 
 
         ArrayList<Notification> listNotifications = NotificationService.getInstance().getAll();
@@ -75,13 +70,6 @@ public class AfficherToutNotification extends BaseForm {
         }
     }
 
-    private void addActions() {
-        addBtn.addActionListener(action -> {
-            currentNotification = null;
-            new AjouterNotification(this).show();
-        });
-
-    }
 
     Label userLabel, eventLabel, messageLabel, hasReadLabel, createdAtLabel, statusLabel;
 
@@ -124,7 +112,7 @@ public class AfficherToutNotification extends BaseForm {
         return notificationModel;
     }
 
-    Button editBtn, deleteBtn;
+    Button editBtn;// deleteBtn;
     Container btnsContainer;
 
     private Component makeNotificationModel(Notification notification) {
@@ -134,16 +122,16 @@ public class AfficherToutNotification extends BaseForm {
         btnsContainer = new Container(new BorderLayout());
         btnsContainer.setUIID("containerButtons");
 
-        editBtn = new Button("Modifier");
-        editBtn.setUIID("buttonWhiteCenter");
-        editBtn.addActionListener(action -> {
-            currentNotification = notification;
+        //editBtn = new Button("Modifier");
+        //editBtn.setUIID("buttonWhiteCenter");
+        /*editBtn.addActionListener(action -> {
+           currentNotification = notification;
             new ModifierNotification(this).show();
-        });
+        });*/
 
-        deleteBtn = new Button("Supprimer");
-        deleteBtn.setUIID("buttonWhiteCenter");
-        deleteBtn.addActionListener(action -> {
+        //deleteBtn = new Button("Supprimer");
+        //deleteBtn.setUIID("buttonWhiteCenter");
+        /*deleteBtn.addActionListener(action -> {
             InteractionDialog dlg = new InteractionDialog("Confirmer la suppression");
             dlg.setLayout(new BorderLayout());
             dlg.add(BorderLayout.CENTER, new Label("Voulez vous vraiment supprimer ce notification ?"));
@@ -161,15 +149,15 @@ public class AfficherToutNotification extends BaseForm {
                 } else {
                     Dialog.show("Erreur", "Erreur de suppression du notification. Code d'erreur : " + responseCode, new Command("Ok"));
                 }
-            });
+            });*/
             Container btnContainer = new Container(new BoxLayout(BoxLayout.X_AXIS));
-            btnContainer.addAll(btnClose, btnConfirm);
-            dlg.addComponent(BorderLayout.SOUTH, btnContainer);
-            dlg.show(800, 800, 0, 0);
-        });
+            //btnContainer.addAll(btnClose, btnConfirm);
+            //dlg.addComponent(BorderLayout.SOUTH, btnContainer);
+            //dlg.show(800, 800, 0, 0);
+       // });
 
-        btnsContainer.add(BorderLayout.WEST, editBtn);
-        btnsContainer.add(BorderLayout.EAST, deleteBtn);
+       /* btnsContainer.add(BorderLayout.WEST, editBtn);*/
+        //btnsContainer.add(BorderLayout.EAST, deleteBtn);
 
 
         notificationModel.add(btnsContainer);
